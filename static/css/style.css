@@ -1,0 +1,22 @@
+.nav-link {
+  font-weight: bold;
+  color: black !important;
+}
+
+.nav-link.active {
+  border-bottom: 3px solid #fdd835; /* Yellow underline */
+}
+
+.btn-outline-dark {
+  border: 1px solid black;
+  color: black;
+}
+
+.btn-join {
+  background-color: #fdd835; /* Yellow */
+  font-weight: bold;
+}
+
+.navbar-brand span {
+  font-weight: bold;
+}
