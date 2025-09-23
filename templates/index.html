@@ -4,17 +4,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>PatientsLikeMe Nav</title>
+  <title>PatientsLikeMe</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg bg-white border-bottom">
+<!-- nav bar start  -->
+
+<nav class="navbar navbar-expand-lg bg-white border-bottom py-0">
   <div class="container-fluid">
-    <a class="navbar-brand d-flex align-items-center" href="#">
-      <img src="logo.png" alt="Logo" width="30" height="30" class="me-2">
-      <span>patients<span style="font-weight:normal">likeme<sup>®</sup></span></span>
+    <a class="navbar-brand d-flex align-items-center "style="margin-left:50px;" href="#">
+      <img src="{% static 'images/logo.svg' %}" alt="Logo"  class="me-2"style="width:100%; height:auto;">
     </a>
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -22,7 +23,7 @@
     </button>
 
     <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
-      <ul class="navbar-nav">
+      <ul class="navbar-nav gap-3">
         <li class="nav-item"><a class="nav-link active" href="#">HOME</a></li>
         <li class="nav-item"><a class="nav-link" href="#">COMMUNITY</a></li>
         <li class="nav-item"><a class="nav-link" href="#">MY HEALTH</a></li>
@@ -32,12 +33,14 @@
       </ul>
     </div>
 
-    <div class="d-flex">
+    <div class="d-flex" style="margin-right: 40px;">
       <button class="btn btn-outline-dark me-2">Sign in</button>
       <button class="btn btn-join">Join now!</button>
     </div>
   </div>
 </nav>
+
+<!-- nav ber end  -->
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
