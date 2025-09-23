@@ -1,7 +1,32 @@
 {% extends "base.html" %}
 
-{% block content%}
+{% block content %}
+<div class="d-flex justify-content-center align-items-center" style="height: 80vh;">
+    <div class="card shadow p-4" style="width: 400px; border-radius: 15px;">
+        <p class="text-center fw-bold mt-3">Already a member? <a href=""style="text-decoration: none;">Sign In</a></p>
+        <h3 class="text-center mb-4">Living better starts here.</h3>
 
-<h1>SignUp Here</h1>
+        <!-- Sign Up Form -->
+        <form method="POST">
+            {% csrf_token %}
+            <!-- Example input fields -->
+            <div class="mb-3">
+                <label for="id_name" class="form-label">Name</label>
+                <input type="text" name="name" class="form-control" id="id_name" placeholder="Enter your name">
+            </div>
+            <div class="mb-3">
+                <label for="id_email" class="form-label">Email</label>
+                <input type="email" name="email" class="form-control" id="id_email" placeholder="Enter your email">
+            </div>
+            <div class="mb-3">
+                <label for="id_password" class="form-label">Password</label>
+                <input type="password" name="password" class="form-control" id="id_password" placeholder="Enter password">
+            </div>
 
-{% endblock content%}
+            <button type="submit" class="btn btn-warning w-100">Create account</button>
+        </form>
+
+        <p class="text-center mt-3">Already have an account? <a href="">Sign In</a></p>
+    </div>
+</div>
+{% endblock %}
