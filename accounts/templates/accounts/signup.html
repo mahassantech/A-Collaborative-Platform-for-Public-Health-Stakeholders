@@ -1,8 +1,13 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block content %}
-<div class="d-flex justify-content-center align-items-center" style="height: 80vh;">
+<div class="d-flex justify-content-center align-items-center" style="height: 100vh;">
     <div class="card shadow p-4" style="width: 400px; border-radius: 15px;">
+        <div class="text-center my-3">
+    <img src="{% static 'images/logo.svg' %}" alt="Logo" width="150" height="auto">
+    </div>
+
         <p class="text-center fw-bold mt-3">Already a member? <a href=""style="text-decoration: none;">Sign In</a></p>
         <h3 class="text-center mb-4">Living better starts here.</h3>
 
@@ -11,7 +16,7 @@
             {% csrf_token %}
             <!-- Example input fields -->
             <div class="mb-3">
-                <label for="id_name" class="form-label">Name</label>
+                <label for="id_name" class="form-label">Username</label>
                 <input type="text" name="name" class="form-control" id="id_name" placeholder="Enter your name">
             </div>
             <div class="mb-3">
