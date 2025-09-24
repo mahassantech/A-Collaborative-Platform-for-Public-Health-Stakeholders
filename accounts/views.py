@@ -5,3 +5,6 @@ from .forms import SignUpForm
 def SignUp(request):
     form=SignUpForm()
     return render(request,'accounts/signup.html',{'form':form})
+
+def SignIn(request):
+    return render(request,'accounts/signin.html')
