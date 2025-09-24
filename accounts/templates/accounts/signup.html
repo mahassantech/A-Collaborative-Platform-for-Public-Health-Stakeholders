@@ -12,10 +12,7 @@
         <h3 class="text-center mb-4">Living better starts here.</h3>
 
         <!-- Sign Up Form -->
-        <form method="POST">
-            {% csrf_token %}
-            <!-- Example input fields -->
-            <form method="POST">
+    <form method="post">
     {% csrf_token %}
 
     <div class="mb-3">
@@ -32,10 +29,15 @@
         <label for="id_password1" class="form-label">Password</label>
         <input type="password" name="password1" class="form-control" id="id_password1" required>
     </div>
-    <button type="submit" class="btn btn-warning w-100">Create account</button>
-</form>
 
-        <p class="text-center mt-3">Already have an account? <a href="">Sign In</a></p>
+    <div class="mb-3">
+        <label for="id_password2" class="form-label">Confirm Password</label>
+        <input type="password" name="password2" class="form-control" id="id_password2" required>
+    </div>
+
+    <button type="submit" class="btn btn-warning w-100">Create account</button>
+       <p class="text-center mt-3">Already have an account? <a href="">Sign In</a></p>
     </div>
 </div>
+</form> 
 {% endblock %}
