@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block content %}
-<div class="d-flex justify-content-center align-items-center" style="height: 100vh;">
+<div class="d-flex justify-content-center align-items-center" style="height: 100vh; padding-top: 200px;">
     <div class="card shadow p-4" style="width: 400px; border-radius: 15px;">
         <div class="text-center my-3">
     <img src="{% static 'images/logo.svg' %}" alt="Logo" width="150" height="auto">
@@ -15,21 +15,28 @@
         <form method="POST">
             {% csrf_token %}
             <!-- Example input fields -->
-            <div class="mb-3">
-                <label for="id_name" class="form-label">Username</label>
-                <input type="text" name="name" class="form-control" id="id_name" placeholder="Enter your name">
-            </div>
-            <div class="mb-3">
-                <label for="id_email" class="form-label">Email</label>
-                <input type="email" name="email" class="form-control" id="id_email" placeholder="Enter your email">
-            </div>
-            <div class="mb-3">
-                <label for="id_password" class="form-label">Password</label>
-                <input type="password" name="password" class="form-control" id="id_password" placeholder="Enter password">
-            </div>
+            <form method="POST">
+    {% csrf_token %}
 
-            <button type="submit" class="btn btn-warning w-100">Create account</button>
-        </form>
+    <div class="mb-3">
+        <label for="id_username" class="form-label">Username</label>
+        <input type="text" name="username" class="form-control" id="id_username" required>
+    </div>
+
+    <div class="mb-3">
+        <label for="id_email" class="form-label">Email</label>
+        <input type="email" name="email" class="form-control" id="id_email" required>
+    </div>
+
+    <div class="mb-3">
+        <label for="id_password1" class="form-label">Password</label>
+        <input type="password" name="password1" class="form-control" id="id_password1" required>
+    </div>
+
+
+    <button type="submit" class="btn btn-warning w-100">Create account</button>
+</form>
+
 
         <p class="text-center mt-3">Already have an account? <a href="">Sign In</a></p>
     </div>
