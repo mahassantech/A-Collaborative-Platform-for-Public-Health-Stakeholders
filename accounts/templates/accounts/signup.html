@@ -5,39 +5,54 @@
 <div class="d-flex justify-content-center align-items-center" style="height: 100vh; padding-top: 200px;">
     <div class="card shadow p-4" style="width: 400px; border-radius: 15px;">
         <div class="text-center my-3">
-    <img src="{% static 'images/logo.svg' %}" alt="Logo" width="150" height="auto">
-    </div>
+            <img src="{% static 'images/logo.svg' %}" alt="Logo" width="150" height="auto">
+        </div>
 
-        <p class="text-center fw-bold mt-3">Already a member? <a href=""style="text-decoration: none;">Sign In</a></p>
+        <p class="text-center fw-bold mt-3">Already a member? <a href="" style="text-decoration: none;">Sign In</a></p>
         <h3 class="text-center mb-4">Living better starts here.</h3>
 
         <!-- Sign Up Form -->
-    <form method="post">
-    {% csrf_token %}
+        <form method="post">
+            {% csrf_token %}
 
-    <div class="mb-3">
-        <label for="id_username" class="form-label">Username</label>
-        <input type="text" name="username" class="form-control" id="id_username" required>
-    </div>
+            <div class="mb-3">
+                <label for="id_username" class="form-label">Username</label>
+                <input type="text" name="username" class="form-control" id="id_username" required>
+            </div>
 
-    <div class="mb-3">
-        <label for="id_email" class="form-label">Email</label>
-        <input type="email" name="email" class="form-control" id="id_email" required>
-    </div>
+            <div class="mb-3">
+                <label for="id_email" class="form-label">Email</label>
+                <input type="email" name="email" class="form-control" id="id_email" required>
+            </div>
 
-    <div class="mb-3">
-        <label for="id_password1" class="form-label">Password</label>
-        <input type="password" name="password1" class="form-control" id="id_password1" required>
-    </div>
+            <div class="mb-3">
+                <label for="id_role" class="form-label">Role</label>
+                <select name="role" id="id_role" class="form-select" required>
+                    <option value="" selected disabled>Select role</option>
+                    {% for value, display in ROLE_CHOICES %}
+                        <option value="{{ value }}">{{ display }}</option>
+                    {% endfor %}
+                </select>
+            </div>
 
-    <div class="mb-3">
-        <label for="id_password2" class="form-label">Confirm Password</label>
-        <input type="password" name="password2" class="form-control" id="id_password2" required>
-    </div>
+            <div class="mb-3">
+                <label for="id_token" class="form-label">Token</label>
+                <input type="text" name="token" class="form-control" id="id_token" required>
+            </div>
 
-    <button type="submit" class="btn btn-warning w-100">Create account</button>
-       <p class="text-center mt-3">Already have an account? <a href="">Sign In</a></p>
+            <div class="mb-3">
+                <label for="id_password1" class="form-label">Password</label>
+                <input type="password" name="password1" class="form-control" id="id_password1" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="id_password2" class="form-label">Confirm Password</label>
+                <input type="password" name="password2" class="form-control" id="id_password2" required>
+            </div>
+
+            <button type="submit" class="btn btn-warning w-100">Create account</button>
+            <p class="text-center mt-3">Already have an account? <a href="">Sign In</a></p>
+        </form>
     </div>
 </div>
-</form> 
 {% endblock %}
