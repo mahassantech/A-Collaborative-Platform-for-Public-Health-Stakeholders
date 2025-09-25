@@ -40,6 +40,46 @@
 </nav>
 
 <!-- nav ber end  -->
+
+<!-- footer start  -->
+<footer class="site-footer mt-auto py-4 bg-dark text-light">
+  <div class="container">
+    <div class="row align-items-center">
+      <!-- Logo + short text -->
+      <div class="col-md-4 text-center text-md-start mb-3 mb-md-0">
+        <img src="{% static 'images/logo.svg' %}" alt="Logo" width="100" style="height:auto;">
+        <p class="mb-0 small">Your product tagline or short description goes here.</p>
+      </div>
+
+      <!-- Links -->
+      <div class="col-md-4 mb-3 mb-md-0">
+        <h6 class="text-uppercase fw-bold">Quick links</h6>
+        <ul class="list-unstyled mb-0">
+          <li><a href="" class="text-decoration-none text-light">Home</a></li>
+          <li><a href="" class="text-decoration-none text-light">About</a></li>
+          <li><a href="" class="text-decoration-none text-light">Contact</a></li>
+        </ul>
+      </div>
+
+      <!-- Social & contact -->
+      <div class="col-md-4 text-center text-md-end">
+        <h6 class="fw-bold">Follow us</h6>
+        <a href="#" class="me-2 text-light text-decoration-none" aria-label="Facebook">FB</a>
+        <a href="#" class="me-2 text-light text-decoration-none" aria-label="Twitter">TW</a>
+        <a href="#" class="me-2 text-light text-decoration-none" aria-label="Instagram">IG</a>
+        <p class="mt-2 mb-0 small">support@example.com</p>
+      </div>
+    </div>
+
+    <hr class="border-secondary my-3">
+
+    <div class="d-flex justify-content-between small">
+      <div>© {% now "Y" %} YourCompany</div>
+      <div><a href="" class="text-decoration-none text-light">Terms</a> · <a href="" class="text-decoration-none text-light">Privacy</a></div>
+    </div>
+  </div>
+</footer>
+
  
 
 {% block content%}

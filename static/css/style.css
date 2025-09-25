@@ -1,3 +1,4 @@
+/* nav bar start  */
 .nav-link {
   font-weight: bold;
   color: black !important;
@@ -20,3 +21,24 @@
 .navbar-brand span {
   font-weight: bold;
 }
+/* nav bar end  */
+
+ /* footer start  */
+
+ .site-footer { 
+  background-color: #04060a; /* dark */
+  color: #e6eef8;
+  border-top: 1px solid rgba(255,255,255,0.05);
+}
+.site-footer a:hover { 
+  text-decoration: underline;
+  opacity: 0.9;
+}
+.site-footer img { 
+  filter: brightness(1); /* adjust if logo too bright */
+}
+@media (max-width: 575px) {
+  .site-footer .col-md-4 { text-align: center !important; }
+}
+
+ /* footer end  */
