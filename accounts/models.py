@@ -9,3 +9,8 @@ class User(AbstractUser):
 
     def __str__(self):
         return f"{self.username} ({self.role})"
+    
+class Membership(models.Model):
+    user_id=models.CharField(unique=True)
+    Membership_id=models.CharField(unique=True)
+    
