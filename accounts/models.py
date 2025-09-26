@@ -13,4 +13,5 @@ class User(AbstractUser):
 class Membership(models.Model):
     user_id=models.CharField(unique=True)
     Membership_id=models.CharField(unique=True)
-    
+    role=models.CharField(max_length=30,choices=ROLE_CHOICES)
+    token_number=token = models.CharField(max_length=100, unique=True)
