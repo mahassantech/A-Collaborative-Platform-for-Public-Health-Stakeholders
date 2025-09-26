@@ -13,8 +13,8 @@
 
 <nav class="navbar navbar-expand-lg bg-white border-bottom py-0">
   <div class="container-fluid">
-    <a class="navbar-brand d-flex align-items-center "style="margin-left:50px;" href="#">
-      <img src="{% static 'images/logo.svg' %}" alt="Logo"  class="me-2"style="width:100%; height:auto;">
+    <a class="navbar-brand d-flex align-items-center" style="margin-left:50px;" href="#">
+      <img src="{% static 'images/logo.svg' %}" alt="Logo" class="me-2" style="width:100px; height:auto;">
     </a>
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -23,7 +23,7 @@
 
     <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
       <ul class="navbar-nav gap-3">
-        <li class="nav-item"><a class="nav-link active" href="#">HOME</a></li>
+        <li class="nav-item"><a class="nav-link active" href="/">HOME</a></li>
         <li class="nav-item"><a class="nav-link" href="#">COMMUNITY</a></li>
         <li class="nav-item"><a class="nav-link" href="#">MY HEALTH</a></li>
         <li class="nav-item"><a class="nav-link" href="#">CONDITIONS</a></li>
@@ -33,21 +33,88 @@
     </div>
 
     <div class="d-flex" style="margin-right: 40px;">
-      <a href="{% url 'login' %}"class="btn btn-outline-dark me-2">Sign in</a>
+      <a href="{% url 'login' %}" class="btn btn-outline-dark me-2">Sign in</a>
       <a href="{% url 'signup' %}" class="btn btn-join">Join now!</a>
     </div>
   </div>
 </nav>
+<!-- nav bar end -->
 
-<!-- nav ber end  -->
+{% block content %}
+<!-- Hero Section -->
+<section class="bg-light py-5 text-center">
+  <div class="container">
+    <h1 class="display-5 fw-bold">Welcome to PatientsLikeMe</h1>
+    <p class="lead text-muted">Connect, share experiences, and learn from people living with similar conditions.</p>
+    <a href="#" class="btn btn-primary btn-lg mt-3">Join Our Community</a>
+  </div>
+</section>
 
+<!-- Features -->
+<section class="container py-5">
+  <div class="row text-center">
+    <div class="col-md-4">
+      <div class="card shadow-sm h-100 p-4">
+        <h5 class="fw-bold">Track Your Health</h5>
+        <p class="text-muted">Monitor symptoms, treatments, and progress all in one place.</p>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card shadow-sm h-100 p-4">
+        <h5 class="fw-bold">Community Support</h5>
+        <p class="text-muted">Share stories and get advice from others who understand you.</p>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card shadow-sm h-100 p-4">
+        <h5 class="fw-bold">Expert Insights</h5>
+        <p class="text-muted">Stay updated with articles, blogs, and medical research.</p>
+      </div>
+    </div>
+  </div>
+</section>
 
+<!-- Blog preview -->
+<section class="bg-light py-5">
+  <div class="container">
+    <h2 class="mb-4 text-center">Latest from our Blog</h2>
+    <div class="row g-4">
+      <div class="col-md-4">
+        <div class="card h-100 shadow-sm">
+          <img src="{% static 'images/blog1.jpg' %}" class="card-img-top" alt="Blog 1">
+          <div class="card-body">
+            <h5 class="card-title">Living with Diabetes</h5>
+            <p class="card-text text-muted">Tips and community experiences on managing daily life with diabetes.</p>
+            <a href="#" class="stretched-link">Read more</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card h-100 shadow-sm">
+          <img src="{% static 'images/blog2.jpg' %}" class="card-img-top" alt="Blog 2">
+          <div class="card-body">
+            <h5 class="card-title">Mental Health Matters</h5>
+            <p class="card-text text-muted">Understanding anxiety and depression in chronic illness patients.</p>
+            <a href="#" class="stretched-link">Read more</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card h-100 shadow-sm">
+          <img src="{% static 'images/blog3.jpg' %}" class="card-img-top" alt="Blog 3">
+          <div class="card-body">
+            <h5 class="card-title">Nutrition & Wellness</h5>
+            <p class="card-text text-muted">Healthy eating habits for people with chronic health conditions.</p>
+            <a href="#" class="stretched-link">Read more</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock content %}
 
- 
-
-{% block content%}
-{% endblock content%}
-<!-- footer start  -->
+<!-- footer start -->
 <footer class="site-footer mt-auto py-4 bg-dark text-light">
   <div class="container">
     <div class="row align-items-center">
@@ -61,7 +128,7 @@
       <div class="col-md-4 mb-3 mb-md-0">
         <h6 class="text-uppercase fw-bold">Quick links</h6>
         <ul class="list-unstyled mb-0">
-          <li><a href="" class="text-decoration-none text-light">Home</a></li>
+          <li><a href="{% url 'homes' %}" class="text-decoration-none text-light">Home</a></li>
           <li><a href="" class="text-decoration-none text-light">About</a></li>
           <li><a href="" class="text-decoration-none text-light">Contact</a></li>
         </ul>
