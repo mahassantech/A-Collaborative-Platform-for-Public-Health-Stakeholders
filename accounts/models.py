@@ -10,8 +10,8 @@ class User(AbstractUser):
     def __str__(self):
         return f"{self.username} ({self.role})"
     
-class Membership(models.Model):
-    user_id=models.CharField(unique=True)
-    Membership_id=models.CharField(unique=True)
-    role=models.CharField(max_length=30,choices=ROLE_CHOICES)
-    token_number=token = models.CharField(max_length=100, unique=True)
+# class Membership(models.Model):
+#     user_id=models.CharField(unique=True)
+#     Membership_id=models.CharField(unique=True)
+#     role=models.CharField(max_length=30,choices=ROLE_CHOICES)
+#     token_number=token = models.CharField(max_length=100, unique=True)
