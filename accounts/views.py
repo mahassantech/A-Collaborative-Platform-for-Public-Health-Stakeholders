@@ -19,3 +19,13 @@ class SignInView(LoginView):
     
     def get_success_url(self):
         return reverse_lazy('profile')
+
+# def add_author(request):
+#     if request.method=="POST":
+#         author_form=forms.AuthorForm(request.POST)
+#         if author_form.is_valid():
+#             author_form.save()
+#             return redirect("add_author") #atar mane jeidata input dibo seta r fill a autofill thkbe na,ai data ta form a store hbe
+#     else:
+#         author_form=forms.AuthorForm()
+#     return render(request,'add_author.html',{'form':author_form})
