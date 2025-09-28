@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+<section class="py-5">
+  <div class="container">
+    <h2 class="text-center mb-5 fw-bold">Community Hub</h2>
+    <div class="row g-4">
+
+      <!-- Forum -->
+      <div class="col-md-4">
+        <div class="card shadow-sm h-100 text-center p-4">
+          <img src="{% static 'images/forum.png' %}" alt="Forum" width="80" class="mx-auto mb-3">
+          <h5 class="card-title">Discussion Forums</h5>
+          <p class="card-text">Join topic-based forums to connect with others.</p>
+          <a href="#" class="btn btn-primary btn-sm">Join Forum</a>
+        </div>
+      </div>
+
+      <!-- Patient Stories -->
+      <div class="col-md-4">
+        <div class="card shadow-sm h-100 text-center p-4">
+          <img src="{% static 'images/stories.png' %}" alt="Stories" width="80" class="mx-auto mb-3">
+          <h5 class="card-title">Patient Stories</h5>
+          <p class="card-text">Read and share inspiring recovery stories with the community.</p>
+          <a href="#" class="btn btn-primary btn-sm">Read Stories</a>
+        </div>
+      </div>
+
+      <!-- Support Groups -->
+      <div class="col-md-4">
+        <div class="card shadow-sm h-100 text-center p-4">
+          <img src="{% static 'images/support.png' %}" alt="Support Groups" width="80" class="mx-auto mb-3">
+          <h5 class="card-title">Support Groups</h5>
+          <p class="card-text">Find emotional support in specialized groups.</p>
+          <a href="#" class="btn btn-primary btn-sm">Join Group</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+{% endblock %}
