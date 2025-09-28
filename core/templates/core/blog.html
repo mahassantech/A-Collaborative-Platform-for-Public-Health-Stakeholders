@@ -1,7 +1,18 @@
 {% extends "base.html" %}
 {% load static %}
-<h1>welcome to Blog page</h1>
+
 {% block content %}
+
+<!-- Featured Section -->
+<section class="py-5 text-center bg-dark text-light">
+  <div class="container">
+    <h1 class="fw-bold">Welcome to Our Blog</h1>
+    <p class="lead">Read the latest stories, tips, and insights from experts.</p>
+    <a href="#" class="btn btn-warning btn-lg mt-3">Explore Now</a>
+  </div>
+</section>
+
+<!-- Blog Posts Section -->
 <section class="py-5 bg-light">
   <div class="container">
     <h2 class="text-center mb-5 fw-bold">Latest Blog Posts</h2>
@@ -43,7 +54,55 @@
         </div>
       </div>
 
+      <!-- Blog Post 4 -->
+      <div class="col-md-4">
+        <div class="card shadow-sm h-100">
+          <img src="{% static 'images/blog4.jpg' %}" class="card-img-top" alt="Blog 4">
+          <div class="card-body">
+            <h5 class="card-title">Fitness Hacks for Busy People</h5>
+            <p class="card-text">No time to hit the gym? Here are simple exercises you can do anywhere.</p>
+            <a href="#" class="btn btn-primary btn-sm">Read More</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Blog Post 5 -->
+      <div class="col-md-4">
+        <div class="card shadow-sm h-100">
+          <img src="{% static 'images/blog5.jpg' %}" class="card-img-top" alt="Blog 5">
+          <div class="card-body">
+            <h5 class="card-title">The Rise of Telemedicine</h5>
+            <p class="card-text">Online doctors are becoming the new normal. Here’s what you should know.</p>
+            <a href="#" class="btn btn-primary btn-sm">Read More</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Blog Post 6 -->
+      <div class="col-md-4">
+        <div class="card shadow-sm h-100">
+          <img src="{% static 'images/blog6.jpg' %}" class="card-img-top" alt="Blog 6">
+          <div class="card-body">
+            <h5 class="card-title">How to Improve Your Sleep</h5>
+            <p class="card-text">Good sleep = good health. Discover habits that can improve your rest.</p>
+            <a href="#" class="btn btn-primary btn-sm">Read More</a>
+          </div>
+        </div>
+      </div>
+
     </div>
+  </div>
+</section>
+
+<!-- Newsletter Section -->
+<section class="py-5 bg-dark text-light">
+  <div class="container text-center">
+    <h2 class="fw-bold">Subscribe to Our Newsletter</h2>
+    <p class="mb-4">Get the latest blog updates directly in your inbox!</p>
+    <form class="d-flex justify-content-center">
+      <input type="email" class="form-control w-50 me-2" placeholder="Enter your email">
+      <button class="btn btn-warning">Subscribe</button>
+    </form>
   </div>
 </section>
 
