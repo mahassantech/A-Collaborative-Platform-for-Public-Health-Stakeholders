@@ -1,3 +1,52 @@
 {% extends "base.html" %}
 {% load static %}
-<h1>welcome to Home page</h1>
+
+{% block content %}
+<div class="container mt-5">
+    <!-- Hero Section -->
+    <div class="text-center p-5 bg-light rounded shadow-sm mb-5">
+        <h1 class="display-5 fw-bold">Welcome to Home Page</h1>
+        <p class="lead text-muted">Discover blogs, read stories, and share your thoughts.</p>
+        <a href="#" class="btn btn-primary btn-lg mt-3">Start Reading</a>
+    </div>
+
+    <!-- Blog Section -->
+    <div class="row">
+        <!-- Blog Card 1 -->
+        <div class="col-md-4 mb-4">
+            <div class="card shadow h-100">
+                <img src="{% static 'images/blog1.jpg' %}" class="card-img-top" alt="Blog 1">
+                <div class="card-body">
+                    <h5 class="card-title">Blog Title One</h5>
+                    <p class="card-text text-muted">Short description of the blog post goes here. Keep it engaging!</p>
+                    <a href="#" class="btn btn-outline-primary">Read More</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Blog Card 2 -->
+        <div class="col-md-4 mb-4">
+            <div class="card shadow h-100">
+                <img src="{% static 'images/blog2.jpg' %}" class="card-img-top" alt="Blog 2">
+                <div class="card-body">
+                    <h5 class="card-title">Blog Title Two</h5>
+                    <p class="card-text text-muted">A short preview of your blog post that makes readers curious.</p>
+                    <a href="#" class="btn btn-outline-primary">Read More</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Blog Card 3 -->
+        <div class="col-md-4 mb-4">
+            <div class="card shadow h-100">
+                <img src="{% static 'images/blog3.jpg' %}" class="card-img-top" alt="Blog 3">
+                <div class="card-body">
+                    <h5 class="card-title">Blog Title Three</h5>
+                    <p class="card-text text-muted">Give your readers a taste of what’s inside your article.</p>
+                    <a href="#" class="btn btn-outline-primary">Read More</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
