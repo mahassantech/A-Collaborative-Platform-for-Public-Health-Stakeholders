@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+<section class="py-5 bg-light">
+  <div class="container">
+    <h2 class="text-center mb-5 fw-bold">Available Treatments</h2>
+    <div class="row g-4">
+
+      <!-- Treatment 1 -->
+      <div class="col-md-4">
+        <div class="card shadow-sm h-100">
+          <img src="{% static 'images/treatment1.jpg' %}" class="card-img-top" alt="Treatment 1">
+          <div class="card-body">
+            <h5 class="card-title">Diabetes Care</h5>
+            <p class="card-text">Personalized plans for diabetes management and diet support.</p>
+            <a href="#" class="btn btn-outline-primary btn-sm">Learn More</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Treatment 2 -->
+      <div class="col-md-4">
+        <div class="card shadow-sm h-100">
+          <img src="{% static 'images/treatment2.jpg' %}" class="card-img-top" alt="Treatment 2">
+          <div class="card-body">
+            <h5 class="card-title">Cardiac Therapy</h5>
+            <p class="card-text">Modern treatments for heart health, recovery, and prevention.</p>
+            <a href="#" class="btn btn-outline-primary btn-sm">Learn More</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Treatment 3 -->
+      <div class="col-md-4">
+        <div class="card shadow-sm h-100">
+          <img src="{% static 'images/treatment3.jpg' %}" class="card-img-top" alt="Treatment 3">
+          <div class="card-body">
+            <h5 class="card-title">Mental Wellness</h5>
+            <p class="card-text">Therapies and counseling sessions to support mental health.</p>
+            <a href="#" class="btn btn-outline-primary btn-sm">Learn More</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+{% endblock %}

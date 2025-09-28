@@ -24,10 +24,10 @@
     <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
       <ul class="navbar-nav gap-3">
         <li class="nav-item"><a class="nav-link active" href="/">HOME</a></li>
-        <li class="nav-item"><a class="nav-link" href="#">COMMUNITY</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'CommunityPage' %}">COMMUNITY</a></li>
         <li class="nav-item"><a class="nav-link" href="#">MY HEALTH</a></li>
         <li class="nav-item"><a class="nav-link" href="#">CONDITIONS</a></li>
-        <li class="nav-item"><a class="nav-link" href="#">TREATMENTS</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'treatmentPage' %}">TREATMENTS</a></li>
         <li class="nav-item"><a class="nav-link" href="{% url 'blogpage' %}">BLOG</a></li>
       </ul>
     </div>

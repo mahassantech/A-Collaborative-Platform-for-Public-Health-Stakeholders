@@ -5,3 +5,5 @@ def BlogPage(request):
     return render(request, "core/blog.html")
 def CommunityPage(request):
     return render(request, "core/community.html")
+def TreatmentsPage(request):
+    return render(request, "core/treatment.html")
