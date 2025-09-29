@@ -12,3 +12,6 @@ def TreatmentsPage(request):
 
 def HealthPage(request):
     return render(request, "core/health.html")
+
+def ConditionsPage(request):
+    return render(request,'core/conditions.html')
