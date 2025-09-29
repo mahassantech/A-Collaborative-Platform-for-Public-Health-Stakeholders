@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+<section class="py-5 bg-light">
+  <div class="container">
+    <h2 class="text-center fw-bold mb-5">Health Conditions</h2>
+    <div class="row g-4">
+
+      <!-- Diabetes -->
+      <div class="col-md-3">
+        <div class="card shadow-sm h-100 text-center p-3">
+          <img src="{% static 'images/diabetes.jpg' %}" alt="Diabetes" class="img-fluid rounded mb-3">
+          <h5 class="card-title">Diabetes</h5>
+          <p class="text-muted">A chronic condition that affects blood sugar regulation.</p>
+          <a href="#" class="btn btn-outline-primary btn-sm">Learn More</a>
+        </div>
+      </div>
+
+      <!-- Hypertension -->
+      <div class="col-md-3">
+        <div class="card shadow-sm h-100 text-center p-3">
+          <img src="{% static 'images/hypertension.jpg' %}" alt="Hypertension" class="img-fluid rounded mb-3">
+          <h5 class="card-title">Hypertension</h5>
+          <p class="text-muted">High blood pressure that can lead to serious health issues.</p>
+          <a href="#" class="btn btn-outline-primary btn-sm">Learn More</a>
+        </div>
+      </div>
+
+      <!-- Asthma -->
+      <div class="col-md-3">
+        <div class="card shadow-sm h-100 text-center p-3">
+          <img src="{% static 'images/asthma.jpg' %}" alt="Asthma" class="img-fluid rounded mb-3">
+          <h5 class="card-title">Asthma</h5>
+          <p class="text-muted">A condition where airways become inflamed, making breathing difficult.</p>
+          <a href="#" class="btn btn-outline-primary btn-sm">Learn More</a>
+        </div>
+      </div>
+
+      <!-- Cancer -->
+      <div class="col-md-3">
+        <div class="card shadow-sm h-100 text-center p-3">
+          <img src="{% static 'images/cancer.jpg' %}" alt="Cancer" class="img-fluid rounded mb-3">
+          <h5 class="card-title">Cancer</h5>
+          <p class="text-muted">A group of diseases involving abnormal cell growth.</p>
+          <a href="#" class="btn btn-outline-primary btn-sm">Learn More</a>
+        </div>
+      </div>
+
+      <!-- Depression -->
+      <div class="col-md-3">
+        <div class="card shadow-sm h-100 text-center p-3">
+          <img src="{% static 'images/depression.jpg' %}" alt="Depression" class="img-fluid rounded mb-3">
+          <h5 class="card-title">Depression</h5>
+          <p class="text-muted">A mental health disorder causing persistent sadness.</p>
+          <a href="#" class="btn btn-outline-primary btn-sm">Learn More</a>
+        </div>
+      </div>
+
+      <!-- Arthritis -->
+      <div class="col-md-3">
+        <div class="card shadow-sm h-100 text-center p-3">
+          <img src="{% static 'images/arthritis.jpg' %}" alt="Arthritis" class="img-fluid rounded mb-3">
+          <h5 class="card-title">Arthritis</h5>
+          <p class="text-muted">Inflammation of joints causing pain and stiffness.</p>
+          <a href="#" class="btn btn-outline-primary btn-sm">Learn More</a>
+        </div>
+      </div>
+
+      <!-- Obesity -->
+      <div class="col-md-3">
+        <div class="card shadow-sm h-100 text-center p-3">
+          <img src="{% static 'images/obesity.jpg' %}" alt="Obesity" class="img-fluid rounded mb-3">
+          <h5 class="card-title">Obesity</h5>
+          <p class="text-muted">Excessive body fat that increases risk of diseases.</p>
+          <a href="#" class="btn btn-outline-primary btn-sm">Learn More</a>
+        </div>
+      </div>
+
+      <!-- Covid-19 -->
+      <div class="col-md-3">
+        <div class="card shadow-sm h-100 text-center p-3">
+          <img src="{% static 'images/covid.jpg' %}" alt="Covid-19" class="img-fluid rounded mb-3">
+          <h5 class="card-title">Covid-19</h5>
+          <p class="text-muted">A viral disease that caused the global pandemic.</p>
+          <a href="#" class="btn btn-outline-primary btn-sm">Learn More</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+{% endblock %}
