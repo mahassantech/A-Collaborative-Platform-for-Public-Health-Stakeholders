@@ -25,15 +25,7 @@
                 <input type="email" name="email" class="form-control" id="id_email" required>
             </div>
 
-            <div class="mb-3">
-                <label for="id_role" class="form-label">Role</label>
-                <select name="role" id="id_role" class="form-select" required>
-                    <option value="" selected disabled>Select role</option>
-                    {% for value, display in ROLE_CHOICES %}
-                        <option value="{{ value }}">{{ display }}</option>
-                    {% endfor %}
-                </select>
-            </div>
+            
 
             <div class="mb-3">
                 <label for="id_token" class="form-label">Token</label>
