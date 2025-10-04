@@ -2,7 +2,7 @@
 {% load static %}
 {% block content %}
 
-<section class="py-5">
+<section class="py-5 bg-light">
   <div class="container">
     <h2 class="text-center mb-5 fw-bold">Community Hub</h2>
     <div class="row g-4">
@@ -34,6 +34,66 @@
           <h5 class="card-title">Support Groups</h5>
           <p class="card-text">Find emotional support in specialized groups.</p>
           <a href="#" class="btn btn-primary btn-sm">Join Group</a>
+        </div>
+      </div>
+
+      <!-- Events -->
+      <div class="col-md-4">
+        <div class="card shadow-sm h-100 text-center p-4">
+          <img src="{% static 'images/events.png' %}" alt="Events" width="80" class="mx-auto mb-3">
+          <h5 class="card-title">Health Events</h5>
+          <p class="card-text">Attend online webinars and local health awareness campaigns.</p>
+          <a href="#" class="btn btn-primary btn-sm">View Events</a>
+        </div>
+      </div>
+
+      <!-- Q&A Section -->
+      <div class="col-md-4">
+        <div class="card shadow-sm h-100 text-center p-4">
+          <img src="{% static 'images/qa.png' %}" alt="Q&A" width="80" class="mx-auto mb-3">
+          <h5 class="card-title">Expert Q&A</h5>
+          <p class="card-text">Ask health experts your questions and get professional advice.</p>
+          <a href="#" class="btn btn-primary btn-sm">Ask Now</a>
+        </div>
+      </div>
+
+      <!-- Volunteering -->
+      <div class="col-md-4">
+        <div class="card shadow-sm h-100 text-center p-4">
+          <img src="{% static 'images/volunteer.png' %}" alt="Volunteer" width="80" class="mx-auto mb-3">
+          <h5 class="card-title">Volunteer Network</h5>
+          <p class="card-text">Join hands with others to help patients in your area.</p>
+          <a href="#" class="btn btn-primary btn-sm">Become a Volunteer</a>
+        </div>
+      </div>
+
+      <!-- Wellness Challenges -->
+      <div class="col-md-4">
+        <div class="card shadow-sm h-100 text-center p-4">
+          <img src="{% static 'images/challenge.png' %}" alt="Challenge" width="80" class="mx-auto mb-3">
+          <h5 class="card-title">Wellness Challenges</h5>
+          <p class="card-text">Participate in daily health challenges and win rewards.</p>
+          <a href="#" class="btn btn-primary btn-sm">Join Challenge</a>
+        </div>
+      </div>
+
+      <!-- Resource Library -->
+      <div class="col-md-4">
+        <div class="card shadow-sm h-100 text-center p-4">
+          <img src="{% static 'images/resources.png' %}" alt="Resources" width="80" class="mx-auto mb-3">
+          <h5 class="card-title">Resource Library</h5>
+          <p class="card-text">Access articles, videos, and guides from trusted professionals.</p>
+          <a href="#" class="btn btn-primary btn-sm">Explore</a>
+        </div>
+      </div>
+
+      <!-- Community Polls -->
+      <div class="col-md-4">
+        <div class="card shadow-sm h-100 text-center p-4">
+          <img src="{% static 'images/poll.png' %}" alt="Polls" width="80" class="mx-auto mb-3">
+          <h5 class="card-title">Community Polls</h5>
+          <p class="card-text">Share your opinion on health topics and see what others think.</p>
+          <a href="#" class="btn btn-primary btn-sm">Vote Now</a>
         </div>
       </div>
 
