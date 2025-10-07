@@ -1,5 +1,6 @@
 ROLE_CHOICES = [
-        ('seeker', 'Healthcare Seeker'),
-        ('provider', 'Healthcare Provider'),
-        ('analyst', 'Health Data Analyst'),
+        ('member', 'Member'),
+        ('provider', 'Data Provider'),
+        ('analyst', 'Analyst'),
+        ('admin', 'Admin'),
     ]
