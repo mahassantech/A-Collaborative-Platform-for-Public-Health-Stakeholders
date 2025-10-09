@@ -42,7 +42,7 @@ INSTALLED_APPS = [
 ]
 #custom user Model 
 
-AUTH_USER_MODEL = "accounts.User"
+AUTH_USER_MODEL = 'accounts.User'
 
 
 MIDDLEWARE = [
