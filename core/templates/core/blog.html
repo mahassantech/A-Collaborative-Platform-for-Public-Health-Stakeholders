@@ -54,19 +54,71 @@
         </div>
       </div>
 
+      <!-- Blog Post 4 -->
+      <div class="col-md-4">
+        <div class="card shadow-sm h-100">
+          <img src="{% static 'images/blog4.jpg' %}" class="card-img-top" alt="Blog 4">
+          <div class="card-body">
+            <h5 class="card-title">Nutrition Myths You Should Stop Believing</h5>
+            <p class="card-text">Let’s debunk some popular nutrition myths and get to the real facts.</p>
+            <a href="#" class="btn btn-primary btn-sm">Read More</a>
+          </div>
+        </div>
+      </div>
 
-      
+      <!-- Blog Post 5 -->
+      <div class="col-md-4">
+        <div class="card shadow-sm h-100">
+          <img src="{% static 'images/blog5.jpg' %}" class="card-img-top" alt="Blog 5">
+          <div class="card-body">
+            <h5 class="card-title">Balancing Work and Wellness</h5>
+            <p class="card-text">Discover how to keep your body and mind healthy while managing your career.</p>
+            <a href="#" class="btn btn-primary btn-sm">Read More</a>
+          </div>
+        </div>
+      </div>
 
-     
-    
-
-    
-
+      <!-- Blog Post 6 -->
+      <div class="col-md-4">
+        <div class="card shadow-sm h-100">
+          <img src="{% static 'images/blog6.jpg' %}" class="card-img-top" alt="Blog 6">
+          <div class="card-body">
+            <h5 class="card-title">The Power of Sleep: Why It Matters</h5>
+            <p class="card-text">Learn how proper sleep can improve your overall well-being and productivity.</p>
+            <a href="#" class="btn btn-primary btn-sm">Read More</a>
+          </div>
+        </div>
+      </div>
 
     </div>
   </div>
 </section>
 
+<!-- Categories Section -->
+<section class="py-5 bg-white">
+  <div class="container text-center">
+    <h2 class="fw-bold mb-4">Popular Categories</h2>
+    <div class="d-flex flex-wrap justify-content-center gap-3">
+      <span class="badge bg-primary p-3 fs-6">Health & Fitness</span>
+      <span class="badge bg-success p-3 fs-6">Technology</span>
+      <span class="badge bg-warning text-dark p-3 fs-6">Mental Wellness</span>
+      <span class="badge bg-info text-dark p-3 fs-6">Nutrition</span>
+      <span class="badge bg-danger p-3 fs-6">Lifestyle</span>
+      <span class="badge bg-secondary p-3 fs-6">Mindfulness</span>
+    </div>
+  </div>
+</section>
 
+<!-- Newsletter Section -->
+<section class="py-5 bg-dark text-light text-center">
+  <div class="container">
+    <h2 class="fw-bold mb-3">Subscribe to Our Newsletter</h2>
+    <p class="mb-4">Get the latest updates and articles directly in your inbox.</p>
+    <form class="d-flex justify-content-center flex-wrap gap-2">
+      <input type="email" class="form-control w-auto" placeholder="Enter your email" required>
+      <button class="btn btn-warning">Subscribe</button>
+    </form>
+  </div>
+</section>
 
 {% endblock content %}
