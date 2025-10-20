@@ -14,7 +14,7 @@ def register(request):
             return redirect('choose_membership')
     else:
         form = UserCreationForm()
-    return render(request, 'accounts/register.html', {'form': form})
+    return render(request, 'accounts/signup.html', {'form': form})
 
 
 # ---------- LOGIN ----------
@@ -30,7 +30,7 @@ def user_login(request):
                 return redirect('dashboard')
     else:
         form = AuthenticationForm()
-    return render(request, 'accounts/login.html', {'form': form})
+    return render(request, 'accounts/signin.html', {'form': form})
 
 
 # ---------- LOGOUT ----------
