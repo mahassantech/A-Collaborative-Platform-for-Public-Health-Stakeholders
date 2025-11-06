@@ -2,6 +2,16 @@
 {% load static %}
 {% block content %}
 
+<!-- Treatments Intro Section -->
+<section class="py-5 text-center bg-dark text-light">
+  <div class="container">
+    <h1 class="fw-bold">Our Specialized Treatments</h1>
+    <p class="lead">We provide holistic care programs tailored to your health needs.</p>
+    <a href="#" class="btn btn-warning btn-lg mt-3">Book an Appointment</a>
+  </div>
+</section>
+
+<!-- Treatments Grid -->
 <section class="py-5 bg-light">
   <div class="container">
     <h2 class="text-center mb-5 fw-bold">Available Treatments</h2>
@@ -19,6 +29,53 @@
         </div>
       </div>
 
+      <!-- Treatment 2 -->
+      <div class="col-md-4">
+        <div class="card shadow-sm h-100">
+          <img src="{% static 'images/treatment2.jpg' %}" class="card-img-top" alt="Treatment 2">
+          <div class="card-body">
+            <h5 class="card-title">Cardiac Wellness</h5>
+            <p class="card-text">Heart care programs with modern techniques and regular monitoring.</p>
+            <a href="#" class="btn btn-outline-primary btn-sm">Learn More</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Treatment 3 -->
+      <div class="col-md-4">
+        <div class="card shadow-sm h-100">
+          <img src="{% static 'images/treatment3.jpg' %}" class="card-img-top" alt="Treatment 3">
+          <div class="card-body">
+            <h5 class="card-title">Physiotherapy</h5>
+            <p class="card-text">Recovery-focused physical therapy designed for all ages and conditions.</p>
+            <a href="#" class="btn btn-outline-primary btn-sm">Learn More</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Treatment 4 -->
+      <div class="col-md-4">
+        <div class="card shadow-sm h-100">
+          <img src="{% static 'images/treatment4.jpg' %}" class="card-img-top" alt="Treatment 4">
+          <div class="card-body">
+            <h5 class="card-title">Mental Health Support</h5>
+            <p class="card-text">Counseling and therapy sessions for stress, anxiety, and emotional wellness.</p>
+            <a href="#" class="btn btn-outline-primary btn-sm">Learn More</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Treatment 5 -->
+      <div class="col-md-4">
+        <div class="card shadow-sm h-100">
+          <img src="{% static 'images/treatment5.jpg' %}" class="card-img-top" alt="Treatment 5">
+          <div class="card-body">
+            <h5 class="card-title">Weight Management</h5>
+            <p class="card-text">Healthy weight loss plans designed by certified nutritionists and trainers.</p>
+            <a href="#" class="btn btn-outline-primary btn-sm">Learn More</a>
+          </div>
+        </div>
+      </div>
 
       <!-- Treatment 6 -->
       <div class="col-md-4">
@@ -31,7 +88,47 @@
           </div>
         </div>
       </div>
+
     </div>
+  </div>
+</section>
+
+<!-- Treatment Benefits Section -->
+<section class="py-5 bg-white">
+  <div class="container text-center">
+    <h2 class="fw-bold mb-4">Why Choose Our Treatments?</h2>
+    <div class="row justify-content-center g-4">
+      <div class="col-md-3">
+        <div class="p-4 border rounded shadow-sm h-100">
+          <img src="{% static 'images/icon-certified.png' %}" width="50" class="mb-3" alt="Certified">
+          <h6 class="fw-bold">Certified Experts</h6>
+          <p class="text-muted small">All treatments are supervised by qualified healthcare professionals.</p>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="p-4 border rounded shadow-sm h-100">
+          <img src="{% static 'images/icon-personalized.png' %}" width="50" class="mb-3" alt="Personalized">
+          <h6 class="fw-bold">Personalized Plans</h6>
+          <p class="text-muted small">Every treatment plan is uniquely tailored for each individual.</p>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="p-4 border rounded shadow-sm h-100">
+          <img src="{% static 'images/icon-support.png' %}" width="50" class="mb-3" alt="Support">
+          <h6 class="fw-bold">24/7 Support</h6>
+          <p class="text-muted small">Our care team is always available to guide and assist you.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA Section -->
+<section class="py-5 text-center bg-primary text-light">
+  <div class="container">
+    <h2 class="fw-bold mb-3">Start Your Wellness Journey Today</h2>
+    <p class="mb-4">Book a consultation with our specialists and take the first step toward a healthier life.</p>
+    <a href="#" class="btn btn-light btn-lg">Book Appointment</a>
   </div>
 </section>
 
