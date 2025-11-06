@@ -2,12 +2,20 @@
 {% load static %}
 {% block content %}
 
+<!-- Community Hub Intro -->
+<section class="py-5 bg-dark text-light text-center">
+  <div class="container">
+    <h1 class="fw-bold">Welcome to the Community Hub</h1>
+    <p class="lead">Connect, learn, and grow together with people who share your passion for wellness.</p>
+    <a href="#" class="btn btn-warning btn-lg mt-3">Join the Community</a>
+  </div>
+</section>
+
+<!-- Main Community Features -->
 <section class="py-5 bg-light">
   <div class="container">
-    <h2 class="text-center mb-5 fw-bold">Community Hub</h2>
+    <h2 class="text-center mb-5 fw-bold">Explore Our Community Spaces</h2>
     <div class="row g-4">
-
-      
 
       <!-- Q&A Section -->
       <div class="col-md-4">
@@ -40,6 +48,69 @@
       </div>
 
     </div>
+  </div>
+</section>
+
+<!-- Top Contributors Section -->
+<section class="py-5 bg-white">
+  <div class="container text-center">
+    <h2 class="fw-bold mb-5">Top Community Contributors</h2>
+    <div class="row g-4 justify-content-center">
+      <div class="col-md-3">
+        <div class="card border-0 shadow-sm p-3">
+          <img src="{% static 'images/member1.jpg' %}" class="rounded-circle mx-auto mb-3" width="100" alt="Member 1">
+          <h5 class="mb-1">Ayesha Rahman</h5>
+          <p class="text-muted small">Nutrition Advisor</p>
+          <span class="badge bg-success">230+ Answers</span>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card border-0 shadow-sm p-3">
+          <img src="{% static 'images/member2.jpg' %}" class="rounded-circle mx-auto mb-3" width="100" alt="Member 2">
+          <h5 class="mb-1">Rafiul Karim</h5>
+          <p class="text-muted small">Fitness Coach</p>
+          <span class="badge bg-primary">180+ Posts</span>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card border-0 shadow-sm p-3">
+          <img src="{% static 'images/member3.jpg' %}" class="rounded-circle mx-auto mb-3" width="100" alt="Member 3">
+          <h5 class="mb-1">Nusrat Jahan</h5>
+          <p class="text-muted small">Mindfulness Expert</p>
+          <span class="badge bg-warning text-dark">150+ Sessions</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Testimonials / Feedback -->
+<section class="py-5 bg-light text-center">
+  <div class="container">
+    <h2 class="fw-bold mb-5">What Members Are Saying</h2>
+    <div class="row g-4 justify-content-center">
+      <div class="col-md-4">
+        <div class="p-4 border rounded shadow-sm h-100">
+          <p>"The community support here is amazing! I learned so much about healthy living."</p>
+          <h6 class="mt-3 mb-0">— Farhana T.</h6>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="p-4 border rounded shadow-sm h-100">
+          <p>"Attending webinars helped me understand mental health better. Highly recommend!"</p>
+          <h6 class="mt-3 mb-0">— Tanvir A.</h6>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Join CTA -->
+<section class="py-5 text-center bg-primary text-light">
+  <div class="container">
+    <h2 class="fw-bold mb-3">Be a Part of Something Bigger</h2>
+    <p class="mb-4">Join thousands of members and start sharing your insights today.</p>
+    <a href="#" class="btn btn-light btn-lg">Join Now</a>
   </div>
 </section>
 
