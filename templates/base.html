@@ -44,31 +44,37 @@
 
 {% block content %}
 <!-- Hero Section -->
-<section class="bg-light py-5 text-center">
-  <div class="container">
-    <h1 class="display-5 fw-bold">Welcome to PatientsLikeMe</h1>
-    <p class="lead text-muted">Connect, share experiences, and learn from people living with similar conditions.</p>
-    <a href="#" class="btn btn-primary btn-lg mt-3">Join Our Community</a>
+<section class="bg-light py-5 text-center position-relative" style="background: url('{% static 'images/hero-bg.jpg' %}') center/cover no-repeat;">
+  <div class="bg-dark bg-opacity-50 text-light py-5">
+    <div class="container">
+      <h1 class="display-4 fw-bold">Welcome to <span class="text-warning">PatientsLikeMe</span></h1>
+      <p class="lead">Connect, share experiences, and learn from people living with similar conditions.</p>
+      <a href="#" class="btn btn-warning btn-lg mt-3 shadow">Join Our Community</a>
+    </div>
   </div>
 </section>
 
 <!-- Features -->
 <section class="container py-5">
+  <h2 class="text-center mb-5 fw-bold">Why Join Us?</h2>
   <div class="row text-center">
     <div class="col-md-4">
-      <div class="card shadow-sm h-100 p-4">
+      <div class="card shadow-sm h-100 p-4 border-0">
+        <div class="mb-3"><i class="bi bi-heart-pulse-fill fs-1 text-primary"></i></div>
         <h5 class="fw-bold">Track Your Health</h5>
         <p class="text-muted">Monitor symptoms, treatments, and progress all in one place.</p>
       </div>
     </div>
     <div class="col-md-4">
-      <div class="card shadow-sm h-100 p-4">
+      <div class="card shadow-sm h-100 p-4 border-0">
+        <div class="mb-3"><i class="bi bi-people-fill fs-1 text-success"></i></div>
         <h5 class="fw-bold">Community Support</h5>
         <p class="text-muted">Share stories and get advice from others who understand you.</p>
       </div>
     </div>
     <div class="col-md-4">
-      <div class="card shadow-sm h-100 p-4">
+      <div class="card shadow-sm h-100 p-4 border-0">
+        <div class="mb-3"><i class="bi bi-lightbulb-fill fs-1 text-warning"></i></div>
         <h5 class="fw-bold">Expert Insights</h5>
         <p class="text-muted">Stay updated with articles, blogs, and medical research.</p>
       </div>
@@ -76,18 +82,55 @@
   </div>
 </section>
 
-<!-- Blog preview -->
+<!-- Popular Health Topics -->
 <section class="bg-light py-5">
   <div class="container">
-    <h2 class="mb-4 text-center">Latest from our Blog</h2>
+    <h2 class="text-center fw-bold mb-5">Popular Health Conditions</h2>
+    <div class="row g-4">
+      <div class="col-md-3">
+        <div class="card h-100 text-center p-4 shadow-sm border-0">
+          <img src="{% static 'images/diabetes.png' %}" class="mx-auto mb-3" alt="Diabetes" style="width:70px;">
+          <h6 class="fw-bold">Diabetes</h6>
+          <p class="text-muted small">Community discussions, treatments & lifestyle tips.</p>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card h-100 text-center p-4 shadow-sm border-0">
+          <img src="{% static 'images/anxiety.png' %}" class="mx-auto mb-3" alt="Anxiety" style="width:70px;">
+          <h6 class="fw-bold">Anxiety</h6>
+          <p class="text-muted small">Real experiences and coping strategies.</p>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card h-100 text-center p-4 shadow-sm border-0">
+          <img src="{% static 'images/heart.png' %}" class="mx-auto mb-3" alt="Heart Disease" style="width:70px;">
+          <h6 class="fw-bold">Heart Disease</h6>
+          <p class="text-muted small">Track progress & discuss recovery stories.</p>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card h-100 text-center p-4 shadow-sm border-0">
+          <img src="{% static 'images/cancer.png' %}" class="mx-auto mb-3" alt="Cancer" style="width:70px;">
+          <h6 class="fw-bold">Cancer Support</h6>
+          <p class="text-muted small">Emotional and physical healing journeys.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Blog preview -->
+<section class="py-5">
+  <div class="container">
+    <h2 class="mb-4 text-center fw-bold">Latest from Our Blog</h2>
     <div class="row g-4">
       <div class="col-md-4">
         <div class="card h-100 shadow-sm">
           <img src="{% static 'images/blog1.jpg' %}" class="card-img-top" alt="Blog 1">
           <div class="card-body">
             <h5 class="card-title">Living with Diabetes</h5>
-            <p class="card-text text-muted">Tips and community experiences on managing daily life with diabetes.</p>
-            <a href="#" class="stretched-link">Read more</a>
+            <p class="card-text text-muted">Tips and community experiences on managing daily life.</p>
+            <a href="#" class="stretched-link text-decoration-none fw-bold text-primary">Read more →</a>
           </div>
         </div>
       </div>
@@ -97,7 +140,7 @@
           <div class="card-body">
             <h5 class="card-title">Mental Health Matters</h5>
             <p class="card-text text-muted">Understanding anxiety and depression in chronic illness patients.</p>
-            <a href="#" class="stretched-link">Read more</a>
+            <a href="#" class="stretched-link text-decoration-none fw-bold text-primary">Read more →</a>
           </div>
         </div>
       </div>
@@ -106,14 +149,15 @@
           <img src="{% static 'images/blog3.jpg' %}" class="card-img-top" alt="Blog 3">
           <div class="card-body">
             <h5 class="card-title">Nutrition & Wellness</h5>
-            <p class="card-text text-muted">Healthy eating habits for people with chronic health conditions.</p>
-            <a href="#" class="stretched-link">Read more</a>
+            <p class="card-text text-muted">Healthy eating habits for chronic conditions.</p>
+            <a href="#" class="stretched-link text-decoration-none fw-bold text-primary">Read more →</a>
           </div>
         </div>
       </div>
     </div>
   </div>
 </section>
+
 <!-- Stats Section -->
 <section class="bg-primary text-light py-5">
   <div class="container text-center">
@@ -136,37 +180,51 @@
 
 <!-- Testimonials -->
 <section class="container py-5">
-  <h2 class="mb-4 text-center">What Our Members Say</h2>
+  <h2 class="mb-4 text-center fw-bold">What Our Members Say</h2>
   <div class="row g-4">
     <div class="col-md-4">
-      <div class="card h-100 shadow-sm p-4">
+      <div class="card h-100 shadow-sm p-4 border-0">
         <p class="text-muted">“This community helped me stay strong through my treatment. I never feel alone.”</p>
-        <h6 class="fw-bold mb-0">— Sarah M.</h6>
+        <h6 class="fw-bold mb-0 text-primary">— Sarah M.</h6>
       </div>
     </div>
     <div class="col-md-4">
-      <div class="card h-100 shadow-sm p-4">
+      <div class="card h-100 shadow-sm p-4 border-0">
         <p class="text-muted">“I found people who understand exactly what I’m going through. Life-changing!”</p>
-        <h6 class="fw-bold mb-0">— David P.</h6>
+        <h6 class="fw-bold mb-0 text-primary">— David P.</h6>
       </div>
     </div>
     <div class="col-md-4">
-      <div class="card h-100 shadow-sm p-4">
+      <div class="card h-100 shadow-sm p-4 border-0">
         <p class="text-muted">“The health tracking tools keep me motivated and aware of my progress.”</p>
-        <h6 class="fw-bold mb-0">— Emily R.</h6>
+        <h6 class="fw-bold mb-0 text-primary">— Emily R.</h6>
       </div>
     </div>
   </div>
 </section>
 
-<!-- Call to Action -->
-<section class="bg-light py-5 text-center">
-  <div class="container">
-    <h2 class="fw-bold">Ready to Join Our Community?</h2>
-    <p class="text-muted">Connect with others, share your story, and take control of your health journey today.</p>
-    <a href="{% url 'signup' %}" class="btn btn-success btn-lg">Create Your Free Account</a>
+<!-- Partners -->
+<section class="bg-light py-5">
+  <div class="container text-center">
+    <h2 class="fw-bold mb-4">Trusted by Leading Health Organizations</h2>
+    <div class="d-flex justify-content-center flex-wrap gap-4">
+      <img src="{% static 'images/partner1.png' %}" alt="Partner 1" style="height:40px;">
+      <img src="{% static 'images/partner2.png' %}" alt="Partner 2" style="height:40px;">
+      <img src="{% static 'images/partner3.png' %}" alt="Partner 3" style="height:40px;">
+      <img src="{% static 'images/partner4.png' %}" alt="Partner 4" style="height:40px;">
+    </div>
   </div>
 </section>
+
+<!-- Call to Action -->
+<section class="bg-primary text-light py-5 text-center">
+  <div class="container">
+    <h2 class="fw-bold">Ready to Join Our Community?</h2>
+    <p class="text-light">Connect with others, share your story, and take control of your health journey today.</p>
+    <a href="{% url 'signup' %}" class="btn btn-light btn-lg shadow">Create Your Free Account</a>
+  </div>
+</section>
+
 
 {% endblock content %}
 
