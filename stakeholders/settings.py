@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'core',
     'accounts',
     'membership',
+    'blog',
 ]
 #custom user Model 
 

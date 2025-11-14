@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <title>Create Blog</title>
+  <style>
+    /* তোমার CSS 그대로 রাখা হলো */
+  </style>
+</head>
+<body>
+
+  <h1>📝 Real-Time Grammar Checker (বাংলা + English)</h1>
+
+  <div class="editor-box">
+
+    <form method="POST">
+      {% csrf_token %}
+
+      <label>Title:</label>
+      {{ form.title }}
+
+      <label>Language:</label>
+      {{ form.language }}
+
+      <textarea id="textInput" name="content" placeholder="Start typing your blog..."></textarea>
+
+      <div id="results"></div>
+
+      <button type="submit">Submit Blog</button>
+    </form>
+  </div>
+
+<script>
+  /* তোমার JavaScript সম্পূর্ণ 그대로 রাখা হলো */
+</script>
+
+</body>
+</html>

@@ -1,0 +1,9 @@
+<h2>All Blogs</h2>
+
+{% for b in blogs %}
+  <div>
+    <h3>{{ b.title }}</h3>
+    <p>{{ b.content }}</p>
+    <small>{{ b.language }} | {{ b.created_at }}</small>
+  </div>
+{% endfor %}

@@ -8,4 +8,6 @@ urlpatterns = [
     path('',views.HomeView,name='homes'),
     path('core/',include('core.urls')),
     path('',include('accounts.urls')),
+    path("blog/", include("blog.urls")),
+
 ]
