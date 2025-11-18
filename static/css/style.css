@@ -1,27 +1,69 @@
-/* nav bar start  */
-.nav-link {
-  font-weight: bold;
-  color: black !important;
+/* Navbar Base */
+.navbar-custom {
+  background-color: #ffffff;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
 }
 
-.nav-link.active {
-  border-bottom: 3px solid #fdd835; /* Yellow underline */
+/* Logo */
+.navbar-logo {
+  width: 180px;
+  height: auto;
+  transition: transform 0.3s ease;
+}
+.navbar-logo:hover {
+  transform: scale(1.05);
 }
 
-.btn-outline-dark {
-  border: 1px solid black;
-  color: black;
+/* Navbar Links */
+.navbar-custom .navbar-nav .nav-link {
+  font-weight: 600;
+  color: #0d6efd;
+  position: relative;
+  transition: color 0.3s ease;
+}
+.navbar-custom .navbar-nav .nav-link:hover {
+  color: #0b5ed7;
 }
 
-.btn-join {
-  background-color: #fdd835; /* Yellow */
-  font-weight: bold;
+/* Link underline animation */
+.navbar-custom .navbar-nav .nav-link::after {
+  content: '';
+  display: block;
+  width: 0;
+  height: 2px;
+  background: #0d6efd;
+  transition: width 0.3s;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+.navbar-custom .navbar-nav .nav-link:hover::after {
+  width: 100%;
 }
 
-.navbar-brand span {
-  font-weight: bold;
+/* Buttons */
+.btn-primary {
+  background-color: #0d6efd;
+  border-color: #0d6efd;
+  transition: background-color 0.3s ease, transform 0.3s ease;
 }
-/* nav bar end  */
+.btn-primary:hover {
+  background-color: #0b5ed7;
+  border-color: #0b5ed7;
+  transform: translateY(-2px);
+}
+
+.btn-outline-primary {
+  border-color: #0d6efd;
+  color: #0d6efd;
+  transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+}
+.btn-outline-primary:hover {
+  background-color: #0d6efd;
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+
 
  /* footer start  */
 
