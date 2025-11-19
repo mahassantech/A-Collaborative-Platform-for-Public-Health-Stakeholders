@@ -2,15 +2,17 @@
 {% load static %}
 
 {% block content %}
-<div class="d-flex justify-content-center align-items-center" style="min-height: 100vh; background: #f5f5f5;">
-    <div class="card shadow-lg p-5" style="width: 450px; border-radius: 20px; background: #ffffff;">
-        
+
+<div class="d-flex justify-content-center align-items-center medical-bg" style="min-height: 100vh;">
+    <div class="card shadow-lg p-5 medical-card" style="width: 450px;">
+
         <!-- Logo -->
-        <div class="text-center mb-4">
-            <img src="{% static 'images/logo.svg' %}" alt="Logo" width="120" height="auto">
+        <div class="text-center mb-3">
+            <img src="{% static 'images/logo.sv' %}" alt="Logo" width="150">
+            <h4 class="fw-bold mt-2 text-primary"> Health Connect</h4>
         </div>
 
-        <h3 class="text-center fw-bold mb-4">Create Your Account</h3>
+        <h4 class="text-center fw-bold mb-4">Create Your Account</h4>
 
         {% if form.errors %}
             <div class="alert alert-danger">
@@ -29,13 +31,20 @@
 
         <form method="post" novalidate>
             {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit" class="btn btn-warning w-100 fw-bold py-2">Create Account</button>
+            <div class="medical-form">
+                {{ form.as_p }}
+            </div>
+
+            <button type="submit" class="btn btn-medical w-100 fw-bold py-2 mt-2">
+                Create Account
+            </button>
         </form>
 
         <p class="text-center mt-3">
-            Already have an account? <a href="" style="text-decoration: none;">Sign In</a>
+            Already have an account? 
+            <a href="#" class="text-decoration-none text-primary fw-semibold">Sign In</a>
         </p>
     </div>
 </div>
+
 {% endblock %}

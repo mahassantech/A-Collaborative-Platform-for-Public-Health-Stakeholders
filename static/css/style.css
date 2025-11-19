@@ -84,3 +84,99 @@
 }
 
  /* footer end  */
+
+ /* login start */
+ /* Medical style background */
+.medical-bg {
+    background: #F3FAFA;
+}
+
+/* Card design */
+.medical-card {
+    width: 380px;
+    border-radius: 18px;
+    background: #ffffff;
+    border: 1px solid #D9ECEC;
+}
+
+/* Input style */
+.input-medical {
+    border-radius: 10px;
+    border: 1px solid #B7DCDC;
+    padding: 10px;
+}
+
+.input-medical:focus {
+    border-color: #1C8F8A;
+    box-shadow: 0 0 0 0.2rem rgba(28,143,138,0.25);
+}
+
+/* Button */
+.btn-medical {
+    background: #1C8F8A;
+    color: white;
+    border-radius: 10px;
+}
+
+.btn-medical:hover {
+    background: #156d68;
+    color: white;
+}
+
+
+/* login end */
+
+
+/* register start */
+
+/* Background */
+.medical-bg {
+    background: #F3FAFA;
+}
+
+/* Card */
+.medical-card {
+    border-radius: 20px;
+    background: #ffffff;
+    border: 1px solid #D9ECEC;
+}
+
+/* Input & label styling for form.as_p */
+.medical-form p {
+    margin-bottom: 15px;
+}
+
+.medical-form label {
+    font-weight: 600;
+    margin-bottom: 5px;
+    display: block;
+    color: #0E5560;
+}
+
+.medical-form input,
+.medical-form select {
+    width: 100%;
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid #B7DCDC;
+}
+
+.medical-form input:focus,
+.medical-form select:focus {
+    border-color: #1C8F8A;
+    box-shadow: 0 0 0 0.2rem rgba(28,143,138,0.25);
+}
+
+/* Medical button */
+.btn-medical {
+    background: #1C8F8A;
+    color: white;
+    border-radius: 10px;
+}
+
+.btn-medical:hover {
+    background: #156d68;
+    color: white;
+}
+
+/* register end */
