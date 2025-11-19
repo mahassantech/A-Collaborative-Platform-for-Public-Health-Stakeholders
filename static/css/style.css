@@ -1,245 +1,201 @@
-body{
-    /* width: 1200px; */
-    /* border: 1px solid gray; */
-    margin: auto;
-    background-color: rgb(236, 236, 236);
+
+/* 19/11/2025 */
+
+/* -------------------------------------------------
+   GLOBAL STYLE
+-------------------------------------------------- */
+body {
+  font-family: 'Inter', sans-serif;
+  background: #f8f9fc;
+  margin: 0;
+  padding: 0;
 }
 
-/* Navbar Base */
-.navbar-custom {
-  background-color: #ffffff;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+/* Smooth animation */
+* {
+  transition: 0.3s ease;
 }
 
-/* Logo */
-.navbar-logo {
-  width: 180px;
-  height: auto;
-  transition: transform 0.3s ease;
+/* -------------------------------------------------
+   NAVBAR (Glassmorphism)
+-------------------------------------------------- */
+.modern-nav {
+  background: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(12px);
+  padding: 15px 0;
 }
-.navbar-logo:hover {
+
+.nav-hover:hover {
+  color: #ffd34d !important;
+  transform: translateY(-2px);
+}
+
+.navbar-brand {
+  font-size: 1.6rem;
+  letter-spacing: 0.5px;
+}
+
+/* -------------------------------------------------
+   HERO SECTION
+-------------------------------------------------- */
+.hero-section {
+  height: 95vh;
+  background: 
+      linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.8)),
+      url('/static/images/hero-bg.jpg') center/cover no-repeat;
+}
+
+.fade-in {
+  animation: fadeIn 1.4s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {opacity: 0; transform: translateY(15px);}
+  to   {opacity: 1; transform: translateY(0);}
+}
+
+.hero-btn:hover {
   transform: scale(1.05);
+  box-shadow: 0 8px 25px rgba(255, 193, 7, 0.5);
 }
 
-/* Navbar Links */
-.navbar-custom .navbar-nav .nav-link {
-  font-weight: 600;
-  color: #0d6efd;
-  position: relative;
-  transition: color 0.3s ease;
-}
-.navbar-custom .navbar-nav .nav-link:hover {
-  color: #0b5ed7;
-}
-
-/* Link underline animation */
-.navbar-custom .navbar-nav .nav-link::after {
-  content: '';
-  display: block;
-  width: 0;
-  height: 2px;
-  background: #0d6efd;
-  transition: width 0.3s;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-}
-.navbar-custom .navbar-nav .nav-link:hover::after {
-  width: 100%;
+/* -------------------------------------------------
+   FEATURE CARDS
+-------------------------------------------------- */
+.modern-card {
+  background: white;
+  border-radius: 18px;
+  padding: 30px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
 }
 
-/* Buttons */
-.btn-primary {
-  background-color: #0d6efd;
-  border-color: #0d6efd;
-  transition: background-color 0.3s ease, transform 0.3s ease;
-}
-.btn-primary:hover {
-  background-color: #0b5ed7;
-  border-color: #0b5ed7;
-  transform: translateY(-2px);
+.modern-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.12);
 }
 
-.btn-outline-primary {
-  border-color: #0d6efd;
-  color: #0d6efd;
-  transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+/* -------------------------------------------------
+   POPULAR CONDITIONS
+-------------------------------------------------- */
+.topic-card {
+  background: #ffffff;
+  border-radius: 18px;
+  transition: .3s;
 }
-.btn-outline-primary:hover {
-  background-color: #0d6efd;
-  color: #ffffff;
-  transform: translateY(-2px);
+
+.topic-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+}
+
+/* -------------------------------------------------
+   BLOG CARDS
+-------------------------------------------------- */
+.blog-card {
+  background: white;
+  border-radius: 18px;
+  overflow: hidden;
+  transition: .3s;
+}
+
+.blog-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+}
+
+.blog-card img {
+  height: 220px;
+  object-fit: cover;
+}
+
+/* -------------------------------------------------
+   CALL TO ACTION BUTTON
+-------------------------------------------------- */
+.btn-warning {
+  border-radius: 50px;
+}
+
+/* -------------------------------------------------
+   FOOTER
+-------------------------------------------------- */
+.modern-footer {
+  background: #0f172a;
+  padding-top: 40px;
+  padding-bottom: 30px;
+  border-top: 3px solid #1e293b;
+}
+
+.social-icons i {
+  font-size: 1.7rem;
+  margin-right: 15px;
+  cursor: pointer;
+  transition: .3s;
+}
+
+.social-icons i:hover {
+  color: #ffd34d;
+  transform: translateY(-4px);
+}
+
+/* -------------------------------------------------
+   RESPONSIVE
+-------------------------------------------------- */
+@media (max-width: 768px) {
+  .hero-section {
+    height: 75vh;
+  }
+
+  .navbar-brand {
+    font-size: 1.4rem;
+  }
 }
 
 
- /* footer start  */
+/* login page start /* 
 
- .site-footer { 
-  background-color: #04060a; /* dark */
-  color: #e6eef8;
-  border-top: 1px solid rgba(255,255,255,0.05);
-}
-.site-footer a:hover { 
-  text-decoration: underline;
-  opacity: 0.9;
-}
-.site-footer img { 
-  filter: brightness(1); /* adjust if logo too bright */
-}
-@media (max-width: 575px) {
-  .site-footer .col-md-4 { text-align: center !important; }
-}
-
- /* footer end  */
-
- /* login start */
- /* Medical style background */
+/* Background Medical Theme */
 .medical-bg {
-    background: #F3FAFA;
+    background: linear-gradient(135deg, #e3f2fd, #bbdefb);
 }
 
-/* Card design */
+/* Login Card */
 .medical-card {
-    width: 380px;
+    width: 100%;
+    max-width: 420px;
     border-radius: 18px;
-    background: #ffffff;
-    border: 1px solid #D9ECEC;
+    border: none;
+    background: #ffffffcc;
+    backdrop-filter: blur(10px);
 }
 
-/* Input style */
+/* Input fields */
 .input-medical {
     border-radius: 10px;
-    border: 1px solid #B7DCDC;
-    padding: 10px;
+    padding: 10px 14px;
+    border: 1px solid #cbd5e1;
 }
 
 .input-medical:focus {
-    border-color: #1C8F8A;
-    box-shadow: 0 0 0 0.2rem rgba(28,143,138,0.25);
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 4px rgba(59,130,246,0.2);
 }
 
 /* Button */
 .btn-medical {
-    background: #1C8F8A;
+    background: #0d6efd;
     color: white;
     border-radius: 10px;
+    font-size: 1rem;
 }
 
 .btn-medical:hover {
-    background: #156d68;
-    color: white;
+    background: #0b5ed7;
 }
 
-
-/* login end */
-
-
-/* register start */
-
-/* Background */
-.medical-bg {
-    background: #F3FAFA;
+/* Smooth hover on card */
+.medical-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.12);
 }
 
-/* Card */
-.medical-card {
-    border-radius: 20px;
-    background: #ffffff;
-    border: 1px solid #D9ECEC;
-}
-
-/* Input & label styling for form.as_p */
-.medical-form p {
-    margin-bottom: 15px;
-}
-
-.medical-form label {
-    font-weight: 600;
-    margin-bottom: 5px;
-    display: block;
-    color: #0E5560;
-}
-
-.medical-form input,
-.medical-form select {
-    width: 100%;
-    padding: 10px;
-    border-radius: 10px;
-    border: 1px solid #B7DCDC;
-}
-
-.medical-form input:focus,
-.medical-form select:focus {
-    border-color: #1C8F8A;
-    box-shadow: 0 0 0 0.2rem rgba(28,143,138,0.25);
-}
-
-/* Medical button */
-.btn-medical {
-    background: #1C8F8A;
-    color: white;
-    border-radius: 10px;
-}
-
-.btn-medical:hover {
-    background: #156d68;
-    color: white;
-}
-
-/* register end */
-
-
-/* navbar start */
-/* Main Navbar */
-.health-navbar {
-    background: linear-gradient(90deg, #4dccec, #0D7A9F); /* Medical Blue + Teal */
-    border-bottom: 1px solid #083B63;
-}
-
-/* Logo Text */
-.brand-text {
-    color: #EAF7FF;
-    letter-spacing: 0.5px;
-}
-
-/* Nav Links */
-.health-navbar .nav-link {
-    color: #EAF7FF !important;
-    padding: 8px 12px;
-    transition: 0.3s ease;
-}
-
-.health-navbar .nav-link:hover {
-    color: #C2E8FF !important;
-    text-decoration: underline;
-}
-
-/* Buttons */
-.health-navbar .btn-outline-light {
-    border-color: #EAF7FF;
-    color: #EAF7FF;
-    font-weight: 600;
-}
-
-.health-navbar .btn-outline-light:hover {
-    background: #EAF7FF;
-    color: #1b3b55;
-}
-
-.health-navbar .btn-light {
-    background: #ffffff;
-    border: none;
-    padding: 8px 18px;
-    transition: 0.3s;
-}
-
-.health-navbar .btn-light:hover {
-    background: #f2f2f2;
-}
-
-/* Mobile toggle icon */
-.navbar-toggler-icon {
-    filter: invert(1);
-}
-
-/* navbar end */
+/* login page end /* 

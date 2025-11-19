@@ -7,8 +7,8 @@
 <section class="py-5 text-center bg-dark text-light">
   <div class="container">
     <h1 class="fw-bold">Welcome to Our Blog</h1>
-    <p class="lead">Read the latest stories, tips, and insights from experts.</p>
-    <a href="#" class="btn btn-warning btn-lg mt-3">Explore Now</a>
+    <p class="lead mb-3">Read the latest stories, tips, and insights from experts.</p>
+    <a href="#" class="btn btn-warning btn-lg">Explore Now</a>
   </div>
 </section>
 
@@ -16,15 +16,16 @@
 <section class="py-5 bg-light">
   <div class="container">
     <h2 class="text-center mb-5 fw-bold">Latest Blog Posts</h2>
+
     <div class="row g-4">
 
       <!-- Blog Post 1 -->
       <div class="col-md-4">
-        <div class="card shadow-sm h-100">
+        <div class="card shadow-sm h-100 blog-card">
           <img src="{% static 'images/blog1.jpg' %}" class="card-img-top" alt="Blog 1">
           <div class="card-body">
             <h5 class="card-title">5 Morning Habits for a Productive Day</h5>
-            <p class="card-text">Start your day right with these scientifically proven habits.</p>
+            <p class="card-text text-muted">Start your day right with these scientifically proven habits.</p>
             <a href="#" class="btn btn-primary btn-sm">Read More</a>
           </div>
         </div>
@@ -32,23 +33,23 @@
 
       <!-- Blog Post 2 -->
       <div class="col-md-4">
-        <div class="card shadow-sm h-100">
+        <div class="card shadow-sm h-100 blog-card">
           <img src="{% static 'images/blog2.jpg' %}" class="card-img-top" alt="Blog 2">
           <div class="card-body">
             <h5 class="card-title">Tech Trends to Watch in 2025</h5>
-            <p class="card-text">Discover the innovations that will shape the future.</p>
+            <p class="card-text text-muted">Discover the innovations that will shape the future.</p>
             <a href="#" class="btn btn-primary btn-sm">Read More</a>
           </div>
         </div>
       </div>
-      
-      <!-- Blog Post 4 -->
+
+      <!-- Blog Post 3 -->
       <div class="col-md-4">
-        <div class="card shadow-sm h-100">
+        <div class="card shadow-sm h-100 blog-card">
           <img src="{% static 'images/blog4.jpg' %}" class="card-img-top" alt="Blog 4">
           <div class="card-body">
             <h5 class="card-title">Nutrition Myths You Should Stop Believing</h5>
-            <p class="card-text">Let’s debunk some popular nutrition myths and get to the real facts.</p>
+            <p class="card-text text-muted">Let’s debunk some popular nutrition myths and get to the real facts.</p>
             <a href="#" class="btn btn-primary btn-sm">Read More</a>
           </div>
         </div>
@@ -62,6 +63,7 @@
 <section class="py-5 bg-white">
   <div class="container text-center">
     <h2 class="fw-bold mb-4">Popular Categories</h2>
+
     <div class="d-flex flex-wrap justify-content-center gap-3">
       <span class="badge bg-primary p-3 fs-6">Health & Fitness</span>
       <span class="badge bg-success p-3 fs-6">Technology</span>
@@ -73,59 +75,72 @@
   </div>
 </section>
 
-<!-- Featured Authors Section -->
+<!-- Featured Authors -->
 <section class="py-5 bg-light">
   <div class="container text-center">
     <h2 class="fw-bold mb-5">Meet Our Authors</h2>
+
     <div class="row g-4 justify-content-center">
+
       <div class="col-md-3">
-        <div class="card border-0 shadow-sm">
+        <div class="card border-0 shadow-sm author-card">
           <img src="{% static 'images/author1.jpg' %}" class="card-img-top rounded-circle p-3" alt="Author 1">
           <div class="card-body">
             <h5 class="card-title mb-1">Sarah Johnson</h5>
-            <p class="text-muted">Health & Nutrition Expert</p>
+            <p class="text-muted small">Health & Nutrition Expert</p>
           </div>
         </div>
       </div>
+
       <div class="col-md-3">
-        <div class="card border-0 shadow-sm">
+        <div class="card border-0 shadow-sm author-card">
           <img src="{% static 'images/author2.jpg' %}" class="card-img-top rounded-circle p-3" alt="Author 2">
           <div class="card-body">
             <h5 class="card-title mb-1">David Lee</h5>
-            <p class="text-muted">Tech & Innovation Writer</p>
+            <p class="text-muted small">Tech & Innovation Writer</p>
           </div>
         </div>
       </div>
+
       <div class="col-md-3">
-        <div class="card border-0 shadow-sm">
+        <div class="card border-0 shadow-sm author-card">
           <img src="{% static 'images/author3.jpg' %}" class="card-img-top rounded-circle p-3" alt="Author 3">
           <div class="card-body">
             <h5 class="card-title mb-1">Emma Williams</h5>
-            <p class="text-muted">Lifestyle Blogger</p>
+            <p class="text-muted small">Lifestyle Blogger</p>
           </div>
         </div>
       </div>
+
     </div>
   </div>
 </section>
 
-<!-- Testimonials Section -->
+<!-- Testimonials -->
 <section class="py-5 bg-white">
   <div class="container text-center">
     <h2 class="fw-bold mb-5">What Our Readers Say</h2>
+
     <div class="row g-4 justify-content-center">
+
       <div class="col-md-4">
-        <div class="p-4 border rounded shadow-sm">
-          <p>“This blog has completely changed the way I think about wellness and productivity!”</p>
-          <h6 class="mt-3 mb-0">— Maria S.</h6>
+        <div class="p-4 rounded shadow-sm testimonial-box">
+          <p class="text-muted">
+            “This blog has completely changed the way I think about wellness and productivity!”
+          </p>
+          <h6 class="mt-3 mb-0 text-primary">— Maria S.</h6>
         </div>
       </div>
+
       <div class="col-md-4">
-        <div class="p-4 border rounded shadow-sm">
-          <p>“The tech articles are super insightful — always ahead of the trend!”</p>
-          <h6 class="mt-3 mb-0">— James K.</h6>
+        <div class="p-4 rounded shadow-sm testimonial-box">
+          <p class="text-muted">
+            “The tech articles are super insightful — always ahead of the trend!”
+          </p>
+          <h6 class="mt-3 mb-0 text-primary">— James K.</h6>
         </div>
       </div>
+
     </div>
   </div>
 </section>
@@ -134,15 +149,16 @@
 <section class="py-5 bg-dark text-light text-center">
   <div class="container">
     <h2 class="fw-bold mb-3">Subscribe to Our Newsletter</h2>
-    <p class="mb-4">Get the latest updates and articles directly in your inbox.</p>
+    <p class="mb-4 text-light">Get the latest updates and articles directly in your inbox.</p>
+
     <form class="d-flex justify-content-center flex-wrap gap-2">
-      <input type="email" class="form-control w-auto" placeholder="Enter your email" required>
+      <input type="email" class="form-control w-auto newsletter-input" placeholder="Enter your email" required>
       <button class="btn btn-warning">Subscribe</button>
     </form>
   </div>
 </section>
 
-<!-- CTA Section -->
+<!-- CTA -->
 <section class="py-5 text-center bg-warning text-dark">
   <div class="container">
     <h2 class="fw-bold mb-3">Want to Share Your Story?</h2>
