@@ -1,3 +1,10 @@
+body{
+    /* width: 1200px; */
+    /* border: 1px solid gray; */
+    margin: auto;
+    background-color: rgb(236, 236, 236);
+}
+
 /* Navbar Base */
 .navbar-custom {
   background-color: #ffffff;
@@ -180,3 +187,59 @@
 }
 
 /* register end */
+
+
+/* navbar start */
+/* Main Navbar */
+.health-navbar {
+    background: linear-gradient(90deg, #4dccec, #0D7A9F); /* Medical Blue + Teal */
+    border-bottom: 1px solid #083B63;
+}
+
+/* Logo Text */
+.brand-text {
+    color: #EAF7FF;
+    letter-spacing: 0.5px;
+}
+
+/* Nav Links */
+.health-navbar .nav-link {
+    color: #EAF7FF !important;
+    padding: 8px 12px;
+    transition: 0.3s ease;
+}
+
+.health-navbar .nav-link:hover {
+    color: #C2E8FF !important;
+    text-decoration: underline;
+}
+
+/* Buttons */
+.health-navbar .btn-outline-light {
+    border-color: #EAF7FF;
+    color: #EAF7FF;
+    font-weight: 600;
+}
+
+.health-navbar .btn-outline-light:hover {
+    background: #EAF7FF;
+    color: #1b3b55;
+}
+
+.health-navbar .btn-light {
+    background: #ffffff;
+    border: none;
+    padding: 8px 18px;
+    transition: 0.3s;
+}
+
+.health-navbar .btn-light:hover {
+    background: #f2f2f2;
+}
+
+/* Mobile toggle icon */
+.navbar-toggler-icon {
+    filter: invert(1);
+}
+
+/* navbar end */
