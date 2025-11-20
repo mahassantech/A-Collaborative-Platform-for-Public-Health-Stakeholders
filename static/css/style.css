@@ -198,4 +198,47 @@ body {
     box-shadow: 0 10px 30px rgba(0,0,0,0.12);
 }
 
-/* login page end /* 
+/* footer  */
+/* Footer Base */
+footer.hc-footer {
+  background-color: #0f172a; /* dark navy */
+  color: #ffffff; /* text white */
+  padding-top: 50px;
+  padding-bottom: 30px;
+  border-top: 3px solid #1e293b;
+}
+
+/* Links */
+footer.hc-footer a {
+  color: #ffc107; /* warning color */
+  text-decoration: none;
+}
+
+footer.hc-footer a:hover {
+  color: #ffffff; /* hover white */
+}
+
+/* Titles */
+footer.hc-footer h4, 
+footer.hc-footer h6 {
+  color: #ffffff;
+}
+
+/* Social icons */
+footer.hc-footer .hc-social a {
+  color: #ffc107; /* warning accent */
+  transition: 0.3s;
+}
+
+footer.hc-footer .hc-social a:hover {
+  color: #ffffff;
+}
+
+/* Small text */
+footer.hc-footer p {
+  color: #d1d5db;
+}
+
+
+
+
