@@ -20,3 +20,14 @@ class User(AbstractUser):
 
     def __str__(self):
         return f"{self.username} ({self.role})"
+
+
+class DoctorProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    doctor_license = models.CharField(max_length=50)
+    specialization = models.CharField(max_length=100)
+    hospital_name = models.CharField(max_length=150)
+
+    def __str__(self):
+        return self.user.username
+

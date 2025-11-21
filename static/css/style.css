@@ -239,6 +239,79 @@ footer.hc-footer p {
   color: #d1d5db;
 }
 
+/* register page  */
+/* Main background */
+.medical-bg {
+    background-color: #f4faff;
+}
+
+/* Card */
+.medical-card {
+    background: #ffffff;
+    border-radius: 14px;
+    border: 1px solid #e6eef5;
+    padding: 30px;
+}
+
+/* Logo */
+.medical-card img {
+    margin-bottom: 5px;
+}
+
+/* Form Title */
+.medical-card h4 {
+    color: #0a4b78;
+}
+
+/* Input fields */
+.medical-form input,
+.medical-form select,
+#doctor-fields input,
+#doctor-fields select {
+    width: 100%;
+    padding: 10px 12px;
+    border-radius: 10px;
+    border: 1px solid #d5e3f0;
+    margin-bottom: 12px;
+    transition: 0.2s;
+}
+
+.medical-form input:focus,
+.medical-form select:focus,
+#doctor-fields input:focus,
+#doctor-fields select:focus {
+    border-color: #0a80ff;
+    box-shadow: 0 0 6px rgba(10,128,255,0.25);
+}
+
+/* Button */
+.btn-medical {
+    background: #0a80ff;
+    color: white;
+    border-radius: 10px;
+    border: none;
+    transition: 0.3s;
+}
+
+.btn-medical:hover {
+    background: #006edc;
+}
+
+/* Doctor Fields Section */
+#doctor-fields {
+    background: #f1f7ff;
+    border: 1px solid #d7e6ff;
+    padding: 15px;
+    border-radius: 10px;
+}
+
+/* Titles */
+#doctor-fields h6 {
+    color: #0a4b78;
+    margin-bottom: 10px;
+}
+
+
 
 
 

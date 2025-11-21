@@ -3,48 +3,93 @@
 
 {% block content %}
 
-<div class="d-flex justify-content-center align-items-center medical-bg" style="min-height: 100vh;">
-    <div class="card shadow-lg p-5 medical-card" style="width: 450px;">
+<div class="d-flex justify-content-center align-items-center medical-bg" style="min-height: 100vh; padding:20px;">
+    <div class="card shadow-lg p-4 medical-card" style="width: 450px;">
+    <!-- Logo -->
+    <div class="text-center mb-4">
+        <h4 class="fw-bold text-primary mt-2">HealthConnect</h4>
+        <p class="text-muted small">Create your account</p>
+    </div>
 
-        <!-- Logo -->
-        <div class="text-center mb-3">
-            <img src="{% static 'images/logo.sv' %}" alt="Logo" width="150">
-            <h4 class="fw-bold mt-2 text-primary"> Health Connect</h4>
-        </div>
-
-        <h4 class="text-center fw-bold mb-4">Create Your Account</h4>
-
-        {% if form.errors %}
-            <div class="alert alert-danger">
-                <ul class="mb-0">
-                    {% for field in form %}
-                        {% for error in field.errors %}
-                            <li>{{ error }}</li>
-                        {% endfor %}
-                    {% endfor %}
-                    {% for error in form.non_field_errors %}
+    {% if form.errors %}
+        <div class="alert alert-danger">
+            <ul class="mb-0">
+                {% for field in form %}
+                    {% for error in field.errors %}
                         <li>{{ error }}</li>
                     {% endfor %}
-                </ul>
+                {% endfor %}
+                {% for error in form.non_field_errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+
+    <form method="post" novalidate>
+        {% csrf_token %}
+
+        <!-- Basic Fields -->
+        <div class="mb-3">
+            <label for="id_username" class="form-label fw-semibold">Username</label>
+            <input type="text" name="username" id="id_username" class="form-control input-medical" value="{{ form.username.value|default_if_none:'' }}">
+        </div>
+        <div class="mb-3">
+            <label for="id_email" class="form-label fw-semibold">Email</label>
+            <input type="email" name="email" id="id_email" class="form-control input-medical" value="{{ form.email.value|default_if_none:'' }}">
+        </div>
+        <div class="mb-3">
+            <label for="id_password" class="form-label fw-semibold">Password</label>
+            <input type="password" name="password" id="id_password" class="form-control input-medical">
+        </div>
+        <div class="mb-3">
+            <label for="id_role" class="form-label fw-semibold">Role</label>
+            <select name="role" id="id_role" class="form-select input-medical">
+                <option value="patient" {% if form.role.value == "patient" %}selected{% endif %}>Patient</option>
+                <option value="doctor" {% if form.role.value == "doctor" %}selected{% endif %}>Doctor</option>
+                <option value="data_analyst" {% if form.role.value == "data_analyst" %}selected{% endif %}>Data Analyst</option>
+            </select>
+        </div>
+
+        <!-- Doctor-specific Fields -->
+        <div id="doctor-fields" class="mb-3" style="display:none;">
+            <h6 class="fw-semibold text-primary mb-2">Doctor Verification</h6>
+            <div class="mb-2">
+                <label for="id_doctor_license" class="form-label fw-semibold">Doctor License</label>
+                <input type="text" name="doctor_license" id="id_doctor_license" class="form-control input-medical" value="{{ form.doctor_license.value|default_if_none:'' }}">
             </div>
-        {% endif %}
-
-        <form method="post" novalidate>
-            {% csrf_token %}
-            <div class="medical-form">
-                {{ form.as_p }}
+            <div class="mb-2">
+                <label for="id_specialization" class="form-label fw-semibold">Specialization</label>
+                <input type="text" name="specialization" id="id_specialization" class="form-control input-medical" value="{{ form.specialization.value|default_if_none:'' }}">
             </div>
+            <div class="mb-2">
+                <label for="id_hospital_name" class="form-label fw-semibold">Hospital Name</label>
+                <input type="text" name="hospital_name" id="id_hospital_name" class="form-control input-medical" value="{{ form.hospital_name.value|default_if_none:'' }}">
+            </div>
+        </div>
 
-            <button type="submit" class="btn btn-medical w-100 fw-bold py-2 mt-2">
-                Create Account
-            </button>
-        </form>
+        <button type="submit" class="btn btn-medical w-100 fw-bold py-2 mt-3">Create Account</button>
+    </form>
 
-        <p class="text-center mt-3">
-            Already have an account? 
-            <a href="#" class="text-decoration-none text-primary fw-semibold">Sign In</a>
-        </p>
-    </div>
+    <p class="text-center mt-3 small">
+        Already have an account? 
+        <a class="text-decoration-none text-primary fw-semibold" href="{% url 'login' %}">Sign In</a>
+    </p>
 </div>
+```
+
+</div>
+
+<script>
+    const roleSelect = document.getElementById("id_role");
+    const doctorFields = document.getElementById("doctor-fields");
+
+    function checkRole() {
+        doctorFields.style.display = (roleSelect.value === "doctor") ? "block" : "none";
+    }
+
+    window.onload = checkRole;
+    roleSelect.addEventListener("change", checkRole);
+</script>
 
 {% endblock %}
