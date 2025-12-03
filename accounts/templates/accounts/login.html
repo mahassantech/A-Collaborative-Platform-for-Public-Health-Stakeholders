@@ -3,35 +3,41 @@
 
 {% block content %}
 
-<!-- Background -->
 <div class="d-flex justify-content-center align-items-center medical-bg" style="min-height: 100vh; padding:20px; background: linear-gradient(135deg, #7d93a7ff, #b5c6d3ff);">
-
     <div class="card shadow-lg p-4 medical-card">
 
         <!-- Logo -->
         <div class="text-center mb-4">
-            
             <h4 class="fw-bold text-primary mt-2">HealthConnect</h4>
             <p class="text-muted small">Log in to continue</p>
         </div>
 
-        <!-- Sign-in Form -->
+        <!-- Display messages -->
+        {% if messages %}
+            <div class="alert alert-danger">
+                {% for message in messages %}
+                    {{ message }}
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <!-- Login Form -->
         <form method="POST">
             {% csrf_token %}
 
-            <!-- Email -->
+            <!-- Email or Username -->
             <div class="mb-3">
                 <label for="id_email" class="form-label fw-semibold">Username / Email</label>
-                <input type="email" 
+                <input type="text" 
                        name="email" 
                        class="form-control input-medical" 
                        id="id_email" 
-                       placeholder="Enter your email"
+                       placeholder="Enter your username or email"
                        required>
             </div>
 
             <!-- Password -->
-            <div class="mb-2">
+            <div class="mb-3">
                 <label for="id_password" class="form-label fw-semibold">Password</label>
                 <input type="password" 
                        name="password" 

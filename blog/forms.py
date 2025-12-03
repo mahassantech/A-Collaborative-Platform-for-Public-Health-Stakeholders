@@ -1,26 +1,17 @@
 from django import forms
-from .models import Blog
-import requests
+from .models import BlogPost, Comment, Prescription
 
 class BlogForm(forms.ModelForm):
     class Meta:
-        model = Blog
-        fields = ['title', 'content', 'language']
+        model = BlogPost
+        fields = ["title", "content", "photo", "category", "urgency_level", "tags"]
 
-    def clean_content(self):
-        content = self.cleaned_data['content']
-        lang = self.cleaned_data.get('language', 'bn')
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ["comment_text"]
 
-        # Call LanguageTool API
-        r = requests.post(
-            "https://api.languagetool.org/v2/check",
-            data={"text": content, "language": lang}
-        ).json()
-
-        if len(r["matches"]) > 15:
-            raise forms.ValidationError(
-                "Too many grammar mistakes detected. "
-                "Please fix your text before submitting."
-            )
-
-        return content
+class PrescriptionForm(forms.ModelForm):
+    class Meta:
+        model = Prescription
+        fields = ["diagnosis", "medicines", "tests", "advice"]

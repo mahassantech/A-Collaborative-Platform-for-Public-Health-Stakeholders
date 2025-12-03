@@ -39,12 +39,13 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'core',
     'accounts',
-    'membership',
     'blog',
+    'crispy_forms',
 ]
+CRISPY_TEMPLATE_PACK = 'bootstrap5'
 #custom user Model 
+AUTH_USER_MODEL = "accounts.CustomUser"
 
-AUTH_USER_MODEL = 'accounts.User'
 
 
 MIDDLEWARE = [
@@ -84,9 +85,10 @@ WSGI_APPLICATION = 'stakeholders.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': BASE_DIR / "db.sqlite3",
     }
 }
+
 
 
 # Password validation

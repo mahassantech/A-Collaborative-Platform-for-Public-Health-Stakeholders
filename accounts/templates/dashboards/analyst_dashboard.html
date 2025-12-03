@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container py-4">
+
+    <h2 class="fw-bold text-primary mb-4">Data Analyst Dashboard</h2>
+
+    <div class="row g-4">
+
+        <!-- Card 1 -->
+        <div class="col-md-4">
+            <div class="card shadow-sm border-0 p-3">
+                <h5 class="fw-semibold">Health Data Charts</h5>
+                <p class="text-muted small">View statistical insights from patient data.</p>
+                <a href="#" class="btn btn-info btn-sm text-white">View Charts</a>
+            </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="col-md-4">
+            <div class="card shadow-sm border-0 p-3">
+                <h5 class="fw-semibold">Reports</h5>
+                <p class="text-muted small">Generate or download analytical reports.</p>
+                <a href="#" class="btn btn-info btn-sm text-white">Generate</a>
+            </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="col-md-4">
+            <div class="card shadow-sm border-0 p-3">
+                <h5 class="fw-semibold">Trend Analysis</h5>
+                <p class="text-muted small">Observe long-term patient health patterns.</p>
+                <a href="#" class="btn btn-info btn-sm text-white">Analyze</a>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+{% endblock %}

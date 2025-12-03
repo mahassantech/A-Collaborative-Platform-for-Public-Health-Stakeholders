@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container py-5">
+
+  <!-- Blog Title & Content -->
+  <div class="card mb-4 shadow-sm">
+    <div class="card-body">
+      <h3 class="card-title">{{ blog.title }}</h3>
+      <p class="text-muted mb-2">By {{ blog.author.username }} | {{ blog.created_at|date:"F j, Y" }}</p>
+      <p class="card-text">{{ blog.content }}</p>
+      {% if blog.photo %}
+        <img src="{{ blog.photo.url }}" class="img-fluid mt-2" alt="Blog Photo">
+      {% endif %}
+      <p class="mt-2">
+        <strong>Category:</strong> {{ blog.get_category_display }} |
+        <strong>Urgency:</strong> {{ blog.get_urgency_level_display }} |
+        <strong>Tags:</strong> {{ blog.tags }}
+      </p>
+    </div>
+  </div>
+
+  <!-- Comments Section -->
+  <div class="card mb-4 shadow-sm">
+    <div class="card-header fw-bold">Comments</div>
+    <div class="card-body">
+      <ul class="list-group list-group-flush mb-3">
+        {% for comment in blog.comments.all %}
+          <li class="list-group-item">
+            <strong>{{ comment.user.username }}</strong>
+            (
+            {% if comment.user.role == 'doctor' %}
+              Doctor
+            {% elif comment.user.role == 'analyst' %}
+              Data Analyst
+            {% else %}
+              Patient
+            {% endif %}
+            ):
+            {{ comment.comment_text }}
+            <span class="text-muted small d-block">{{ comment.created_at|date:"F j, Y, g:i a" }}</span>
+          </li>
+        {% empty %}
+          <li class="list-group-item text-muted">No comments yet.</li>
+        {% endfor %}
+      </ul>
+
+      <!-- Comment Form -->
+      {% if user.is_authenticated %}
+        <form method="POST">
+          {% csrf_token %}
+          {{ comment_form.comment_text|as_crispy_field }}
+          <button type="submit" name="comment_submit" class="btn btn-primary mt-2">Add Comment</button>
+        </form>
+      {% else %}
+        <p class="text-muted">Please <a href="{% url 'login' %}">login</a> to comment.</p>
+      {% endif %}
+    </div>
+  </div>
+
+  <!-- Prescription Section (Doctor Only) -->
+  {% if user.role == 'doctor' %}
+    <div class="card shadow-sm">
+      <div class="card-header fw-bold">Prescription</div>
+      <div class="card-body">
+        <ul class="list-group list-group-flush mb-3">
+          {% for presc in blog.prescriptions.all %}
+            <li class="list-group-item">
+              <strong>{{ presc.doctor.username }}</strong>:
+              Diagnosis: {{ presc.diagnosis }},
+              Medicines: {{ presc.medicines }}
+              {% if presc.tests %}, Tests: {{ presc.tests }}{% endif %}
+              {% if presc.advice %}, Advice: {{ presc.advice }}{% endif %}
+              <span class="text-muted small d-block">{{ presc.created_at|date:"F j, Y, g:i a" }}</span>
+            </li>
+          {% empty %}
+            <li class="list-group-item text-muted">No prescriptions yet.</li>
+          {% endfor %}
+        </ul>
+
+        <!-- Prescription Form -->
+        <form method="POST">
+          {% csrf_token %}
+          {{ prescription_form.diagnosis|as_crispy_field }}
+          {{ prescription_form.medicines|as_crispy_field }}
+          {{ prescription_form.tests|as_crispy_field }}
+          {{ prescription_form.advice|as_crispy_field }}
+          <button type="submit" name="prescription_submit" class="btn btn-success mt-2">Add Prescription</button>
+        </form>
+      </div>
+    </div>
+  {% endif %}
+
+</div>
+{% endblock %}

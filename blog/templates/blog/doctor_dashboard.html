@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container py-5">
+  <h2 class="mb-4">Patient Posts Dashboard</h2>
+
+  {% if patient_posts %}
+    {% for post in patient_posts %}
+      <div class="card mb-4 shadow-sm">
+        <div class="card-body">
+          <h4>{{ post.title }}</h4>
+          <p class="text-muted">
+            By {{ post.author.username }} | Urgency: {{ post.get_urgency_level_display }} | {{ post.created_at|date:"F j, Y" }}
+          </p>
+          <p>{{ post.content }}</p>
+          {% if post.photo %}
+            <img src="{{ post.photo.url }}" class="img-fluid mt-2" alt="Post Photo">
+          {% endif %}
+
+          <!-- Existing Prescriptions -->
+          {% if post.prescriptions.all %}
+            <ul class="list-group list-group-flush mt-3 mb-3">
+              {% for presc in post.prescriptions.all %}
+                <li class="list-group-item">
+                  <strong>{{ presc.doctor.username }}</strong>:
+                  Diagnosis: {{ presc.diagnosis }},
+                  Medicines: {{ presc.medicines }}
+                  {% if presc.tests %}, Tests: {{ presc.tests }}{% endif %}
+                  {% if presc.advice %}, Advice: {{ presc.advice }}{% endif %}
+                </li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+
+          <!-- Prescription Form -->
+          <form method="POST" class="mt-3">
+            {% csrf_token %}
+            <input type="hidden" name="post_id" value="{{ post.id }}">
+            <div class="mb-2">
+              <label>Diagnosis</label>
+              <textarea name="diagnosis" class="form-control" required></textarea>
+            </div>
+            <div class="mb-2">
+              <label>Medicines</label>
+              <textarea name="medicines" class="form-control" required></textarea>
+            </div>
+            <div class="mb-2">
+              <label>Tests</label>
+              <textarea name="tests" class="form-control"></textarea>
+            </div>
+            <div class="mb-2">
+              <label>Advice</label>
+              <textarea name="advice" class="form-control"></textarea>
+            </div>
+            <button type="submit" class="btn btn-success mt-2">Add Prescription</button>
+          </form>
+
+        </div>
+      </div>
+    {% endfor %}
+  {% else %}
+    <p class="text-muted">No patient posts yet.</p>
+  {% endif %}
+</div>
+{% endblock %}

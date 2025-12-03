@@ -43,10 +43,20 @@
       </ul>
     </div>
 
-    <div class="d-flex gap-2">
-      <a href="{% url 'login' %}" class="btn btn-outline-light px-3 rounded-pill">Sign in</a>
-      <a href="{% url 'signup' %}" class="btn btn-warning text-dark fw-bold px-3 rounded-pill">Join Now</a>
-    </div>
+   <div class="d-flex gap-2">
+  {% if request.user.is_authenticated %}
+    <a href="{% url 'profile' %}" class="btn btn-outline-light px-3 rounded-pill">
+      Profile
+    </a>
+    <a href="{% url 'logout' %}" class="btn btn-danger text-white px-3 rounded-pill">
+      Logout
+    </a>
+  {% else %}
+    <a href="{% url 'login' %}" class="btn btn-outline-light px-3 rounded-pill">Sign in</a>
+    <a href="{% url 'signup' %}" class="btn btn-warning text-dark fw-bold px-3 rounded-pill">Join Now</a>
+  {% endif %}
+</div>
+
 
   </div>
 </nav>
