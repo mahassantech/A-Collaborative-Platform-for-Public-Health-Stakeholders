@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
-
+<link rel="stylesheet" href="{% static 'css/profile.css' %}">
 {% block content %}
 <div class="container py-5">
 
@@ -28,13 +28,7 @@
         </div>
 
         <hr>
-        <p><strong>Status:</strong> 
-          {% if user.is_staff %}
-            <span class="text-success">Admin</span>
-          {% else %}
-            <span class="text-primary">Member</span>
-          {% endif %}
-        </p>
+       
 
         <!-- Buttons -->
         <a href="" class="btn btn-warning w-100 mb-2">Edit Profile</a>
