@@ -1,84 +1,183 @@
 {% extends "base.html" %}
 {% load static %}
-<link rel="stylesheet" href="{% static 'css/profile.css' %}">
+
 {% block content %}
-<div class="container py-5">
 
-  <!-- Welcome -->
-  <h1 class="mb-4">Welcome to your Profile</h1>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 
-  <div class="row">
-    <!-- Left: Profile Info -->
-    <div class="col-md-4">
-      <div class="card shadow-sm p-4">
-        <div class="text-center">
-          <img src="{% if user.profile_pic %}{{ user.profile_pic.url }}{% else %}{% static 'images/avatar.png' %}{% endif %}" 
-               alt="Profile Picture" 
-               class="rounded-circle mb-3" width="120" height="120">
-          <h4 class="fw-bold">{{ user.username }}</h4>
-          <p class="text-muted mb-1">{{ user.email }}</p>
-          <p class="small">Joined: {{ user.date_joined|date:"F j, Y" }}</p>
-          {% if user.role == "doctor" %}
-            <p class="small text-primary">Doctor - {{ user.specialization }}</p>
-          {% elif user.role == "analyst" %}
-            <p class="small text-secondary">Data Analyst</p>
-          {% else %}
-            <p class="small text-muted">Patient</p>
+<style>
+/* ===== General Styles ===== */
+body.dark-mode { background-color: #1a1a1a !important; color: #e2e2e2 !important; }
+body.dark-mode .card { background-color: #2a2a2a !important; color: #fff !important; transition: 0.3s; }
+.dash-card { transition: 0.3s ease-in-out; border-radius: 16px; }
+.dash-card:hover { transform: translateY(-4px); box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+.sidebar { min-height: 100vh; background: rgba(255,255,255,0.05); padding: 20px; border-radius: 16px; }
+.sidebar.dark-mode { background: rgba(0,0,0,0.3); }
+.sidebar .badge { font-size: 0.75rem; }
+.quick-btn { margin: 3px; }
+</style>
+
+<div class="container-fluid py-5">
+  <div class="row g-4">
+
+    <!-- LEFT SIDEBAR -->
+    <div class="col-lg-3 col-md-4">
+      <div class="sidebar dash-card shadow p-4 text-center">
+        <img src="{% if user.profile_pic %}{{ user.profile_pic.url }}{% else %}{% static 'images/avatar.png' %}{% endif %}" 
+             class="rounded-circle shadow-sm mb-3" width="120" height="120" style="object-fit: cover;">
+        <h4 class="fw-bold">{{ user.username }}</h4>
+        <p class="text-muted mb-1">{{ user.email }}</p>
+        <p class="small">Joined: {{ user.date_joined|date:"F j, Y" }}</p>
+
+        {% if user.role == "doctor" %}
+            <span class="badge bg-primary px-3 py-2 mb-2">Doctor</span>
+            <p class="small text-primary">Specialization: {{ user.specialization }}</p>
+        {% elif user.role == "analyst" %}
+            <span class="badge bg-secondary px-3 py-2 mb-2">Data Analyst</span>
+        {% else %}
+            <span class="badge bg-success px-3 py-2 mb-2">Patient</span>
+        {% endif %}
+
+        <hr>
+
+        <!-- Quick Actions -->
+        <div class="d-grid gap-2">
+          <a href="{% url 'profile' %}" class="btn btn-warning fw-bold rounded-3 quick-btn">Edit Profile</a>
+          <a href="{% url 'blog_create' %}" class="btn btn-primary fw-bold rounded-3 quick-btn">Create Post</a>
+          {% if user.role == 'doctor' %}
+          <a href="{% url 'patient_lists' %}" class="btn btn-info fw-bold rounded-3 quick-btn">Patient List</a>
           {% endif %}
         </div>
 
-        <hr>
-       
-
-        <!-- Buttons -->
-        <a href="" class="btn btn-warning w-100 mb-2">Edit Profile</a>
-        <a href="{% url 'blog_create' %}" class="btn btn-primary w-100 mb-2">Create a Post</a>
+        <!-- Dark Mode Toggle -->
+        <button id="toggleMode" class="btn btn-dark mt-3 rounded-3 w-100">🌙 Dark Mode</button>
       </div>
     </div>
 
-    <!-- Right: Recent Activities -->
-    <div class="col-md-8">
-      <!-- Actions -->
-      <div class="card shadow-sm mb-4">
-        <div class="card-body d-flex gap-2">
-          <a href="" class="btn btn-outline-secondary">Change Password</a>
-          <a href="{% url 'logout' %}" class="btn btn-outline-danger">Logout</a>
+    <!-- RIGHT CONTENT -->
+    <div class="col-lg-9 col-md-8">
+
+      <!-- Stats Cards -->
+      <div class="row g-3 mb-4">
+        <div class="col-md-4">
+          <div class="card dash-card shadow p-3">
+            <h6 class="text-muted">Total Posts</h6>
+            <h3 class="fw-bold">{{ recent_posts.count }}</h3>
+          </div>
         </div>
+        <div class="col-md-4">
+          <div class="card dash-card shadow p-3">
+            <h6 class="text-muted">Comments</h6>
+            <h3 class="fw-bold">{{ recent_comments.count }}</h3>
+          </div>
+        </div>
+        {% if user.role == "doctor" %}
+        <div class="col-md-4">
+          <div class="card dash-card shadow p-3">
+            <h6 class="text-muted">Prescriptions</h6>
+            <h3 class="fw-bold">{{ recent_prescriptions.count }}</h3>
+          </div>
+        </div>
+        {% endif %}
+      </div>
+
+      <!-- Charts -->
+      <div class="row g-3 mb-4">
+        <div class="col-md-12">
+          <div class="card dash-card shadow p-3">
+            <h6 class="fw-bold">Posts Over Time</h6>
+            <canvas id="postsChart" height="120"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <!-- Notifications -->
+      <div class="card dash-card shadow p-3 mb-4">
+        <h6 class="fw-bold">Notifications</h6>
+        <ul class="list-group list-group-flush">
+          {% for note in notifications %}
+          <li class="list-group-item">{{ note.text|truncatechars:50 }}</li>
+          {% empty %}
+          <li class="list-group-item text-muted">No new notifications</li>
+          {% endfor %}
+        </ul>
       </div>
 
       <!-- Recent Activities -->
-      <div class="card shadow-sm">
-        <div class="card-header fw-bold">Recent Activities</div>
+      <div class="card dash-card shadow mb-4">
+        <div class="card-header fw-bold bg-light">Recent Activities</div>
         <div class="card-body">
           <ul class="list-group list-group-flush">
             {% for post in recent_posts %}
-              <li class="list-group-item">✔ Posted: {{ post.title }}</li>
+            <li class="list-group-item">
+              <i class="bi bi-check2-circle text-success"></i>
+              <strong>Posted:</strong> {{ post.title }}
+            </li>
             {% empty %}
-              <li class="list-group-item text-muted">No recent posts.</li>
+            <li class="list-group-item text-muted">No posts yet.</li>
             {% endfor %}
 
             {% for comment in recent_comments %}
-              <li class="list-group-item">✔ Commented: {{ comment.comment_text|truncatechars:40 }}</li>
+            <li class="list-group-item">
+              <i class="bi bi-chat-left-text text-primary"></i>
+              <strong>Commented:</strong> {{ comment.comment_text|truncatechars:40 }}
+            </li>
             {% empty %}
-              <li class="list-group-item text-muted">No recent comments.</li>
+            <li class="list-group-item text-muted">No comments yet.</li>
             {% endfor %}
 
-            {% for prescription in recent_prescriptions %}
-              <li class="list-group-item">✔ Prescribed: {{ prescription.diagnosis|truncatechars:40 }}</li>
-            {% empty %}
-              {% if user.role == "doctor" %}
-                <li class="list-group-item text-muted">No recent prescriptions.</li>
-              {% endif %}
-            {% endfor %}
+            {% if user.role == "doctor" %}
+              {% for pres in recent_prescriptions %}
+              <li class="list-group-item">
+                <i class="bi bi-clipboard-check text-warning"></i>
+                <strong>Prescribed:</strong> {{ pres.diagnosis|truncatechars:40 }}
+              </li>
+              {% empty %}
+              <li class="list-group-item text-muted">No prescriptions yet.</li>
+              {% endfor %}
+            {% endif %}
           </ul>
         </div>
       </div>
+
+      {% if user.role == "doctor" %}
+      <a href="{% url 'doctor_dashboard' %}" class="btn btn-primary w-100 fw-bold py-2 rounded-3 shadow-sm mb-4">
+        View Patient Posts
+      </a>
+      {% endif %}
+
     </div>
   </div>
-{% if user.role == "doctor" %}
-  <a href="{% url 'doctor_dashboard' %}" class="btn btn-primary w-100 mt-2">
-    View Patient Posts
-  </a>
-{% endif %}
 </div>
+
+<!-- Dark Mode Script -->
+<script>
+const toggleBtn = document.getElementById("toggleMode");
+toggleBtn.addEventListener("click", function () {
+    document.body.classList.toggle("dark-mode");
+    toggleBtn.textContent = 
+        document.body.classList.contains("dark-mode") ? "☀️ Light Mode" : "🌙 Dark Mode";
+});
+</script>
+
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+const ctx = document.getElementById('postsChart').getContext('2d');
+new Chart(ctx, {
+    type: 'line',
+    data: {
+        labels: {{ posts_labels|safe }},   // ['Jan', 'Feb', ...]
+        datasets: [{
+            label: 'Posts',
+            data: {{ posts_data|safe }},   // [5, 8, 3, ...]
+            borderColor: 'rgba(54, 162, 235, 1)',
+            backgroundColor: 'rgba(54, 162, 235, 0.2)',
+            tension: 0.4
+        }]
+    },
+    options: { responsive: true, maintainAspectRatio: false }
+});
+</script>
+
 {% endblock %}

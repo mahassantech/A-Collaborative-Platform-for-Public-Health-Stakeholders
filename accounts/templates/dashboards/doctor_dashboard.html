@@ -2,40 +2,22 @@
 {% load static %}
 
 {% block content %}
-<div class="container py-4">
-
-    <h2 class="fw-bold text-primary mb-4">Doctor Dashboard</h2>
-
-    <div class="row g-4">
-
-        <!-- Card 1 -->
+<div class="container py-5">
+    <h2 class="mb-4">Pateints List</h2>
+    <div class="row g-3">
+        {% for patient in patients %}
         <div class="col-md-4">
-            <div class="card shadow-sm border-0 p-3">
-                <h5 class="fw-semibold">Verified Patients</h5>
-                <p class="text-muted small">View and manage your assigned patients.</p>
-                <a href="#" class="btn btn-success btn-sm">Open</a>
+            <div class="card shadow p-3 text-center">
+                <img src="{% if patient.profile_pic %}{{ patient.profile_pic.url }}{% else %}{% static 'images/avatar.png' %}{% endif %}"
+                     width="100" height="100" class="rounded-circle mb-2" style="object-fit: cover;">
+                <h5 class="fw-bold">{{ patient.username }}</h5>
+                <p class="text-muted small">{{ patient.email }}</p>
+                <a href="{% url 'view_patient' patient.id %}" class="btn btn-primary btn-sm mt-2 w-100">View Details</a>
             </div>
         </div>
-
-        <!-- Card 2 -->
-        <div class="col-md-4">
-            <div class="card shadow-sm border-0 p-3">
-                <h5 class="fw-semibold">Approve Requests</h5>
-                <p class="text-muted small">Verify patient identity & medical history.</p>
-                <a href="#" class="btn btn-success btn-sm">Approve</a>
-            </div>
-        </div>
-
-        <!-- Card 3 -->
-        <div class="col-md-4">
-            <div class="card shadow-sm border-0 p-3">
-                <h5 class="fw-semibold">Prescriptions</h5>
-                <p class="text-muted small">Write or update prescriptions for patients.</p>
-                <a href="#" class="btn btn-success btn-sm">Create</a>
-            </div>
-        </div>
-
+        {% empty %}
+        <p class="text-muted">No patients registered yet.</p>
+        {% endfor %}
     </div>
-
 </div>
 {% endblock %}

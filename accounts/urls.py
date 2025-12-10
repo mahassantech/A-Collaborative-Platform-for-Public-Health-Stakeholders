@@ -6,6 +6,12 @@ urlpatterns = [
     path("login/", views.login_view, name="login"),
     path('logout/', views.logout_view, name='logout'),
     path("profile/", views.profile_view, name="profile"),
+    path('dashboard/', views.patient_dashboard, name='dashboard'),
+    
+    path('doctor-dashboard/', views.doctor_dashboard, name='patient_lists'),
+    path('patients/<int:patient_id>/', views.view_patient, name='view_patient'),
+    path('patients/<int:patient_id>/export/csv/', views.export_patient_csv, name='export_patient_csv'),
+    path('patients/<int:patient_id>/export/pdf/', views.export_patient_pdf, name='export_patient_pdf'),
 
     # Dashboards
     path("dashboard/patient/", views.patient_dashboard, name="patient_dashboard"),

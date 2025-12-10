@@ -7,4 +7,5 @@ urlpatterns = [
     path('treatments/',views.TreatmentsPage,name='treatmentPage'),
     path('myhealth/',views.HealthPage,name='healthPage'),
     path('conditons/',views.ConditionsPage,name='conditionspage'),
+    
 ]

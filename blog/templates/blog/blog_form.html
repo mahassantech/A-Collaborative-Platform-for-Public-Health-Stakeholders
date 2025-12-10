@@ -1,9 +1,114 @@
 {% extends "base.html" %}
+{% load static %}
 {% block content %}
-<h2>Create Blog</h2>
-<form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit" class="btn btn-primary">Submit</button>
-</form>
+
+<!-- Custom Styles -->
+<style>
+    .blog-create-wrapper {
+        max-width: 760px;
+        margin: auto;
+    }
+    .blog-header-icon {
+        font-size: 40px;
+        color: #0d6efd;
+    }
+    .blog-card {
+        border-radius: 18px;
+    }
+    textarea {
+        min-height: 180px;
+        resize: vertical;
+    }
+</style>
+
+<div class="container py-5 blog-create-wrapper">
+    <div class="card shadow p-4 blog-card">
+
+        <!-- Header -->
+        <div class="text-center mb-4">
+            <div class="blog-header-icon mb-2">📝</div>
+            <h2 class="fw-bold">Create a New Blog</h2>
+            <p class="text-muted">Express your ideas and share them with everyone.</p>
+        </div>
+
+        <!-- Form -->
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <!-- Title -->
+            <div class="mb-3">
+                <label class="form-label fw-semibold">Blog Title</label>
+                <input 
+                    type="text" 
+                    name="title"
+                    value="{{ form.title.value|default_if_none:'' }}"
+                    class="form-control form-control-lg"
+                    placeholder="Enter your blog title"
+                    required
+                >
+            </div>
+
+            <!-- Content -->
+            <div class="mb-3">
+                <label class="form-label fw-semibold">Blog Content</label>
+                <textarea 
+                    name="content" 
+                    class="form-control"
+                    placeholder="Write your blog content here..."
+                    required>{{ form.content.value|default_if_none:'' }}</textarea>
+            </div>
+
+            <!-- Category -->
+            <div class="mb-3">
+                <label class="form-label fw-semibold">Category</label>
+                <select name="category" class="form-select">
+                    {% for key, value in form.category.field.choices %}
+                        <option value="{{ key }}" 
+                        {% if form.category.value == key %}selected{% endif %}>
+                            {{ value }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <!-- Urgency Level -->
+            <div class="mb-3">
+                <label class="form-label fw-semibold">Urgency Level</label>
+                <select name="urgency_level" class="form-select">
+                    {% for key, value in form.urgency_level.field.choices %}
+                        <option value="{{ key }}" 
+                        {% if form.urgency_level.value == key %}selected{% endif %}>
+                            {{ value }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <!-- Tags -->
+            <div class="mb-3">
+                <label class="form-label fw-semibold">Tags</label>
+                <input 
+                    type="text" 
+                    name="tags"
+                    value="{{ form.tags.value|default_if_none:'' }}"
+                    class="form-control"
+                    placeholder="e.g: health, cardio, advice"
+                >
+                <small class="text-muted">Use comma-separated tags</small>
+            </div>
+
+            <!-- Image Upload -->
+            <div class="mb-3">
+                <label class="form-label fw-semibold">Upload Image (optional)</label>
+                <input type="file" name="photo" class="form-control">
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="btn btn-primary w-100 fw-bold py-2">
+                Publish Blog
+            </button>
+        </form>
+    </div>
+</div>
+
 {% endblock %}
