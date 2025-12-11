@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card shadow p-4">
+        <h4 class="fw-bold mb-3">Edit Profile</h4>
+
+        <form method="POST" enctype="multipart/form-data">
+          {% csrf_token %}
+
+          <!-- Username -->
+          <div class="mb-3">
+            {{ user_form.username.label_tag }}
+            {{ user_form.username }}
+          </div>
+
+          <!-- Email -->
+          <div class="mb-3">
+            {{ user_form.email.label_tag }}
+            {{ user_form.email }}
+          </div>
+
+          <!-- Profile Picture -->
+          <div class="mb-3">
+            {{ user_form.profile_pic.label_tag }}
+            {{ user_form.profile_pic }}
+          </div>
+
+          <!-- Role -->
+          <div class="mb-3">
+            {{ user_form.role.label_tag }}
+            {{ user_form.role }}
+          </div>
+
+          <!-- Doctor License -->
+          <div class="mb-3">
+            {{ user_form.doctor_license.label_tag }}
+            {{ user_form.doctor_license }}
+          </div>
+
+          <!-- Specialization -->
+          <div class="mb-3">
+            {{ user_form.specialization.label_tag }}
+            {{ user_form.specialization }}
+          </div>
+
+          <!-- Hospital Name -->
+          <div class="mb-3">
+            {{ user_form.hospital_name.label_tag }}
+            {{ user_form.hospital_name }}
+          </div>
+
+          <button class="btn btn-primary w-100 fw-bold">Save Changes</button>
+        </form>
+
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -12,6 +12,13 @@ from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseForbidden
 from django.template.loader import render_to_string
+from django.shortcuts import render, get_object_or_404
+from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse, HttpResponseForbidden
+from .models import CustomUser  # Custom user
+from django.template.loader import render_to_string
+from .forms import UserUpdateForm
+
 
 # Doctor Dashboard: List of patients
 
@@ -70,6 +77,28 @@ def profile_view(request):
     return render(request, "accounts/profile.html", context)
 
 @login_required
+def edit_profile(request):
+    user = request.user
+    if request.method == "POST":
+        # Include request.FILES for profile_pic
+        user_form = UserUpdateForm(request.POST, request.FILES, instance=user)
+
+        if user_form.is_valid():
+            user_form.save()
+            messages.success(request, "Profile updated successfully!")
+            return redirect("profile")
+        else:
+            # Print errors to debug if save fails
+            print(user_form.errors)
+
+    else:
+        user_form = UserUpdateForm(instance=user)
+
+    return render(request, "accounts/edit_profile.html", {
+        "user_form": user_form
+    })
+
+@login_required
 def patient_dashboard(request):
     return render(request, "dashboards/patient_dashboard.html")
 
@@ -81,14 +110,6 @@ def doctor_dashboard(request):
 def analyst_dashboard(request):
     return render(request, "dashboards/analyst_dashboard.html")
 
-
-from django.shortcuts import render, get_object_or_404
-from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse, HttpResponseForbidden
-from .models import CustomUser  # Custom user
-import csv
-from django.template.loader import render_to_string
-import pdfkit
 
 # Doctor Dashboard - List all patients
 @login_required
