@@ -5,7 +5,7 @@
 <div class="container py-5">
   <h2 class="mb-4">Blog Posts</h2>
 
-  <!-- Create Blog Button (Patient & Doctor both can see if allowed) -->
+  <!-- Create Blog Button (Only patients can create) -->
   {% if user.is_authenticated and user.role == 'patient' %}
     <div class="mb-3">
       <a href="{% url 'blog_create' %}" class="btn btn-primary">Create New Blog</a>
@@ -15,23 +15,18 @@
   <!-- Blog List -->
   <div class="row">
     {% for blog in blogs %}
-      {% if user.role == 'doctor' and blog.author.role == 'patient' %}
+      {% comment %}
+        Doctor: see only patient posts
+        Patient & Analyst: see all posts
+      {% endcomment %}
+      {% if user.role == 'doctor' and blog.author.role == 'patient' or user.role in 'patient analyst' %}
         <div class="col-md-6 mb-3">
           <div class="card shadow-sm">
             <div class="card-body">
               <h5 class="card-title">{{ blog.title }}</h5>
-              <p class="text-muted mb-1">By {{ blog.author.username }} | {{ blog.created_at|date:"F j, Y" }}</p>
-              <p class="card-text">{{ blog.content|truncatechars:100 }}</p>
-              <a href="{% url 'blog_detail' blog.pk %}" class="btn btn-outline-primary btn-sm">View Details</a>
-            </div>
-          </div>
-        </div>
-      {% elif user.role == 'patient' %}
-        <div class="col-md-6 mb-3">
-          <div class="card shadow-sm">
-            <div class="card-body">
-              <h5 class="card-title">{{ blog.title }}</h5>
-              <p class="text-muted mb-1">By {{ blog.author.username }} | {{ blog.created_at|date:"F j, Y" }}</p>
+              <p class="text-muted mb-1">
+                By {{ blog.author.username }} ({{ blog.author.role|capfirst }}) | {{ blog.created_at|date:"F j, Y" }}
+              </p>
               <p class="card-text">{{ blog.content|truncatechars:100 }}</p>
               <a href="{% url 'blog_detail' blog.pk %}" class="btn btn-outline-primary btn-sm">View Details</a>
             </div>

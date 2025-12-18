@@ -2,25 +2,6 @@
 {% load static %}
 {% block content %}
 
-<!-- Custom Styles -->
-<style>
-    .blog-create-wrapper {
-        max-width: 760px;
-        margin: auto;
-    }
-    .blog-header-icon {
-        font-size: 40px;
-        color: #0d6efd;
-    }
-    .blog-card {
-        border-radius: 18px;
-    }
-    textarea {
-        min-height: 180px;
-        resize: vertical;
-    }
-</style>
-
 <div class="container py-5 blog-create-wrapper">
     <div class="card shadow p-4 blog-card">
 
@@ -37,70 +18,38 @@
 
             <!-- Title -->
             <div class="mb-3">
-                <label class="form-label fw-semibold">Blog Title</label>
-                <input 
-                    type="text" 
-                    name="title"
-                    value="{{ form.title.value|default_if_none:'' }}"
-                    class="form-control form-control-lg"
-                    placeholder="Enter your blog title"
-                    required
-                >
+                {{ form.title.label_tag }}
+                {{ form.title }}
             </div>
 
             <!-- Content -->
             <div class="mb-3">
-                <label class="form-label fw-semibold">Blog Content</label>
-                <textarea 
-                    name="content" 
-                    class="form-control"
-                    placeholder="Write your blog content here..."
-                    required>{{ form.content.value|default_if_none:'' }}</textarea>
+                {{ form.content.label_tag }}
+                {{ form.content }}
+            </div>
+
+            <!-- Description -->
+            <div class="mb-3">
+                {{ form.description.label_tag }}
+                {{ form.description }}
             </div>
 
             <!-- Category -->
             <div class="mb-3">
-                <label class="form-label fw-semibold">Category</label>
-                <select name="category" class="form-select">
-                    {% for key, value in form.category.field.choices %}
-                        <option value="{{ key }}" 
-                        {% if form.category.value == key %}selected{% endif %}>
-                            {{ value }}
-                        </option>
-                    {% endfor %}
-                </select>
+                {{ form.category.label_tag }}
+                {{ form.category }}
             </div>
 
             <!-- Urgency Level -->
             <div class="mb-3">
-                <label class="form-label fw-semibold">Urgency Level</label>
-                <select name="urgency_level" class="form-select">
-                    {% for key, value in form.urgency_level.field.choices %}
-                        <option value="{{ key }}" 
-                        {% if form.urgency_level.value == key %}selected{% endif %}>
-                            {{ value }}
-                        </option>
-                    {% endfor %}
-                </select>
-            </div>
-
-            <!-- Tags -->
-            <div class="mb-3">
-                <label class="form-label fw-semibold">Tags</label>
-                <input 
-                    type="text" 
-                    name="tags"
-                    value="{{ form.tags.value|default_if_none:'' }}"
-                    class="form-control"
-                    placeholder="e.g: health, cardio, advice"
-                >
-                <small class="text-muted">Use comma-separated tags</small>
+                {{ form.urgency_level.label_tag }}
+                {{ form.urgency_level }}
             </div>
 
             <!-- Image Upload -->
             <div class="mb-3">
-                <label class="form-label fw-semibold">Upload Image (optional)</label>
-                <input type="file" name="photo" class="form-control">
+                {{ form.photo.label_tag }}
+                {{ form.photo }}
             </div>
 
             <!-- Submit Button -->
@@ -110,5 +59,32 @@
         </form>
     </div>
 </div>
+
+<!-- CKEditor Scripts -->
+<script src="{% static 'ckeditor/ckeditor.js' %}"></script>
+<script>
+    // Initialize CKEditor for content and description fields
+    CKEDITOR.replace('{{ form.content.id_for_label }}', {
+        height: 250,
+        toolbar: [
+            { name: 'basicstyles', items: ['Bold', 'Italic', 'Underline', 'Strike'] },
+            { name: 'paragraph', items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent'] },
+            { name: 'links', items: ['Link', 'Unlink'] },
+            { name: 'insert', items: ['Image', 'Table'] },
+            { name: 'styles', items: ['Format', 'FontSize'] },
+            { name: 'colors', items: ['TextColor', 'BGColor'] },
+            { name: 'tools', items: ['Maximize'] }
+        ]
+    });
+
+    CKEDITOR.replace('{{ form.description.id_for_label }}', {
+        height: 150,
+        toolbar: [
+            { name: 'basicstyles', items: ['Bold', 'Italic'] },
+            { name: 'paragraph', items: ['NumberedList', 'BulletedList'] },
+            { name: 'links', items: ['Link', 'Unlink'] }
+        ]
+    });
+</script>
 
 {% endblock %}

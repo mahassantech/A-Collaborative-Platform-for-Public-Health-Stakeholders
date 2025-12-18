@@ -35,23 +35,28 @@
             {{ user_form.role }}
           </div>
 
-          <!-- Doctor License -->
-          <div class="mb-3">
-            {{ user_form.doctor_license.label_tag }}
-            {{ user_form.doctor_license }}
-          </div>
+          <!-- Doctor-specific fields -->
 
-          <!-- Specialization -->
-          <div class="mb-3">
-            {{ user_form.specialization.label_tag }}
-            {{ user_form.specialization }}
-          </div>
+          <!-- Doctor-specific fields -->
+      {% if user.role == 'doctor' %}
+        <div id="doctor-fields">
+        <div class="mb-3">
+      {{ user_form.doctor_license.label_tag }}
+      {{ user_form.doctor_license }}
+        </div>
 
-          <!-- Hospital Name -->
-          <div class="mb-3">
-            {{ user_form.hospital_name.label_tag }}
-            {{ user_form.hospital_name }}
-          </div>
+    <div class="mb-3">
+      {{ user_form.specialization.label_tag }}
+      {{ user_form.specialization }}
+    </div>
+
+    <div class="mb-3">
+      {{ user_form.hospital_name.label_tag }}
+      {{ user_form.hospital_name }}
+    </div>
+    </div>
+    {% endif %}
+
 
           <button class="btn btn-primary w-100 fw-bold">Save Changes</button>
         </form>
@@ -60,4 +65,21 @@
     </div>
   </div>
 </div>
+
+<script>
+  const roleField = document.getElementById("id_role");
+  const doctorFields = document.getElementById("doctor-fields");
+
+  function toggleDoctorFields() {
+      if(roleField.value === "doctor") {
+          doctorFields.style.display = "block";
+      } else {
+          doctorFields.style.display = "none";
+      }
+  }
+
+  // On load & change
+  window.onload = toggleDoctorFields;
+  roleField.addEventListener("change", toggleDoctorFields);
+</script>
 {% endblock %}

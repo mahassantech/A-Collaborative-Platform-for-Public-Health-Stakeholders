@@ -6,7 +6,7 @@ from .forms import RegistrationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
 from django.contrib import messages
-from blog.models import BlogPost, Comment, Prescription
+from blog.models import Comment
 from accounts.models import CustomUser
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
@@ -19,54 +19,64 @@ from .models import CustomUser  # Custom user
 from django.template.loader import render_to_string
 from .forms import UserUpdateForm
 
-
-# Doctor Dashboard: List of patients
-
+# REGISTER VIEW
 
 def register(request):
     if request.method == "POST":
-        form = RegistrationForm(request.POST)
+        form = RegistrationForm(request.POST, request.FILES)  # Include profile_pic
         if form.is_valid():
             form.save()
+            messages.success(request, "Account created successfully! Please login.")
             return redirect("login")
+        else:
+            print(form.errors)  # Debugging
     else:
         form = RegistrationForm()
 
     return render(request, "accounts/register.html", {"form": form})
 
 
+# LOGIN VIEW
+
 def login_view(request):
     if request.method == "POST":
-        identifier = request.POST.get("email")  # username or email
+        identifier = request.POST.get("email")  # Can be username or email
         password = request.POST.get("password")
 
-        # Check if identifier is an email
+        # Identify user by email or username
         try:
             user_obj = CustomUser.objects.get(email=identifier)
             username = user_obj.username
         except CustomUser.DoesNotExist:
-            username = identifier  # assume it's username
+            username = identifier  # Assume username
 
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            return redirect("profile")  
+            return redirect("profile")
         else:
             messages.error(request, "Invalid credentials. Please try again.")
 
     return render(request, "accounts/login.html")
+
+# LOGOUT VIEW
 
 def logout_view(request):
     logout(request)
     messages.success(request, "You have been logged out successfully.")
     return redirect('login')
 
+
+# PROFILE VIEW
+
 @login_required
 def profile_view(request):
     user = request.user
-    recent_posts = user.posts.all().order_by('-created_at')[:5]  # recent blog posts
+    recent_posts = user.posts.all().order_by('-created_at')[:5]  # recent posts
     recent_comments = Comment.objects.filter(user=user).order_by('-created_at')[:5]
-    recent_prescriptions = Prescription.objects.filter(doctor=user).order_by('-created_at')[:5] if user.role == 'doctor' else []
+    recent_prescriptions = []
+    if user.role == 'doctor':
+        recent_prescriptions = Prescription.objects.filter(doctor=user).order_by('-created_at')[:5]
 
     context = {
         'user': user,
@@ -76,20 +86,20 @@ def profile_view(request):
     }
     return render(request, "accounts/profile.html", context)
 
+
+# EDIT PROFILE VIEW
+
 @login_required
 def edit_profile(request):
     user = request.user
     if request.method == "POST":
-        # Include request.FILES for profile_pic
         user_form = UserUpdateForm(request.POST, request.FILES, instance=user)
-
         if user_form.is_valid():
             user_form.save()
             messages.success(request, "Profile updated successfully!")
             return redirect("profile")
         else:
-            # Print errors to debug if save fails
-            print(user_form.errors)
+            print(user_form.errors)  # Debugging
 
     else:
         user_form = UserUpdateForm(instance=user)
@@ -97,6 +107,14 @@ def edit_profile(request):
     return render(request, "accounts/edit_profile.html", {
         "user_form": user_form
     })
+
+
+
+
+
+
+
+
 
 @login_required
 def patient_dashboard(request):

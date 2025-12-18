@@ -40,8 +40,10 @@ INSTALLED_APPS = [
     'core',
     'accounts',
     'blog',
+    'category',
     'crispy_forms',
     "crispy_bootstrap5",
+    'ckeditor',
 ]
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = "bootstrap5"
