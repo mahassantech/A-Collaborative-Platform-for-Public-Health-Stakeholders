@@ -1,0 +1,6 @@
+<h3>Recover Account Using Token</h3>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Next</button>
+</form>

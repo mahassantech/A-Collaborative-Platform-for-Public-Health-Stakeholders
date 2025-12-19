@@ -26,6 +26,7 @@ body.dark-mode .card { background-color: #2a2a2a !important; color: #fff !import
         <img src="{% if user.profile_pic %}{{ user.profile_pic.url }}{% else %}{% static 'images/avatar.png' %}{% endif %}" 
              class="rounded-circle shadow-sm mb-3" width="120" height="120" style="object-fit: cover;">
         <h4 class="fw-bold">{{ user.username }}</h4>
+        <p><strong>Token: {{ user.token_id }} </strong></p>
         <p class="text-muted mb-1">{{ user.email }}</p>
         <p class="small">Joined: {{ user.date_joined|date:"F j, Y" }}</p>
 

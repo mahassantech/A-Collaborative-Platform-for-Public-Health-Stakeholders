@@ -9,6 +9,15 @@ urlpatterns = [
     path('dashboard/', views.patient_dashboard, name='dashboard'),
     path("edit-profile/", views.edit_profile, name="edit_profile"),
     
+    # token url 
+    
+    path("recover/", views.token_recovery_view, name="token_recovery"),
+    path(
+        "recover/reset/<int:uid>/<str:token>/",
+        views.token_reset_password_verify_view,
+        name="token_reset_password_verify"
+    ),
+    
     path('doctor-dashboard/', views.doctor_dashboard, name='patient_lists'),
     path('patients/<int:patient_id>/', views.view_patient, name='view_patient'),
     path('patients/<int:patient_id>/export/csv/', views.export_patient_csv, name='export_patient_csv'),

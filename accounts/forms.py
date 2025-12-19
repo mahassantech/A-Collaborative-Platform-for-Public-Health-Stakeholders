@@ -107,3 +107,19 @@ class UserUpdateForm(forms.ModelForm):
             cleaned_data["doctor_license"] = ""
             cleaned_data["hospital_name"] = ""
         return cleaned_data
+
+
+# token form added  
+
+class TokenRecoveryForm(forms.Form):
+    token_id = forms.CharField(
+        max_length=12,
+        label="Your Token ID",
+        widget=forms.TextInput(attrs={"class": "form-control", "placeholder": "Enter your token"})
+    )
+
+    def clean_token_id(self):
+        token = self.cleaned_data.get("token_id")
+        if not CustomUser.objects.filter(token_id=token).exists():
+            raise forms.ValidationError("Invalid token!")
+        return token

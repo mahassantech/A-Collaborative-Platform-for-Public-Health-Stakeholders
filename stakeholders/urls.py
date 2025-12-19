@@ -9,7 +9,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('',views.HomeView,name='homes'),
     path('core/',include('core.urls')),
-    path('',include('accounts.urls')),
+    path('accounts/',include('accounts.urls')),
     path("blog/", include("blog.urls")),
 
 ]
