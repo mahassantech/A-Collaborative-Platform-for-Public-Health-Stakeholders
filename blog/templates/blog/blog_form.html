@@ -5,54 +5,52 @@
 <div class="container py-5 blog-create-wrapper">
     <div class="card shadow p-4 blog-card">
 
-        <!-- Header -->
         <div class="text-center mb-4">
             <div class="blog-header-icon mb-2">📝</div>
             <h2 class="fw-bold">Create a New Blog</h2>
             <p class="text-muted">Express your ideas and share them with everyone.</p>
         </div>
 
-        <!-- Form -->
+        {% if form.errors %}
+        <div class="alert alert-danger">
+            {{ form.errors }}
+        </div>
+        {% endif %}
+
         <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
 
-            <!-- Title -->
             <div class="mb-3">
                 {{ form.title.label_tag }}
                 {{ form.title }}
             </div>
 
-            <!-- Content -->
             <div class="mb-3">
                 {{ form.content.label_tag }}
                 {{ form.content }}
             </div>
 
-            <!-- Description -->
             <div class="mb-3">
                 {{ form.description.label_tag }}
                 {{ form.description }}
             </div>
 
-            <!-- Category -->
             <div class="mb-3">
                 {{ form.category.label_tag }}
                 {{ form.category }}
+                <small class="text-muted">You can select multiple categories</small>
             </div>
 
-            <!-- Urgency Level -->
             <div class="mb-3">
                 {{ form.urgency_level.label_tag }}
                 {{ form.urgency_level }}
             </div>
 
-            <!-- Image Upload -->
             <div class="mb-3">
                 {{ form.photo.label_tag }}
                 {{ form.photo }}
             </div>
 
-            <!-- Submit Button -->
             <button type="submit" class="btn btn-primary w-100 fw-bold py-2">
                 Publish Blog
             </button>
@@ -60,31 +58,6 @@
     </div>
 </div>
 
-<!-- CKEditor Scripts -->
-<script src="{% static 'ckeditor/ckeditor.js' %}"></script>
-<script>
-    // Initialize CKEditor for content and description fields
-    CKEDITOR.replace('{{ form.content.id_for_label }}', {
-        height: 250,
-        toolbar: [
-            { name: 'basicstyles', items: ['Bold', 'Italic', 'Underline', 'Strike'] },
-            { name: 'paragraph', items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent'] },
-            { name: 'links', items: ['Link', 'Unlink'] },
-            { name: 'insert', items: ['Image', 'Table'] },
-            { name: 'styles', items: ['Format', 'FontSize'] },
-            { name: 'colors', items: ['TextColor', 'BGColor'] },
-            { name: 'tools', items: ['Maximize'] }
-        ]
-    });
-
-    CKEDITOR.replace('{{ form.description.id_for_label }}', {
-        height: 150,
-        toolbar: [
-            { name: 'basicstyles', items: ['Bold', 'Italic'] },
-            { name: 'paragraph', items: ['NumberedList', 'BulletedList'] },
-            { name: 'links', items: ['Link', 'Unlink'] }
-        ]
-    });
-</script>
+{{ form.media }}  <!-- ✅ CKEditor auto load -->
 
 {% endblock %}

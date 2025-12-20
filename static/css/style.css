@@ -310,5 +310,11 @@ footer.hc-footer p {
     color: #0a4b78;
     margin-bottom: 10px;
 }
+.comment-box {
+  margin-top: 10px;
+  padding-left: calc(var(--depth) * 30px);
+  border-left: 2px solid #e0e0e0;
+}
+
 
 

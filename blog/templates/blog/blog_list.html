@@ -2,40 +2,74 @@
 {% load static %}
 
 {% block content %}
-<div class="container py-5">
-  <h2 class="mb-4">Blog Posts</h2>
+<!-- Blog Posts Section -->
+<section class="py-5 bg-light">
+  <div class="container">
+    <h2 class="text-center mb-5 fw-bold">Latest Blog Posts</h2>
 
-  <!-- Create Blog Button (Only patients can create) -->
-  {% if user.is_authenticated and user.role == 'patient' %}
-    <div class="mb-3">
-      <a href="{% url 'blog_create' %}" class="btn btn-primary">Create New Blog</a>
-    </div>
-  {% endif %}
+    <!-- Create Blog Button (Only patients can create) -->
+    {% if user.is_authenticated and user.role == 'patient' %}
+      <div class="mb-4 text-end">
+        <a href="{% url 'blog_create' %}" class="btn btn-success">Create New Blog</a>
+      </div>
+    {% endif %}
 
-  <!-- Blog List -->
-  <div class="row">
-    {% for blog in blogs %}
-      {% comment %}
-        Doctor: see only patient posts
-        Patient & Analyst: see all posts
-      {% endcomment %}
-      {% if user.role == 'doctor' and blog.author.role == 'patient' or user.role in 'patient analyst' %}
-        <div class="col-md-6 mb-3">
-          <div class="card shadow-sm">
-            <div class="card-body">
+    <div class="row g-4">
+
+      <!-- Blog List -->
+      {% for blog in blogs %}
+        <div class="col-lg-4 col-md-6">
+          <div class="card h-100 shadow-sm border-0">
+            {% if blog.photo %}
+              <img src="{{ blog.photo.url }}" class="card-img-top" alt="{{ blog.title }}" style="height: 200px; object-fit: cover;">
+            {% endif %}
+            <div class="card-body d-flex flex-column">
               <h5 class="card-title">{{ blog.title }}</h5>
+
+              <!-- Author Info -->
               <p class="text-muted mb-1">
-                By {{ blog.author.username }} ({{ blog.author.role|capfirst }}) | {{ blog.created_at|date:"F j, Y" }}
+                By <strong>{{ blog.author.username }}</strong> ({{ blog.author.role|capfirst }}) | 
+                {{ blog.created_at|date:"F j, Y" }}
               </p>
-              <p class="card-text">{{ blog.content|truncatechars:100 }}</p>
-              <a href="{% url 'blog_detail' blog.pk %}" class="btn btn-outline-primary btn-sm">View Details</a>
+
+              {% if blog.description %}
+                <p class="card-text"><strong>Description:</strong> {{ blog.description }}</p>
+              {% endif %}
+
+              <p class="card-text">{{ blog.content|truncatechars:120 }}</p>
+
+              <!-- Category -->
+              {% if blog.category.all %}
+                <p class="mt-auto mb-1">
+                  <strong>Category:</strong> 
+                  {% for cat in blog.category.all %}
+                    <span class="badge bg-info text-dark">{{ cat.name }}</span>
+                  {% endfor %}
+                </p>
+              {% endif %}
+
+              <!-- Urgency -->
+              <p class="mb-2">
+                <strong>Urgency:</strong> 
+                <span class="badge 
+                  {% if blog.urgency_level == 'high' %} bg-danger
+                  {% elif blog.urgency_level == 'medium' %} bg-warning text-dark
+                  {% else %} bg-success
+                  {% endif %}">
+                  {{ blog.urgency_level|capfirst }}
+                </span>
+              </p>
+
+              <a href="{% url 'blog_detail' blog.pk %}" class="btn btn-outline-primary mt-2">Read More</a>
             </div>
           </div>
         </div>
-      {% endif %}
-    {% empty %}
-      <p class="text-muted">No blog posts available.</p>
-    {% endfor %}
+      {% empty %}
+        <p class="text-muted">No blog posts available.</p>
+      {% endfor %}
+
+    </div>
   </div>
-</div>
+</section>
+
 {% endblock %}

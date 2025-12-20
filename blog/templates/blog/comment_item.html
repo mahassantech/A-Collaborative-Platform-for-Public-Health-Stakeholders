@@ -1,0 +1,52 @@
+{% load crispy_forms_tags %}
+
+<div class="mt-3" style="margin-left: {{ level }}rem">
+
+  <div class="d-flex gap-2">
+    {% if comment.user.profile_pic %}
+      <img src="{{ comment.user.profile_pic.url }}" class="rounded-circle" width="40" height="40">
+    {% else %}
+      <div class="rounded-circle bg-secondary text-white d-flex align-items-center justify-content-center"
+           style="width:40px;height:40px;">
+        {{ comment.user.username|slice:":1"|upper }}
+      </div>
+    {% endif %}
+
+    <div class="flex-grow-1">
+      <strong>{{ comment.user.username }}</strong>
+
+      <span class="badge 
+        {% if comment.user.role == 'doctor' %} bg-success
+        {% elif comment.user.role == 'patient' %} bg-primary
+        {% elif comment.user.role == 'analyst' %} bg-warning text-dark
+        {% else %} bg-secondary
+        {% endif %}">
+        {{ comment.user.role|capfirst }}
+      </span>
+
+      <p class="mb-1 mt-1">{{ comment.comment_text }}</p>
+
+      {% if comment.is_advice %}
+        <span class="badge bg-success">Doctor Advice</span>
+      {% endif %}
+
+      {% if user.is_authenticated %}
+        <a href="#" class="reply-btn small text-decoration-none"
+           data-id="{{ comment.id }}">Reply</a>
+
+        <form method="post"
+              id="reply-form-{{ comment.id }}"
+              class="d-none mt-2">
+          {% csrf_token %}
+          <input type="hidden" name="parent_id" value="{{ comment.id }}">
+          {{ comment_form.comment_text|as_crispy_field }}
+          <button class="btn btn-sm btn-outline-primary">Reply</button>
+        </form>
+      {% endif %}
+    </div>
+  </div>
+
+  {% for reply in comment.replies.all %}
+    {% include "blog/comment_item.html" with comment=reply level=level|add:3 %}
+  {% endfor %}
+</div>

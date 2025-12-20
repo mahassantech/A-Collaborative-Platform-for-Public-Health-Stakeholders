@@ -3,18 +3,25 @@ from .models import BlogPost, Comment
 
 @admin.register(BlogPost)
 class BlogPostAdmin(admin.ModelAdmin):
-    list_display = ("title", "author", "author_role", "get_category", "urgency_level", "created_at")
+    list_display = (
+        "title",
+        "author",
+        "author_role",
+        "get_categories",
+        "urgency_level",
+        "created_at",
+    )
     search_fields = ("title", "content", "author__username")
-    list_filter = ("category", "urgency_level", "created_at", "updated_at")
+    list_filter = ("category", "urgency_level", "created_at")
     ordering = ("-created_at",)
 
     def author_role(self, obj):
         return obj.author.role
     author_role.short_description = "Author Role"
 
-    def get_category(self, obj):
-        return obj.category.name if obj.category else "-"
-    get_category.short_description = "Category"
+    def get_categories(self, obj):
+        return ", ".join([cat.name for cat in obj.category.all()])
+    get_categories.short_description = "Categories"
 
 
 @admin.register(Comment)

@@ -1,11 +1,9 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from blog.models import BlogPost
-from .models import BlogPost, Comment
+from .models import BlogPost, Comment,Notification
 from .forms import BlogForm, CommentForm 
 
-
-@login_required
 def blog_create(request):
     if request.method == 'POST':
         form = BlogForm(request.POST, request.FILES)
@@ -13,6 +11,7 @@ def blog_create(request):
             blog = form.save(commit=False)
             blog.author = request.user  # Author assign
             blog.save()
+            form.save_m2m()  # ⭐ Must for ManyToManyField
             return redirect('blog_list')
         else:
             # Debug: print errors
@@ -22,39 +21,76 @@ def blog_create(request):
     
     return render(request, 'blog/blog_form.html', {'form': form})
 
-@login_required
+
+
 def blog_list(request):
-    category_id = request.GET.get('category')  # query param ?category=1
+    category_id = request.GET.get('category')
     blogs = BlogPost.objects.all().order_by('-created_at')
     if category_id:
-        blogs = blogs.filter(category_id=category_id)
-    return render(request, 'blog/blog_list.html', {'blogs': blogs})
+        blogs = blogs.filter(category__id=category_id)
+    return render(request, 'core/blog.html', {'blogs': blogs})
 
 
+# comment 
 
+def get_depth(comment):
+    depth = 0
+    while comment.parent:
+        depth += 1
+        comment = comment.parent
+    return depth
 @login_required
 def blog_detail(request, pk):
     blog = get_object_or_404(BlogPost, pk=pk)
     comment_form = CommentForm()
 
-    if request.method == 'POST':
-        if 'comment_submit' in request.POST:
-            comment_form = CommentForm(request.POST)
-            if comment_form.is_valid():
-                comment = comment_form.save(commit=False)
-                comment.blog = blog
-                comment.user = request.user
-                # doctor advice only if checkbox submitted
-                if request.user.role == "doctor" and request.POST.get("is_advice"):
-                    comment.is_advice = True
-                comment.save()
-                return redirect('blog_detail', pk=pk)
+    if request.method == "POST":
+        comment_form = CommentForm(request.POST)
+        if comment_form.is_valid():
+            comment = comment_form.save(commit=False)
+            comment.blog = blog
+            comment.user = request.user
 
-    return render(request, 'blog/blog_detail.html', {
-        'blog': blog,
-        'comment_form': comment_form,
-    })
-    
+            parent_id = request.POST.get("parent_id")
+            if parent_id:
+                try:
+                    parent_comment = Comment.objects.get(id=parent_id)
+                    comment.parent = parent_comment
+
+                    if parent_comment.user != request.user:
+                        Notification.objects.create(
+                            user=parent_comment.user,
+                            message=f"{request.user.username} replied to your comment"
+                        )
+                except Comment.DoesNotExist:
+                    comment.parent = None
+
+            if request.user.role == "doctor" and request.POST.get("is_advice"):
+                comment.is_advice = True
+
+            comment.save()
+            return redirect("blog_detail", pk=pk)
+
+    top_comments = blog.comments.filter(parent__isnull=True)
+
+    return render(
+        request,
+        "blog/blog_detail.html",
+        {
+            "blog": blog,
+            "comment_form": comment_form,
+            "top_comments": top_comments,
+        },
+    )
+
+
+@login_required
+def notifications(request):
+    notes = request.user.notifications.order_by("-created_at")
+    notes.update(is_read=True)
+    return render(request, "blog/notifications.html", {"notes": notes})
+
+
     
 @login_required
 def doctor_dashboard(request):

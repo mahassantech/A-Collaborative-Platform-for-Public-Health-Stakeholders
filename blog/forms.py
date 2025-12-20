@@ -2,8 +2,8 @@ from django import forms
 from .models import BlogPost, Comment
 from ckeditor.widgets import CKEditorWidget
 from .models import BlogPost
+from crispy_forms.helper import FormHelper
 from category.models import Category
-
 
 class BlogForm(forms.ModelForm):
     class Meta:
@@ -12,23 +12,29 @@ class BlogForm(forms.ModelForm):
         widgets = {
             "title": forms.TextInput(attrs={"class": "form-control"}),
             "content": forms.Textarea(attrs={"class": "form-control", "rows": 5}),
-            "description": forms.Textarea(attrs={"class": "form-control", "rows": 5}),
-            "category": forms.Select(attrs={"class": "form-select"}),  # select box
+            "description": forms.Textarea(attrs={"class": "form-control", "rows": 3}),
+            "category": forms.SelectMultiple(attrs={"class": "form-select"}),  # Multiple select
             "urgency_level": forms.Select(attrs={"class": "form-select"}),
         }
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        # category queryset শুধু active/সব category দেখাতে
         self.fields['category'].queryset = Category.objects.all()
-        self.fields['category'].empty_label = "Select Category"  # placeholder
+
         
-        
+
+
+
 class CommentForm(forms.ModelForm):
-    comment_text = forms.CharField(
-        widget=forms.Textarea(attrs={"class": "form-control", "rows": 3, "placeholder": "Add a comment..."}))
-    
     class Meta:
         model = Comment
-        fields = ["comment_text"]  # is_advice field hidden, set in view
-
+        fields = ["comment_text"]
+        widgets = {
+            "comment_text": forms.Textarea(
+                attrs={
+                    "class": "form-control",
+                    "rows": 2,
+                    "placeholder": "Write a comment..."
+                }
+            )
+        }

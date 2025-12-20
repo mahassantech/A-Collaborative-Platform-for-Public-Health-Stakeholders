@@ -32,7 +32,14 @@ body.dark-mode .card { background-color: #2a2a2a !important; color: #fff !import
 
         {% if user.role == "doctor" %}
             <span class="badge bg-primary px-3 py-2 mb-2">Doctor</span>
-            <p class="small text-primary">Specialization: {{ user.specialization }}</p>
+            <p class="small text-primary">
+    <strong>Specialization:</strong>
+    {% for spec in user.specialization.all %}
+        {{ spec.name }}{% if not forloop.last %}, {% endif %}
+    {% empty %}
+        <span class="text-muted">Not set</span>
+    {% endfor %}
+</p>
         {% elif user.role == "analyst" %}
             <span class="badge bg-secondary px-3 py-2 mb-2">Data Analyst</span>
         {% else %}
