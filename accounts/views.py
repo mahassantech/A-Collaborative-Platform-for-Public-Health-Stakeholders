@@ -29,6 +29,7 @@ from django.conf import settings
 
 
 
+
 # REGISTER VIEW
 
 def register(request):

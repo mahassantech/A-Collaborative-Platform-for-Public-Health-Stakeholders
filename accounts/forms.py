@@ -10,10 +10,10 @@ class RegistrationForm(forms.ModelForm):
         })
     )
 
-    # Multi-select specialization
+    # Multi-select specialization (Dropdown, not checkboxes)
     specialization = forms.ModelMultipleChoiceField(
         queryset=Specialization.objects.all(),
-        widget=forms.CheckboxSelectMultiple,
+        widget=forms.SelectMultiple(attrs={'class': 'form-select'}),
         required=False
     )
 
@@ -59,6 +59,7 @@ class RegistrationForm(forms.ModelForm):
             if self.cleaned_data.get("specialization"):
                 user.specialization.set(self.cleaned_data["specialization"])
         return user
+
 
 
 # PROFILE UPDATE FORM

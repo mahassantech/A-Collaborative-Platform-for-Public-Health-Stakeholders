@@ -3,6 +3,9 @@ from django.contrib.auth.decorators import login_required
 from blog.models import BlogPost
 from .models import BlogPost, Comment,Notification
 from .forms import BlogForm, CommentForm 
+# views.py
+from category.models import Category  # app name অনুযায়ী adjust করো
+
 
 def blog_create(request):
     if request.method == 'POST':
@@ -23,12 +26,22 @@ def blog_create(request):
 
 
 
-def blog_list(request):
-    category_id = request.GET.get('category')
+def blog_list(request, category_slug=None):
+    categories = Category.objects.all()
+    selected_category = None
     blogs = BlogPost.objects.all().order_by('-created_at')
-    if category_id:
-        blogs = blogs.filter(category__id=category_id)
-    return render(request, 'core/blog.html', {'blogs': blogs})
+
+    if category_slug:
+        selected_category = get_object_or_404(Category, slug=category_slug)
+        blogs = blogs.filter(category=selected_category)
+
+    context = {
+        'blogs': blogs,
+        'categories': categories,
+        'selected_category': selected_category,
+    }
+    return render(request, 'core/blog.html', context)
+
 
 
 # comment 
