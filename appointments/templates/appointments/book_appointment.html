@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+<div class="container py-5">
+  <div class="row">
+
+    <!-- LEFT SIDEBAR -->
+    <div class="col-lg-4 mb-4">
+      <div class="card shadow-sm p-3 text-center">
+        <img src="{% if doctor.profile_pic %}{{ doctor.profile_pic.url }}{% else %}{% static 'images/avatar.png' %}{% endif %}" 
+             class="rounded-circle mb-3" width="120" height="120" style="object-fit: cover;">
+        <h4 class="fw-bold">{{ doctor.username }}</h4>
+        <span class="badge bg-primary mb-2">Doctor</span>
+
+        <p class="small text-primary">
+          <strong>Specialization:</strong>
+          {% for spec in doctor.specialization.all %}{{ spec.name }}{% if not forloop.last %}, {% endif %}{% empty %}Not set{% endfor %}
+        </p>
+
+        <hr>
+
+        <h6 class="fw-bold text-start">Practice Locations</h6>
+        {% for loc in doctor.doctor_locations.all %}
+        <div class="card p-2 mb-2 text-start">
+          <strong>{{ loc.name }}</strong><br>
+          <small>📍 {{ loc.address }}</small><br>
+          <small>🗓 {{ loc.days }}</small><br>
+          <small>⏰ {{ loc.start_time }} - {{ loc.end_time }}</small><br>
+          <span class="badge bg-info mt-1">{{ loc.get_appointment_type_display }}</span>
+        </div>
+        {% empty %}
+        <p class="text-muted small text-start">No practice locations added.</p>
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- RIGHT MAIN CONTENT -->
+    <div class="col-lg-8">
+      <div class="card shadow-sm p-4">
+        <h4 class="mb-3">Book an Appointment with {{ doctor.username }}</h4>
+
+        {% if user.is_authenticated %}
+        {% if error %}<p class="text-danger">{{ error }}</p>{% endif %}
+        <form method="post">
+          {% csrf_token %}
+
+          <div class="mb-3">
+            <label for="location" class="form-label">Select Location</label>
+            <select class="form-select" name="location_id" id="location" required>
+              {% for loc_slots in available_slots %}
+                <option value="{{ loc_slots.location.id }}">{{ loc_slots.location.name }}</option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <div class="mb-3">
+            <label for="slot" class="form-label">Available Time Slots</label>
+            <select class="form-select" name="slot" id="slot" required>
+              {% for loc_slots in available_slots %}
+                {% for s in loc_slots.slots %}
+                <option value="{{ s.value }}">{{ loc_slots.location.name }} : {{ s.display }}</option>
+                {% endfor %}
+              {% endfor %}
+            </select>
+          </div>
+
+          <div class="mb-3">
+            <label for="notes" class="form-label">Notes (optional)</label>
+            <textarea class="form-control" name="notes" id="notes" rows="2"></textarea>
+          </div>
+
+          <button type="submit" class="btn btn-success w-100 fw-bold rounded-3">📅 Book Appointment</button>
+        </form>
+        {% else %}
+        <p class="text-muted">Please <a href="{% url 'login' %}">login</a> to book an appointment.</p>
+        {% endif %}
+
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

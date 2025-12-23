@@ -20,47 +20,90 @@ body.dark-mode .card { background-color: #2a2a2a !important; color: #fff !import
 <div class="container-fluid py-5">
   <div class="row g-4">
 
-    <!-- LEFT SIDEBAR -->
-    <div class="col-lg-3 col-md-4">
-      <div class="sidebar dash-card shadow p-4 text-center">
-        <img src="{% if user.profile_pic %}{{ user.profile_pic.url }}{% else %}{% static 'images/avatar.png' %}{% endif %}" 
-             class="rounded-circle shadow-sm mb-3" width="120" height="120" style="object-fit: cover;">
-        <h4 class="fw-bold">{{ user.username }}</h4>
-        <p><strong>Token: {{ user.token_id }} </strong></p>
-        <p class="text-muted mb-1">{{ user.email }}</p>
-        <p class="small">Joined: {{ user.date_joined|date:"F j, Y" }}</p>
+  <!-- LEFT SIDEBAR -->
+<div class="col-lg-3 col-md-4">
+  <div class="sidebar dash-card shadow p-4 text-center">
 
-        {% if user.role == "doctor" %}
-            <span class="badge bg-primary px-3 py-2 mb-2">Doctor</span>
-            <p class="small text-primary">
-    <strong>Specialization:</strong>
-    {% for spec in user.specialization.all %}
-        {{ spec.name }}{% if not forloop.last %}, {% endif %}
-    {% empty %}
-        <span class="text-muted">Not set</span>
-    {% endfor %}
-</p>
-        {% elif user.role == "analyst" %}
-            <span class="badge bg-secondary px-3 py-2 mb-2">Data Analyst</span>
-        {% else %}
-            <span class="badge bg-success px-3 py-2 mb-2">Patient</span>
-        {% endif %}
+    <img src="{% if user.profile_pic %}{{ user.profile_pic.url }}{% else %}{% static 'images/avatar.png' %}{% endif %}" 
+         class="rounded-circle shadow-sm mb-3" width="120" height="120" style="object-fit: cover;">
+
+    <h4 class="fw-bold">{{ user.username }}</h4>
+    <p><strong>Token: {{ user.token_id }}</strong></p>
+    <p class="text-muted mb-1">{{ user.email }}</p>
+    <p class="small">Joined: {{ user.date_joined|date:"F j, Y" }}</p>
+
+    {% if user.role == "doctor" %}
+        <span class="badge bg-primary px-3 py-2 mb-2">Doctor</span>
+
+        <p class="small text-primary">
+          <strong>Specialization:</strong>
+          {% for spec in user.specialization.all %}
+              {{ spec.name }}{% if not forloop.last %}, {% endif %}
+          {% empty %}
+              <span class="text-muted">Not set</span>
+          {% endfor %}
+        </p>
 
         <hr>
 
-        <!-- Quick Actions -->
-        <div class="d-grid gap-2">
-          <a href="{% url 'edit_profile' %}" class="btn btn-warning fw-bold rounded-3 quick-btn">Edit Profile</a>
-          <a href="{% url 'blog_create' %}" class="btn btn-primary fw-bold rounded-3 quick-btn">Create Post</a>
-          {% if user.role == 'doctor' %}
-          <a href="{% url 'patient_lists' %}" class="btn btn-info fw-bold rounded-3 quick-btn">Patient List</a>
-          {% endif %}
-        </div>
+        <!-- 🔹 Doctor Practice Locations -->
+        <h6 class="fw-bold text-start">Practice Locations</h6>
 
-        <!-- Dark Mode Toggle -->
-        <button id="toggleMode" class="btn btn-dark mt-3 rounded-3 w-100">🌙 Dark Mode</button>
-      </div>
+        {% for loc in user.doctor_locations.all %}
+          <div class="card p-2 mb-2 text-start">
+            <strong>{{ loc.name }}</strong><br>
+            <small>📍 {{ loc.address }}</small><br>
+            <small>🗓 {{ loc.days }}</small><br>
+            <small>⏰ {{ loc.start_time }} - {{ loc.end_time }}</small><br>
+            <span class="badge bg-info mt-1">
+              {{ loc.get_appointment_type_display }}
+            </span>
+          </div>
+        {% empty %}
+          <p class="text-muted small text-start">
+            No practice locations added.
+          </p>
+        {% endfor %}
+
+        <a href="{% url 'add_location' %}" 
+           class="btn btn-outline-primary btn-sm w-100 mt-2">
+          ➕ Add Location
+        </a>
+
+    {% elif user.role == "analyst" %}
+        <span class="badge bg-secondary px-3 py-2 mb-2">Data Analyst</span>
+
+    {% else %}
+        <span class="badge bg-success px-3 py-2 mb-2">Patient</span>
+    {% endif %}
+
+    <hr>
+
+    <!-- Quick Actions -->
+    <div class="d-grid gap-2">
+      <a href="{% url 'edit_profile' %}" class="btn btn-warning fw-bold rounded-3 quick-btn">
+        Edit Profile
+      </a>
+
+      <a href="{% url 'blog_create' %}" class="btn btn-primary fw-bold rounded-3 quick-btn">
+        Create Post
+      </a>
+
+      {% if user.role == 'doctor' %}
+        <a href="{% url 'patient_lists' %}" class="btn btn-info fw-bold rounded-3 quick-btn">
+          Patient List
+        </a>
+      {% endif %}
     </div>
+
+    <!-- Dark Mode Toggle -->
+    <button id="toggleMode" class="btn btn-dark mt-3 rounded-3 w-100">
+      🌙 Dark Mode
+    </button>
+
+  </div>
+</div>
+
 
     <!-- RIGHT CONTENT -->
     <div class="col-lg-9 col-md-8">

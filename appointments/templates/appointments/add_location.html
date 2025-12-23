@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container py-5">
+  <div class="card shadow rounded-4 p-4">
+    <h3 class="mb-3">Add Chamber / Schedule</h3>
+
+    <form method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+
+      <button class="btn btn-success mt-3">
+        Save Location
+      </button>
+    </form>
+  </div>
+</div>
+
+{% endblock %}

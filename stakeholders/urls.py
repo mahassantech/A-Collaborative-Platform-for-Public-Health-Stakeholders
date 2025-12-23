@@ -11,6 +11,8 @@ urlpatterns = [
     path('core/',include('core.urls')),
     path('accounts/',include('accounts.urls')),
     path("blog/", include("blog.urls")),
+    path("appointments/", include("appointments.urls")),
+
 
 ]
 
