@@ -80,22 +80,31 @@ body.dark-mode .card { background-color: #2a2a2a !important; color: #fff !import
     <hr>
 
     <!-- Quick Actions -->
-    <div class="d-grid gap-2">
-      <a href="{% url 'edit_profile' %}" class="btn btn-warning fw-bold rounded-3 quick-btn">
-        Edit Profile
-      </a>
+<div class="d-grid gap-2">
 
-      <a href="{% url 'blog_create' %}" class="btn btn-primary fw-bold rounded-3 quick-btn">
-        Create Post
-      </a>
+  <!-- Edit Profile -->
+  <a href="{% url 'edit_profile' %}" class="btn btn-warning fw-bold rounded-3 quick-btn">
+    Edit Profile
+  </a>
 
-      {% if user.role == 'doctor' %}
-        <a href="{% url 'patient_lists' %}" class="btn btn-info fw-bold rounded-3 quick-btn">
-          Patient List
-        </a>
-      {% endif %}
-    </div>
+  <!-- Create Blog Post -->
+  <a href="{% url 'blog_create' %}" class="btn btn-primary fw-bold rounded-3 quick-btn">
+    Create Post
+  </a>
 
+  <!-- Appointment List -->
+  <a href="{% url 'doctor_my_appointment' %}" class="btn btn-success fw-bold rounded-3 quick-btn">
+    Appointment List
+  </a>
+
+  <!-- Patient List (Doctor Only) -->
+  {% if user.role == 'doctor' %}
+    <a href="{% url 'patient_lists' %}" class="btn btn-info fw-bold rounded-3 quick-btn">
+      Patient List
+    </a>
+  {% endif %}
+
+</div>
     <!-- Dark Mode Toggle -->
     <button id="toggleMode" class="btn btn-dark mt-3 rounded-3 w-100">
       🌙 Dark Mode

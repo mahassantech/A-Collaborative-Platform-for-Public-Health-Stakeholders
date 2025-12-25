@@ -141,8 +141,6 @@ def appointments_success(request):
     return render(request, 'appointments/success.html')
 
 
-
-
 @login_required
 def my_appointments(request):
     appointments = request.user.appointments.order_by('-date', '-start_time')
@@ -150,22 +148,32 @@ def my_appointments(request):
 
 
 @login_required
-def doctor_my_appointments(request):
+def doctor_my_appointment(request):
     if request.user.role != "doctor":
         return redirect('home')
 
+    # All appointments for this doctor
     appointments = request.user.doctor_appointments.order_by('date', 'start_time')
 
     if request.method == 'POST':
         appt_id = request.POST.get('appointment_id')
         action = request.POST.get('action')
-        appointment = Appointment.objects.get(id=appt_id, doctor=request.user)
+        appointment = get_object_or_404(Appointment, id=appt_id, doctor=request.user)
+
         if action == "confirm":
             appointment.status = "confirmed"
         elif action == "cancel":
             appointment.status = "cancelled"
+        elif action == "complete":
+            appointment.status = "completed"
         appointment.save()
-        return redirect('doctor_my_appointments')
+        return redirect('doctor_my_appointment')
 
-    return render(request, 'appointments/doctor_my_appointments.html', {'appointments': appointments})
+    # Separate upcoming and past appointments
+    upcoming = appointments.filter(status__in=['pending', 'confirmed'])
+    past = appointments.filter(status__in=['completed', 'cancelled'])
 
+    return render(request, 'appointments/doctor_appointments.html', {
+        'upcoming': upcoming,
+        'past': past
+    })

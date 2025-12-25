@@ -1,40 +1,93 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="container py-5">
-  <h2>Pending Appointments</h2>
+    <h3 class="mb-4">All Appointment</h3>
 
-  {% if appointments %}
-    <table class="table table-striped">
-      <thead>
-        <tr>
-          <th>Patient</th>
-          <th>Location</th>
-          <th>Date</th>
-          <th>Time</th>
-          <th>Action</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for appt in appointments %}
-        <tr>
-          <td>{{ appt.patient.username }}</td>
-          <td>{{ appt.location.name }}</td>
-          <td>{{ appt.date }}</td>
-          <td>{{ appt.start_time }} - {{ appt.end_time }}</td>
-          <td>
-            <form method="post" class="d-inline-block">
-              {% csrf_token %}
-              <input type="hidden" name="appointment_id" value="{{ appt.id }}">
-              <button name="action" value="confirm" class="btn btn-sm btn-success">Confirm</button>
-              <button name="action" value="cancel" class="btn btn-sm btn-danger">Cancel</button>
-            </form>
-          </td>
-        </tr>
-        {% endfor %}
-      </tbody>
+    <h5>Upcoming Appointments</h5>
+    <table class="table table-bordered mb-5">
+        <thead>
+            <tr>
+                <th>Patient</th>
+                <th>Date</th>
+                <th>Time</th>
+                <th>Location</th>
+                <th>Notes</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for appt in upcoming %}
+            <tr>
+                <td>{{ appt.patient.username }}</td>
+                <td>{{ appt.date }}</td>
+                <td>{{ appt.start_time }} - {{ appt.end_time }}</td>
+                <td>{{ appt.location.name }}</td>
+                <td>{{ appt.notes }}</td>
+                <td>
+                    {% if appt.status == "pending" %}
+                        <span class="badge bg-warning">Pending</span>
+                    {% elif appt.status == "confirmed" %}
+                        <span class="badge bg-success">Confirmed</span>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if appt.status == "pending" %}
+                    <form method="post" style="display:inline;">
+                        {% csrf_token %}
+                        <input type="hidden" name="appointment_id" value="{{ appt.id }}">
+                        <button type="submit" name="action" value="confirm" class="btn btn-success btn-sm">Confirm</button>
+                        <button type="submit" name="action" value="cancel" class="btn btn-danger btn-sm">Cancel</button>
+                    </form>
+                    {% elif appt.status == "confirmed" %}
+                    <form method="post" style="display:inline;">
+                        {% csrf_token %}
+                        <input type="hidden" name="appointment_id" value="{{ appt.id }}">
+                        <button type="submit" name="action" value="complete" class="btn btn-primary btn-sm">Mark as Completed</button>
+                    </form>
+                    {% else %}
+                        -
+                    {% endif %}
+                </td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="7">No upcoming appointments.</td></tr>
+            {% endfor %}
+        </tbody>
     </table>
-  {% else %}
-    <p>No pending appointments.</p>
-  {% endif %}
+
+    <h5>Past / Cancelled Appointments</h5>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Patient</th>
+                <th>Date</th>
+                <th>Time</th>
+                <th>Location</th>
+                <th>Notes</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for appt in past %}
+            <tr>
+                <td>{{ appt.patient.username }}</td>
+                <td>{{ appt.date }}</td>
+                <td>{{ appt.start_time }} - {{ appt.end_time }}</td>
+                <td>{{ appt.location.name }}</td>
+                <td>{{ appt.notes }}</td>
+                <td>
+                    {% if appt.status == "completed" %}
+                        <span class="badge bg-primary">Completed</span>
+                    {% elif appt.status == "cancelled" %}
+                        <span class="badge bg-danger">Cancelled</span>
+                    {% endif %}
+                </td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="6">No past appointments.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
 </div>
 {% endblock %}
