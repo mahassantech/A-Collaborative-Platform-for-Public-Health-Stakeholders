@@ -23,14 +23,13 @@ class DoctorLocationForm(forms.ModelForm):
 
 
 class AppointmentForm(forms.ModelForm):
-    # 🔹 Hidden field for selected slot (e.g., "10:00-10:30")
-    time_slot = forms.CharField(required=True, widget=forms.HiddenInput())
+    time_slot = forms.CharField(widget=forms.HiddenInput())
 
     class Meta:
         model = Appointment
-        fields = ['location', 'date', 'notes']  # remove start_time/end_time
+        fields = ["location", "date", "notes"]
         widgets = {
-            'date': forms.DateInput(attrs={'type': 'date', 'class':'form-control'}),
-            'notes': forms.Textarea(attrs={'rows': 2, 'placeholder': 'Add any notes', 'class':'form-control'}),
-            'location': forms.Select(attrs={'class':'form-select'}),
+            "date": forms.DateInput(attrs={"type": "date", "class": "form-control"}),
+            "location": forms.Select(attrs={"class": "form-select"}),
+            "notes": forms.Textarea(attrs={"rows": 2, "class": "form-control"}),
         }

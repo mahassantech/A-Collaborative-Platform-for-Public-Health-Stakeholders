@@ -9,7 +9,7 @@ from .forms import AppointmentForm
 from accounts.models import CustomUser
 from datetime import datetime, timedelta
 from .models import CustomUser, DoctorLocation, Appointment
-from datetime import datetime, timedelta, date
+from datetime import datetime, date as today_date, timedelta
 
 
 
@@ -45,85 +45,94 @@ def doctor_locations(request):
 
 @login_required
 def book_appointment(request, doctor_id):
-    doctor = get_object_or_404(CustomUser, id=doctor_id, role='doctor')
-
-    # Precompute available slots for each location
-    available_slots = []
-    for loc in doctor.doctor_locations.all():
-        start = loc.start_time
-        end = loc.end_time
-        slots = []
-        current = datetime.combine(datetime.today(), start)
-        end_dt = datetime.combine(datetime.today(), end)
-        while current + timedelta(minutes=30) <= end_dt:
-            slot_start = current.time()
-            slot_end = (current + timedelta(minutes=30)).time()
-
-            # Check if already booked
-            booked = Appointment.objects.filter(
-                doctor=doctor,
-                location=loc,
-                date=datetime.today().date(),
-                start_time__lt=slot_end,
-                end_time__gt=slot_start,
-                status__in=['pending', 'confirmed']
-            ).exists()
-            if not booked:
-                # value = 24h format for parsing
-                value = f"{slot_start.strftime('%H:%M')}-{slot_end.strftime('%H:%M')}"
-                # display = friendly AM/PM
-                display = f"{slot_start.strftime('%I:%M %p')} - {slot_end.strftime('%I:%M %p')}"
-                slots.append({'value': value, 'display': display})
-            current += timedelta(minutes=30)
-        available_slots.append({'location': loc, 'slots': slots})
+    doctor = get_object_or_404(CustomUser, id=doctor_id, role="doctor")
 
     error = None
+    available_slots = []
 
-    if request.method == 'POST':
-        location_id = request.POST.get('location_id')
-        slot = request.POST.get('slot')
-        notes = request.POST.get('notes')
+    # ================= POST REQUEST =================
+    if request.method == "POST":
+        location_id = request.POST.get("location_id")
+        slot_value = request.POST.get("slot")
+        date_str = request.POST.get("date")
+        notes = request.POST.get("notes")
 
-        # Validate slot
-        try:
-            start_str, end_str = slot.strip().split('-')
-            start_time = datetime.strptime(start_str, "%H:%M").time()
-            end_time = datetime.strptime(end_str, "%H:%M").time()
-        except:
-            error = "Invalid time slot selected."
-            start_time = end_time = None
-
-        location = doctor.doctor_locations.get(id=location_id)
-
-        # Check overlapping
-        if start_time and end_time:
-            overlapping = Appointment.objects.filter(
-                doctor=doctor,
-                location=location,
-                date=datetime.today().date(),
-                start_time__lt=end_time,
-                end_time__gt=start_time,
-                status__in=['pending', 'confirmed']
+        if not (location_id and slot_value and date_str):
+            error = "Please select date, location and time slot."
+        else:
+            location = get_object_or_404(
+                DoctorLocation, id=location_id, doctor=doctor
             )
-            if overlapping.exists():
-                error = "This slot is already booked. Please choose another time."
-            else:
-                # Save appointment
-                Appointment.objects.create(
-                    patient=request.user,
-                    doctor=doctor,
-                    location=location,
-                    date=datetime.today().date(),
-                    start_time=start_time,
-                    end_time=end_time,
-                    notes=notes
-                )
-                return redirect('appointments_success')
 
-    return render(request, 'appointments/book_appointment.html', {
-        'doctor': doctor,
-        'available_slots': available_slots,
-        'error': error
+            date = datetime.strptime(date_str, "%Y-%m-%d").date()
+
+            # 🔴 BLOCK BACK DATE
+            if date < today_date.today():
+                error = "You cannot book an appointment for a past date."
+            else:
+                # 🔹 DAY VALIDATION
+                weekday = date.strftime("%a")  # Sun, Mon
+                allowed_days = [d.strip() for d in location.days.split(",")]
+
+                if weekday not in allowed_days:
+                    error = f"Doctor is not available on {weekday}"
+                else:
+                    start_str, end_str = slot_value.split("-")
+                    start_time = datetime.strptime(
+                        start_str.strip(), "%H:%M"
+                    ).time()
+                    end_time = datetime.strptime(
+                        end_str.strip(), "%H:%M"
+                    ).time()
+
+                    # 🔹 SLOT ALREADY BOOKED?
+                    exists = Appointment.objects.filter(
+                        doctor=doctor,
+                        location=location,
+                        date=date,
+                        start_time=start_time,
+                        status__in=["pending", "confirmed"]
+                    ).exists()
+
+                    if exists:
+                        error = "This slot is already booked."
+                    else:
+                        Appointment.objects.create(
+                            patient=request.user,
+                            doctor=doctor,
+                            location=location,
+                            date=date,
+                            start_time=start_time,
+                            end_time=end_time,
+                            notes=notes
+                        )
+                        return redirect("appointments_success")
+
+    # ================= SLOT GENERATION (GET) =================
+    for loc in doctor.doctor_locations.all():
+        slots = []
+        current = datetime.combine(today_date.today(), loc.start_time)
+        end_dt = datetime.combine(today_date.today(), loc.end_time)
+
+        while current + timedelta(minutes=30) <= end_dt:
+            s = current.time()
+            e = (current + timedelta(minutes=30)).time()
+            slots.append({
+                "value": f"{s.strftime('%H:%M')}-{e.strftime('%H:%M')}",
+                "display": f"{s.strftime('%I:%M %p')} - {e.strftime('%I:%M %p')}"
+            })
+            current += timedelta(minutes=30)
+
+        available_slots.append({
+            "location": loc,
+            "slots": slots
+        })
+
+    return render(request, "appointments/book_appointment.html", {
+        "doctor": doctor,
+        "available_slots": available_slots,
+        "error": error,
+        "today": today_date.today()
     })
 
 

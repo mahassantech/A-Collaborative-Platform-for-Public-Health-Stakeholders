@@ -46,24 +46,30 @@
           {% csrf_token %}
 
           <div class="mb-3">
-            <label for="location" class="form-label">Select Location</label>
-            <select class="form-select" name="location_id" id="location" required>
-              {% for loc_slots in available_slots %}
-                <option value="{{ loc_slots.location.id }}">{{ loc_slots.location.name }}</option>
-              {% endfor %}
-            </select>
-          </div>
+  <label for="location" class="form-label">Select Location</label>
+  <select class="form-select" name="location_id" id="location" required>
+    {% for loc_slots in available_slots %}
+      <option value="{{ loc_slots.location.id }}">{{ loc_slots.location.name }}</option>
+    {% endfor %}
+  </select>
+</div>
 
-          <div class="mb-3">
-            <label for="slot" class="form-label">Available Time Slots</label>
-            <select class="form-select" name="slot" id="slot" required>
-              {% for loc_slots in available_slots %}
-                {% for s in loc_slots.slots %}
-                <option value="{{ s.value }}">{{ loc_slots.location.name }} : {{ s.display }}</option>
-                {% endfor %}
-              {% endfor %}
-            </select>
-          </div>
+<div class="mb-3">
+  <label for="date" class="form-label">Select Appointment Date</label>
+  <input type="date" class="form-control" name="date" required>
+</div>
+
+<div class="mb-3">
+  <label for="slot" class="form-label">Available Time Slots</label>
+  <select class="form-select" name="slot" id="slot" required>
+    {% for loc_slots in available_slots %}
+      {% for s in loc_slots.slots %}
+        <option value="{{ s.value }}">{{ s.display }}</option>
+      {% endfor %}
+    {% endfor %}
+  </select>
+</div>
+
 
           <div class="mb-3">
             <label for="notes" class="form-label">Notes (optional)</label>
