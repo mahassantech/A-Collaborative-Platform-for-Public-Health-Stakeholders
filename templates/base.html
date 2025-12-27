@@ -9,13 +9,20 @@
   <title>HealthConnect</title>
 
   <!-- Bootstrap -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
   <!-- Icons -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
-  <!-- Custom Style -->
-  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+<link rel="stylesheet"
+href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
+<!-- Custom Style -->
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+<link rel="stylesheet" href="{% static 'css/pricing.css' %}">
+<link rel="stylesheet" href="{% static 'css/profile.css' %}">
+
 </head>
 
 <body style="padding-top: 78px;">
@@ -35,13 +42,14 @@
     <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
       <ul class="navbar-nav gap-4 fs-6">
         <li class="nav-item"><a class="nav-link text-white nav-hover" href="/">Dashboard</a></li>
-        <li class="nav-item"><a class="nav-link text-white nav-hover" href="{% url 'CommunityPage' %}">Community</a></li>
+        {% comment %} <li class="nav-item"><a class="nav-link text-white nav-hover" href="{% url 'CommunityPage' %}">Community</a></li> {% endcomment %}
         <li class="nav-item"><a class="nav-link text-white nav-hover" href="{% url 'healthPage' %}">Wellness</a></li>
         <li class="nav-item"><a class="nav-link text-white nav-hover" href="{% url 'doctor_list' %}">Doctors</a></li>
         {% comment %} <li class="nav-item"><a class="nav-link text-white nav-hover" href="{% url 'conditionspage' %}">Diseases</a></li> {% endcomment %}
         <li class="nav-item"><a class="nav-link text-white nav-hover" href="{% url 'treatmentPage' %}">Care Guides</a>
         </li>
         <li class="nav-item"><a class="nav-link text-white nav-hover" href="{% url 'blog_list' %}">Blog</a></li>
+        <li class="nav-item"><a class="nav-link text-white nav-hover" href="{% url 'subscription_plans' %}">Pricing</a></li>
       </ul>
     </div>
 
@@ -256,6 +264,77 @@
     </div>
   </div>
 </section>
+
+<!--  Subscription Plans  -->
+<section class="container py-5">
+  <h2 class="text-center fw-bold mb-5">Choose Your Subscription Plan</h2>
+  <p class="text-center text-muted mb-5">
+    Secure online health & appointment platform
+  </p>
+
+  <div class="row g-4 justify-content-center">
+
+    <!-- Free Plan -->
+    <div class="col-md-4">
+      <div class="pricing-card free p-4 text-center shadow-sm">
+        <h5 class="plan-title">Free</h5>
+        <p class="text-muted">Basic Access</p>
+
+        <ul class="plan-features text-start mb-3">
+          <li>View doctor profiles</li>
+          <li>Unlimited health blogs</li>
+          <li>Unlimited comments & replies</li>
+          <li class="disabled">Book appointments</li>
+          <li class="disabled">Google Meet consultation</li>
+        </ul>
+
+        <button class="btn btn-outline-secondary w-100" disabled>Not Available</button>
+      </div>
+    </div>
+
+    <!-- Premium Plans -->
+    {% for plan in plans %}
+    <div class="col-md-4">
+      <div class="pricing-card {% if plan.name == "premium_6" %}premium{% else %}premium-plus{% endif %} p-4 text-center shadow-sm position-relative">
+
+        {% if plan.name == "premium_6" %}
+        <span class="badge-popular position-absolute top-0 start-50 translate-middle-x mt-2 px-3 py-1 rounded-pill bg-warning text-dark">
+          Most Popular
+        </span>
+        {% endif %}
+
+        <h5 class="plan-title mt-3">{{ plan.get_name_display }}</h5>
+        <p class="price">৳{{ plan.price }}</p>
+        <p class="text-light">{{ plan.duration_months }} months access</p>
+
+        <ul class="plan-features text-start mb-3">
+          <li>Appointment booking</li>
+          <li>Google Meet link after confirmation</li>
+          <li>Unlimited health blogs</li>
+          <li>Unlimited comments & replies</li>
+          <li>Appointment status tracking</li>
+        </ul>
+
+        <!-- Buy Now / Login to Buy -->
+        {% if user.is_authenticated %}
+          <a href="{% url 'payment_page' plan.id %}" class="btn btn-primary w-100 fw-bold">
+            Buy Now
+          </a>
+        {% else %}
+          <a href="{% url 'login' %}?next={% url 'payment_page' plan.id %}" class="btn btn-primary w-100 fw-bold">
+            Login to Buy
+          </a>
+        {% endif %}
+
+      </div>
+    </div>
+    {% empty %}
+    <p class="text-center text-muted">No subscription plans available at the moment.</p>
+    {% endfor %}
+
+  </div>
+</section>
+
 
 
 <!-- Blog -->

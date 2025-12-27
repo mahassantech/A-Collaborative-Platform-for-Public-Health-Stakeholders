@@ -1,4 +1,6 @@
 from django.shortcuts import render
+from subscriptions.models import SubscriptionPlan
 
 def HomeView(request):
-    return render(request,'base.html')
+    plans = SubscriptionPlan.objects.all()
+    return render(request,'base.html',{"plans": plans})

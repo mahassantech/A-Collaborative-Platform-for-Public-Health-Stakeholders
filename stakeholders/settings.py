@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     "crispy_bootstrap5",
     'ckeditor',
     'appointments',
+    'subscriptions',
 ]
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = 'bootstrap5'
@@ -150,5 +151,8 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 DEFAULT_FROM_EMAIL = 'webmaster@localhost'
 
 
-# ... পরের settings ...
 
+# SSLCommerz Settings (Sandbox)
+SSLCOMMERZ_STORE_ID = "testbox"
+SSLCOMMERZ_STORE_PASS = "qwerty"
+SSLCOMMERZ_SANDBOX = True

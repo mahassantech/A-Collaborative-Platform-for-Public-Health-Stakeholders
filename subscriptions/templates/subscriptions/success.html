@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Payment Successful</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f7fa;
+            text-align: center;
+            padding-top: 100px;
+        }
+        .box {
+            background: white;
+            width: 400px;
+            margin: auto;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        .success {
+            color: green;
+            font-size: 22px;
+            font-weight: bold;
+        }
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            text-decoration: none;
+            color: white;
+            background: green;
+            padding: 10px 20px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <p class="success">✅ Payment Successful!</p>
+        <p>Your subscription has been activated.</p>
+        <a href="{% url 'subscription_plans' %}">Go to Dashboard</a>
+    </div>
+</body>
+</html>

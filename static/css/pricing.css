@@ -1,0 +1,134 @@
+/* ===== Common Card ===== */
+.pricing-card {
+  border-radius: 24px;
+  padding: 36px 28px;
+  height: 100%;
+  text-align: center;
+  position: relative;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+  transition: all 0.35s ease;
+}
+
+.pricing-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 22px 55px rgba(0,0,0,0.14);
+}
+
+/* ===== Title & Price ===== */
+.plan-title {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.price {
+  font-size: 36px;
+  font-weight: 800;
+  margin: 18px 0;
+}
+
+/* ===== Features ===== */
+.plan-features {
+  list-style: none;
+  padding: 0;
+  margin: 26px 0;
+  text-align: left;
+}
+
+.plan-features li {
+  margin-bottom: 14px;
+  padding-left: 30px;
+  position: relative;
+  font-size: 15px;
+}
+
+.plan-features li::before {
+  content: "✔";
+  position: absolute;
+  left: 0;
+  font-weight: bold;
+}
+
+.plan-features li.disabled {
+  opacity: 0.5;
+}
+
+.plan-features li.disabled::before {
+  content: "✖";
+}
+
+/* ===== Buttons ===== */
+.pricing-card .btn {
+  border-radius: 16px;
+  padding: 12px;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+/* ================= FREE PLAN ================= */
+.pricing-card.free {
+  background: linear-gradient(135deg, #e8f7f4, #f4fbfa);
+  border: 2px solid #cceee8;
+}
+
+.pricing-card.free .plan-title,
+.pricing-card.free .price,
+.pricing-card.free .plan-features li::before {
+  color: #0f766e;
+}
+
+/* ================= PREMIUM 6 MONTHS ================= */
+.pricing-card.premium {
+  background: linear-gradient(135deg, #1cc7d0, #2f80ed);
+  color: #ffffff;
+}
+
+.pricing-card.premium:hover {
+  transform: translateY(-12px) scale(1.06);
+}
+
+.pricing-card.premium .price,
+.pricing-card.premium .plan-features li::before {
+  color: #ffffff;
+}
+
+.pricing-card.premium .btn {
+  background: #ffffff;
+  color: #2f80ed;
+  border: none;
+}
+
+/* Popular badge */
+.badge-popular {
+  position: absolute;
+  top: -16px;
+  right: 24px;
+  background: linear-gradient(135deg, #ffd166, #f4b400);
+  color: #000;
+  padding: 8px 18px;
+  border-radius: 30px;
+  font-size: 12px;
+  font-weight: bold;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+}
+
+/* ================= PREMIUM 12 MONTHS ================= */
+.pricing-card.premium-plus {
+  background: linear-gradient(135deg, #6a11cb, #2575fc);
+  color: #ffffff;
+}
+
+.pricing-card.premium-plus:hover {
+  transform: translateY(-10px) scale(1.04);
+}
+
+.pricing-card.premium-plus .price,
+.pricing-card.premium-plus .plan-features li::before {
+  color: #ffffff;
+}
+
+.pricing-card.premium-plus .btn {
+  background: #ffffff;
+  color: #6a11cb;
+  border: none;
+}

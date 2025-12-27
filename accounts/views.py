@@ -15,7 +15,6 @@ from django.contrib import messages
 from .forms import TokenRecoveryForm
 from .models import CustomUser
 from django.contrib.auth.forms import SetPasswordForm
-
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import SetPasswordForm
 from django.contrib.auth.tokens import default_token_generator
@@ -25,9 +24,10 @@ from django.contrib import messages
 from .forms import TokenRecoveryForm
 from .models import CustomUser
 from django.conf import settings
-
-
-
+from django.shortcuts import render
+from django.utils import timezone
+from subscriptions.models import UserSubscription
+from blog.models import Comment 
 
 
 # REGISTER VIEW
@@ -80,15 +80,41 @@ def logout_view(request):
 
 # PROFILE VIEW
 
+
 @login_required
 def profile_view(request):
     user = request.user
-    recent_posts = user.posts.all().order_by('-created_at')[:5]  # recent posts
+
+    # Recent posts and comments
+    recent_posts = user.posts.all().order_by('-created_at')[:5]
     recent_comments = Comment.objects.filter(user=user).order_by('-created_at')[:5]
+
+    # Subscription info
+    subscription = UserSubscription.objects.filter(user=user).first()  # fetch even inactive
+    remaining_days = None
+    progress_percent = None
+    now = timezone.now()
+
+    if subscription:
+        total_seconds = (subscription.end_date - subscription.start_date).total_seconds()
+        remaining_seconds = (subscription.end_date - now).total_seconds()
+        remaining_days = max(0, (subscription.end_date - now).days)
+
+        if total_seconds > 0:
+            progress_percent = max(0, min(100, 100 - (remaining_seconds / total_seconds) * 100))
+
+        # mark expired subscription inactive
+        if remaining_days == 0 and subscription.is_active:
+            subscription.is_active = False
+            subscription.save()
+
     context = {
         'user': user,
         'recent_posts': recent_posts,
         'recent_comments': recent_comments,
+        'subscription': subscription if subscription and subscription.is_active else None,
+        'remaining_days': remaining_days,
+        'progress_percent': progress_percent,
     }
     return render(request, "accounts/profile.html", context)
 

@@ -3,20 +3,6 @@
 
 {% block content %}
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-
-<style>
-/* ===== General Styles ===== */
-body.dark-mode { background-color: #1a1a1a !important; color: #e2e2e2 !important; }
-body.dark-mode .card { background-color: #2a2a2a !important; color: #fff !important; transition: 0.3s; }
-.dash-card { transition: 0.3s ease-in-out; border-radius: 16px; }
-.dash-card:hover { transform: translateY(-4px); box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
-.sidebar { min-height: 100vh; background: rgba(255,255,255,0.05); padding: 20px; border-radius: 16px; }
-.sidebar.dark-mode { background: rgba(0,0,0,0.3); }
-.sidebar .badge { font-size: 0.75rem; }
-.quick-btn { margin: 3px; }
-</style>
-
 <div class="container-fluid py-5">
   <div class="row g-4">
 
@@ -31,6 +17,25 @@ body.dark-mode .card { background-color: #2a2a2a !important; color: #fff !import
     <p><strong>Token: {{ user.token_id }}</strong></p>
     <p class="text-muted mb-1">{{ user.email }}</p>
     <p class="small">Joined: {{ user.date_joined|date:"F j, Y" }}</p>
+    <!-- Subscription Badge -->
+        {% if subscription %}
+          <p class="mt-2 mb-1">
+            <span class="badge bg-success fw-bold">
+              ✅ Subscription Active
+            </span>
+          </p>
+          <small class="text-muted d-block">
+            Plan: {{ subscription.plan.name }}<br>
+            Ends: {{ subscription.end_date|date:"M d, Y" }}
+          </small>
+        {% else %}
+          <p class="mt-2 mb-1">
+            <span class="badge bg-secondary fw-bold">
+              ❌ No Active Subscription
+            </span>
+          </p>
+        {% endif %}
+    
 
     {% if user.role == "doctor" %}
         <span class="badge bg-primary px-3 py-2 mb-2">Doctor</span>
@@ -43,8 +48,10 @@ body.dark-mode .card { background-color: #2a2a2a !important; color: #fff !import
               <span class="text-muted">Not set</span>
           {% endfor %}
         </p>
+        
 
         <hr>
+        
 
         <!-- 🔹 Doctor Practice Locations -->
         <h6 class="fw-bold text-start">Practice Locations</h6>
@@ -133,6 +140,34 @@ body.dark-mode .card { background-color: #2a2a2a !important; color: #fff !import
 
     <!-- RIGHT CONTENT -->
     <div class="col-lg-9 col-md-8">
+      <!-- Subscription Card -->
+      <div class="row mb-4">
+        <div class="col-md-12">
+          <div class="card shadow-sm p-3">
+            {% if subscription %}
+              <h6 class="fw-bold text-success">✅ Your Subscription is Active</h6>
+              <p>Plan: {{ subscription.plan.name }}</p>
+              <p>Start Date: {{ subscription.start_date|date:"M d, Y" }}</p>
+              <p>End Date: {{ subscription.end_date|date:"M d, Y" }}</p>
+
+              <!-- Remaining Days & Progress Bar -->
+              <p>Subscription Remaining: {{ remaining_days }} days</p>
+              <div class="progress mb-2">
+                <div class="progress-bar" role="progressbar" 
+                     style="width: {{ progress_percent }}%;" 
+                     aria-valuenow="{{ progress_percent }}" aria-valuemin="0" aria-valuemax="100">
+                  {{ progress_percent|floatformat:0 }}%
+                </div>
+              </div>
+
+            {% else %}
+              <h6 class="fw-bold text-secondary">❌ No Active Subscription</h6>
+              <p>You currently have no active subscription.</p>
+              <a href="{% url 'subscription_plans' %}" class="btn btn-primary btn-sm mt-2">View Plans</a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
 
       <!-- Stats Cards -->
       <div class="row g-3 mb-4">

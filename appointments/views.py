@@ -11,6 +11,8 @@ from datetime import datetime, timedelta
 from .models import CustomUser, DoctorLocation, Appointment
 from datetime import datetime, date as today_date, timedelta
 from blog.models import Notification   
+from subscriptions.utils import can_book_appointment
+from django.contrib import messages
 
 
 
@@ -46,6 +48,9 @@ def doctor_locations(request):
 
 @login_required
 def book_appointment(request, doctor_id):
+    if not can_book_appointment(request.user):
+        messages.error(request, "You need an active Premium subscription to book an appointment.")
+        return redirect("subscription_plans")
     doctor = get_object_or_404(CustomUser, id=doctor_id, role="doctor")
 
     error = None

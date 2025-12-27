@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+<div class="container py-5">
+  <h2 class="text-center fw-bold mb-2">Choose Your Subscription Plan</h2>
+  <p class="text-center text-muted mb-5">
+    Secure online health & appointment platform
+  </p>
+  
+  
+
+  <div class="row g-4 justify-content-center">
+
+    <!-- ================= FREE PLAN ================= -->
+    <div class="col-md-4">
+      <div class="pricing-card free">
+        <h5 class="plan-title">Free</h5>
+        <p class="text-muted">Basic Access</p>
+
+        <ul class="plan-features">
+          <li>View doctor profiles</li>
+          <li>Unlimited health blogs</li>
+          <li>Unlimited comments & replies</li>
+          <li class="disabled">Book appointments</li>
+          <li class="disabled">Google Meet consultation</li>
+        </ul>
+
+        <button class="btn btn-outline-secondary w-100" disabled>
+          Not Available
+        </button>
+      </div>
+    </div>
+
+    <!-- ================= PREMIUM PLANS ================= -->
+    {% for plan in plans %}
+    <div class="col-md-4">
+
+      {% if plan.name == "premium_6" %}
+      <div class="pricing-card premium">
+        <span class="badge-popular">Most Popular</span>
+      {% else %}
+      <div class="pricing-card premium-plus">
+      {% endif %}
+
+        <h5 class="plan-title">{{ plan.get_name_display }}</h5>
+        <p class="price">৳{{ plan.price }}</p>
+        <p class="text-light">{{ plan.duration_months }} months access</p>
+
+        <ul class="plan-features">
+          <li>Appointment booking</li>
+          <li>Google Meet link after confirmation</li>
+          <li>Unlimited health blogs</li>
+          <li>Unlimited comments & replies</li>
+          <li>Appointment status tracking</li>
+        </ul>
+
+        <a href="{% url 'payment_page' plan.id %}" class="btn w-100 fw-bold">
+          Buy Now
+        </a>
+      </div>
+
+    </div>
+    {% endfor %}
+
+  </div>
+</div>
+
+{% endblock %}

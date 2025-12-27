@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card shadow-lg p-4 text-center">
+        <h3 class="mb-3 fw-bold">{{ plan.get_name_display }}</h3>
+        <h4 class="text-primary mb-3">৳{{ plan.price }}</h4>
+        <p class="mb-4">{{ plan.duration_months }} month(s) subscription</p>
+        <p class="text-muted mb-4">
+          Enjoy premium features and book unlimited appointments during your subscription period.
+        </p>
+
+        <!-- Payment Button (dummy / to be replaced with SSLCommerz integration) -->
+        <form method="POST" action="{% url 'sslcommerz_payment' plan.id %}">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-success btn-lg w-100 fw-bold">
+            Pay Now
+          </button>
+        </form>
+
+        <a href="{% url 'subscription_plans' %}" class="btn btn-link mt-3">Back to Plans</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
