@@ -13,7 +13,7 @@ from datetime import datetime, date as today_date, timedelta
 from blog.models import Notification   
 from subscriptions.utils import can_book_appointment
 from django.contrib import messages
-
+from subscriptions.models import UserSubscription
 
 
 def doctor_list(request):
@@ -46,12 +46,26 @@ def doctor_locations(request):
 
 # appointment 
 
+# Helper function
+def has_active_premium(user):
+    """Check if user has an active premium subscription"""
+    try:
+        return user.usersubscription.is_premium()
+    except UserSubscription.DoesNotExist:
+        return False
+
 @login_required
 def book_appointment(request, doctor_id):
-    if not can_book_appointment(request.user):
-        messages.error(request, "You need an active Premium subscription to book an appointment.")
-        return redirect("subscription_plans")
     doctor = get_object_or_404(CustomUser, id=doctor_id, role="doctor")
+    try:
+        subscription = request.user.usersubscription
+    except UserSubscription.DoesNotExist:
+        messages.error(request, "You need a premium subscription to book an appointment.")
+        return redirect("subscription_plans")
+
+    if not subscription.is_premium():
+        messages.error(request, "Only premium users can book appointments.")
+        return redirect("subscription_plans")
 
     error = None
     available_slots = []
@@ -112,6 +126,7 @@ def book_appointment(request, doctor_id):
                             end_time=end_time,
                             notes=notes
                         )
+                        messages.success(request, "Appointment booked successfully!")
                         return redirect("appointments_success")
 
     # ================= SLOT GENERATION (GET) =================

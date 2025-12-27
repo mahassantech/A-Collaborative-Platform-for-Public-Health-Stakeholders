@@ -22,10 +22,29 @@ href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.c
 <link rel="stylesheet" href="{% static 'css/style.css' %}">
 <link rel="stylesheet" href="{% static 'css/pricing.css' %}">
 <link rel="stylesheet" href="{% static 'css/profile.css' %}">
+<link rel="stylesheet" href="{% static 'css/bloglist.css' %}">
+
 
 </head>
 
 <body style="padding-top: 78px;">
+
+  <!-- Messages  -->
+  {% if messages %}
+  <div class="container mt-3">
+    {% for message in messages %}
+      <div class="alert 
+                  {% if message.tags == 'error' %}alert-danger{% elif message.tags == 'success' %}alert-success{% elif message.tags == 'warning' %}alert-warning{% else %}alert-info{% endif %} 
+                  alert-dismissible fade show shadow-sm" 
+           role="alert"
+           style="font-weight: bold; border-radius: 6px; font-size: 16px;">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    {% endfor %}
+  </div>
+{% endif %}
+
 
 
 <!-- 🌟 Modern Glass Navbar -->
@@ -44,10 +63,11 @@ href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.c
         <li class="nav-item"><a class="nav-link text-white nav-hover" href="/">Dashboard</a></li>
         {% comment %} <li class="nav-item"><a class="nav-link text-white nav-hover" href="{% url 'CommunityPage' %}">Community</a></li> {% endcomment %}
         <li class="nav-item"><a class="nav-link text-white nav-hover" href="{% url 'healthPage' %}">Wellness</a></li>
-        <li class="nav-item"><a class="nav-link text-white nav-hover" href="{% url 'doctor_list' %}">Doctors</a></li>
+        
         {% comment %} <li class="nav-item"><a class="nav-link text-white nav-hover" href="{% url 'conditionspage' %}">Diseases</a></li> {% endcomment %}
         <li class="nav-item"><a class="nav-link text-white nav-hover" href="{% url 'treatmentPage' %}">Care Guides</a>
         </li>
+        <li class="nav-item"><a class="nav-link text-white nav-hover" href="{% url 'doctor_list' %}">Doctors</a></li>
         <li class="nav-item"><a class="nav-link text-white nav-hover" href="{% url 'blog_list' %}">Blog</a></li>
         <li class="nav-item"><a class="nav-link text-white nav-hover" href="{% url 'subscription_plans' %}">Pricing</a></li>
       </ul>
@@ -220,11 +240,7 @@ href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.c
               <input type="text" name="name" class="form-control input-medical" id="id_name" placeholder="Enter your full name" required>
             </div>
 
-            <!-- Email -->
-            <div class="mb-3">
-              <label for="id_email" class="form-label fw-semibold">Email</label>
-              <input type="email" name="email" class="form-control input-medical" id="id_email" placeholder="Enter your email" required>
-            </div>
+            
 
             <!-- Phone -->
             <div class="mb-3">
@@ -256,7 +272,10 @@ href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.c
               </select>
             </div>
 
-            <button type="submit" class="btn btn-medical w-100 fw-bold py-2">Book Appointment</button>
+            <a href="{% url 'doctor_list' %}"
+            class="btn btn-medical w-100 fw-bold py-2">
+            Book Appointment
+          </a>
           </form>
 
         </div>
@@ -334,8 +353,6 @@ href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.c
 
   </div>
 </section>
-
-
 
 <!-- Blog -->
 <section class="py-5">

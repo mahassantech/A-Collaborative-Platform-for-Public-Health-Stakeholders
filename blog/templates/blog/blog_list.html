@@ -3,73 +3,89 @@
 
 {% block content %}
 <!-- Blog Posts Section -->
-<section class="py-5 bg-light">
+<section class="blog-section py-5">
   <div class="container">
     <h2 class="text-center mb-5 fw-bold">Latest Blog Posts</h2>
 
-    <!-- Create Blog Button (Only patients can create) -->
+    <!-- Create Blog Button -->
     {% if user.is_authenticated and user.role == 'patient' %}
       <div class="mb-4 text-end">
-        <a href="{% url 'blog_create' %}" class="btn btn-success">Create New Blog</a>
+        <a href="{% url 'blog_create' %}"
+           class="btn btn-success create-blog-btn">
+          + Create New Blog
+        </a>
       </div>
     {% endif %}
 
     <div class="row g-4">
 
-      <!-- Blog List -->
       {% for blog in blogs %}
         <div class="col-lg-4 col-md-6">
-          <div class="card h-100 shadow-sm border-0">
+          <!-- ❌ shadow-sm / bg-light বাদ -->
+          <div class="blog-card card h-100 border-0">
+
             {% if blog.photo %}
-              <img src="{{ blog.photo.url }}" class="card-img-top" alt="{{ blog.title }}" style="height: 200px; object-fit: cover;">
+              <img src="{{ blog.photo.url }}"
+                   class="card-img-top blog-image"
+                   alt="{{ blog.title }}">
             {% endif %}
+
             <div class="card-body d-flex flex-column">
               <h5 class="card-title">{{ blog.title }}</h5>
 
-              <!-- Author Info -->
-              <p class="text-muted mb-1">
-                By <strong>{{ blog.author.username }}</strong> ({{ blog.author.role|capfirst }}) | 
-                {{ blog.created_at|date:"F j, Y" }}
+              <!-- Author -->
+              <p class="blog-meta mb-2">
+                By <strong>{{ blog.author.username }}</strong>
+                • {{ blog.created_at|date:"F j, Y" }}
               </p>
 
               {% if blog.description %}
-                <p class="card-text"><strong>Description:</strong> {{ blog.description }}</p>
-              {% endif %}
-
-              <p class="card-text">{{ blog.content|truncatechars:120 }}</p>
-
-              <!-- Category -->
-              {% if blog.category.all %}
-                <p class="mt-auto mb-1">
-                  <strong>Category:</strong> 
-                  {% for cat in blog.category.all %}
-                    <span class="badge bg-info text-dark">{{ cat.name }}</span>
-                  {% endfor %}
+                <p class="card-text mb-2">
+                  <strong>Description:</strong> {{ blog.description }}
                 </p>
               {% endif %}
 
+              <p class="card-text text-muted">
+                {{ blog.content|truncatechars:120 }}
+              </p>
+
+              <!-- Category -->
+              {% if blog.category.all %}
+                <div class="blog-category mt-auto mb-2">
+                  {% for cat in blog.category.all %}
+                    <span class="badge bg-info text-dark me-1">
+                      {{ cat.name }}
+                    </span>
+                  {% endfor %}
+                </div>
+              {% endif %}
+
               <!-- Urgency -->
-              <p class="mb-2">
-                <strong>Urgency:</strong> 
-                <span class="badge 
+              <div class="mb-3">
+                <span class="badge badge-urgency
                   {% if blog.urgency_level == 'high' %} bg-danger
                   {% elif blog.urgency_level == 'medium' %} bg-warning text-dark
                   {% else %} bg-success
                   {% endif %}">
-                  {{ blog.urgency_level|capfirst }}
+                  {{ blog.urgency_level|capfirst }} urgency
                 </span>
-              </p>
+              </div>
 
-              <a href="{% url 'blog_detail' blog.pk %}" class="btn btn-outline-primary mt-2">Read More</a>
+              <a href="{% url 'blog_detail' blog.pk %}"
+                 class="btn btn-outline-primary mt-auto align-self-start">
+                Read More →
+              </a>
             </div>
+
           </div>
         </div>
       {% empty %}
-        <p class="text-muted">No blog posts available.</p>
+        <p class="no-blog text-center">
+          No blog posts available.
+        </p>
       {% endfor %}
 
     </div>
   </div>
 </section>
-
 {% endblock %}

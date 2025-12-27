@@ -19,7 +19,7 @@ class SubscriptionPlan(models.Model):
 
     def __str__(self):
         return self.get_name_display()
-
+    
 
 class UserSubscription(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -29,11 +29,22 @@ class UserSubscription(models.Model):
     is_active = models.BooleanField(default=False)
 
     def activate_plan(self, plan):
+        from django.utils import timezone
+        from dateutil.relativedelta import relativedelta
+
         self.plan = plan
         self.start_date = timezone.now()
         self.end_date = self.start_date + relativedelta(months=plan.duration_months)
         self.is_active = True
         self.save()
+
+    # check kortesi premium ache kina
+    def is_premium(self):
+        """Return True if user has an active premium subscription"""
+        if self.plan and self.is_active:
+            return self.plan.name.startswith("premium")  
+        return False
+
 
 # transaction model for payment
 

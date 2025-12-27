@@ -11,59 +11,63 @@
   
 
   <div class="row g-4 justify-content-center">
-
-    <!-- ================= FREE PLAN ================= -->
-    <div class="col-md-4">
-      <div class="pricing-card free">
-        <h5 class="plan-title">Free</h5>
-        <p class="text-muted">Basic Access</p>
-
-        <ul class="plan-features">
-          <li>View doctor profiles</li>
-          <li>Unlimited health blogs</li>
-          <li>Unlimited comments & replies</li>
-          <li class="disabled">Book appointments</li>
-          <li class="disabled">Google Meet consultation</li>
-        </ul>
-
-        <button class="btn btn-outline-secondary w-100" disabled>
-          Not Available
-        </button>
-      </div>
+  
+  <!-- Free Plan (Static, DB-ত নেই) -->
+  <div class="col-md-4">
+    <div class="pricing-card free">
+      <h5 class="plan-title">Free</h5>
+      <p class="text-muted">Basic Access</p>
+      <ul class="plan-features">
+        <li>View doctor list</li>
+        <li>Unlimited health blogs</li>
+        <li>Unlimited comments & replies</li>
+        <li class="disabled">notifications </li>
+        <li class="disabled">View doctor profiles</li>
+        <li class="disabled">Book appointments</li>
+        <li class="disabled">Google Meet consultation</li>
+      </ul>
+      <button class="btn btn-outline-secondary w-100" disabled>Not Available</button>
     </div>
-
-    <!-- ================= PREMIUM PLANS ================= -->
-    {% for plan in plans %}
-    <div class="col-md-4">
-
-      {% if plan.name == "premium_6" %}
-      <div class="pricing-card premium">
-        <span class="badge-popular">Most Popular</span>
-      {% else %}
-      <div class="pricing-card premium-plus">
-      {% endif %}
-
-        <h5 class="plan-title">{{ plan.get_name_display }}</h5>
-        <p class="price">৳{{ plan.price }}</p>
-        <p class="text-light">{{ plan.duration_months }} months access</p>
-
-        <ul class="plan-features">
-          <li>Appointment booking</li>
-          <li>Google Meet link after confirmation</li>
-          <li>Unlimited health blogs</li>
-          <li>Unlimited comments & replies</li>
-          <li>Appointment status tracking</li>
-        </ul>
-
-        <a href="{% url 'payment_page' plan.id %}" class="btn w-100 fw-bold">
-          Buy Now
-        </a>
-      </div>
-
-    </div>
-    {% endfor %}
-
   </div>
-</div>
 
+  {% for plan in plans %}
+  <div class="col-md-4">
+    <div class="pricing-card 
+         {% if plan.name == 'premium_6' %}premium{% else %}premium-plus{% endif %}">
+      
+      {% if plan.name == 'premium_6' %}
+      <span class="badge-popular">Most Popular</span>
+      {% endif %}
+      {% if plan.name == 'premium_12' %}<span class="badge-popular">Best Value</span>{% endif %}
+
+      <h5 class="plan-title">{{ plan.get_name_display }}</h5>
+      <p class="price">৳{{ plan.price }}</p>
+      <p class="text-light">{{ plan.duration_months }} months access</p>
+
+<ul class="plan-features">
+  <li>View doctor profiles</li>
+  <li>Book appointments</li>
+  <li>notifications</li>
+  <li>Google Meet link after confirmation</li>
+  <li>Unlimited health blogs</li>
+  <li>Unlimited comments & replies</li>
+
+  {% if plan.name == 'premium_6' %}
+    <li>Appointment status tracking</li>
+    <li class="disabled">Extended appointment history</li>
+  {% endif %}
+
+  {% if plan.name == 'premium_12' %}
+    <li>Appointment status tracking</li>
+    <li>Extended appointment history</li>
+    <li>Early access to new features</li>
+  {% endif %}
+</ul>
+
+      <a href="{% url 'payment_page' plan.id %}" class="btn w-100 fw-bold">Buy Now</a>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+</div>
 {% endblock %}
