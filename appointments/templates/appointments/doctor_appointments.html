@@ -1,93 +1,155 @@
 {% extends "base.html" %}
 {% block content %}
+
 <div class="container py-5">
-    <h3 class="mb-4">All Appointment</h3>
 
-    <h5>Upcoming Appointments</h5>
-    <table class="table table-bordered mb-5">
-        <thead>
-            <tr>
-                <th>Patient</th>
-                <th>Date</th>
-                <th>Time</th>
-                <th>Location</th>
-                <th>Notes</th>
-                <th>Status</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for appt in upcoming %}
-            <tr>
-                <td>{{ appt.patient.username }}</td>
-                <td>{{ appt.date }}</td>
-                <td>{{ appt.start_time }} - {{ appt.end_time }}</td>
-                <td>{{ appt.location.name }}</td>
-                <td>{{ appt.notes }}</td>
-                <td>
-                    {% if appt.status == "pending" %}
-                        <span class="badge bg-warning">Pending</span>
-                    {% elif appt.status == "confirmed" %}
-                        <span class="badge bg-success">Confirmed</span>
-                    {% endif %}
-                </td>
-                <td>
-                    {% if appt.status == "pending" %}
-                    <form method="post" style="display:inline;">
-                        {% csrf_token %}
-                        <input type="hidden" name="appointment_id" value="{{ appt.id }}">
-                        <button type="submit" name="action" value="confirm" class="btn btn-success btn-sm">Confirm</button>
-                        <button type="submit" name="action" value="cancel" class="btn btn-danger btn-sm">Cancel</button>
-                    </form>
-                    {% elif appt.status == "confirmed" %}
-                    <form method="post" style="display:inline;">
-                        {% csrf_token %}
-                        <input type="hidden" name="appointment_id" value="{{ appt.id }}">
-                        <button type="submit" name="action" value="complete" class="btn btn-primary btn-sm">Mark as Completed</button>
-                    </form>
-                    {% else %}
-                        -
-                    {% endif %}
-                </td>
-            </tr>
-            {% empty %}
-            <tr><td colspan="7">No upcoming appointments.</td></tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    <h3 class="mb-4 text-primary">
+        🏥 Doctor Appointment Dashboard
+    </h3>
 
-    <h5>Past / Cancelled Appointments</h5>
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th>Patient</th>
-                <th>Date</th>
-                <th>Time</th>
-                <th>Location</th>
-                <th>Notes</th>
-                <th>Status</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for appt in past %}
-            <tr>
-                <td>{{ appt.patient.username }}</td>
-                <td>{{ appt.date }}</td>
-                <td>{{ appt.start_time }} - {{ appt.end_time }}</td>
-                <td>{{ appt.location.name }}</td>
-                <td>{{ appt.notes }}</td>
-                <td>
-                    {% if appt.status == "completed" %}
-                        <span class="badge bg-primary">Completed</span>
-                    {% elif appt.status == "cancelled" %}
-                        <span class="badge bg-danger">Cancelled</span>
-                    {% endif %}
-                </td>
-            </tr>
-            {% empty %}
-            <tr><td colspan="6">No past appointments.</td></tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    <!-- ================= UPCOMING ================= -->
+    <div class="card shadow-sm mb-5">
+        <div class="card-header bg-light fw-bold">
+            Upcoming Appointments
+        </div>
+
+        <div class="card-body p-0">
+            <table class="table table-bordered mb-0 align-middle">
+                <thead class="table-secondary">
+                    <tr>
+                        <th>Patient</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Location</th>
+                        <th>Notes</th>
+                        <th>Status</th>
+                        <th width="260">Action</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                {% for appt in upcoming %}
+                    <tr>
+                        <td>{{ appt.patient.username }}</td>
+                        <td>{{ appt.date }}</td>
+                        <td>{{ appt.start_time }} - {{ appt.end_time }}</td>
+                        <td>{{ appt.location.name }}</td>
+                        <td>{{ appt.notes|default:"-" }}</td>
+
+                        <td>
+                            {% if appt.status == "pending" %}
+                                <span class="badge bg-warning text-dark">Pending</span>
+                            {% elif appt.status == "confirmed" %}
+                                <span class="badge bg-success">Confirmed</span>
+                            {% endif %}
+                        </td>
+
+                        <td>
+                            {% if appt.status == "pending" %}
+                            <!-- CONFIRM FORM -->
+                            <form method="post">
+                                {% csrf_token %}
+                                <input type="hidden" name="appointment_id" value="{{ appt.id }}">
+
+                                <input type="url"
+                                       name="meeting_link"
+                                       class="form-control form-control-sm mb-2"
+                                       placeholder="Paste Google Meet link"
+                                       required>
+
+                                <div class="d-flex gap-1">
+                                    <button type="submit"
+                                            name="action"
+                                            value="confirm"
+                                            class="btn btn-success btn-sm w-100">
+                                        ✅ Confirm
+                                    </button>
+
+                                    <button type="submit"
+                                            name="action"
+                                            value="cancel"
+                                            class="btn btn-danger btn-sm w-100">
+                                        ❌ Cancel
+                                    </button>
+                                </div>
+                            </form>
+
+                            {% elif appt.status == "confirmed" %}
+                            <!-- COMPLETE -->
+                            <form method="post">
+                                {% csrf_token %}
+                                <input type="hidden" name="appointment_id" value="{{ appt.id }}">
+                                <button type="submit"
+                                        name="action"
+                                        value="complete"
+                                        class="btn btn-primary btn-sm w-100">
+                                    ✔ Mark as Completed
+                                </button>
+                            </form>
+                            {% else %}
+                                -
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="7" class="text-center py-4">
+                            No upcoming appointments.
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- ================= PAST ================= -->
+    <div class="card shadow-sm">
+        <div class="card-header bg-light fw-bold">
+            Past / Cancelled Appointments
+        </div>
+
+        <div class="card-body p-0">
+            <table class="table table-bordered mb-0 align-middle">
+                <thead class="table-secondary">
+                    <tr>
+                        <th>Patient</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Location</th>
+                        <th>Notes</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                {% for appt in past %}
+                    <tr>
+                        <td>{{ appt.patient.username }}</td>
+                        <td>{{ appt.date }}</td>
+                        <td>{{ appt.start_time }} - {{ appt.end_time }}</td>
+                        <td>{{ appt.location.name }}</td>
+                        <td>{{ appt.notes|default:"-" }}</td>
+                        <td>
+                            {% if appt.status == "completed" %}
+                                <span class="badge bg-primary">Completed</span>
+                            {% elif appt.status == "cancelled" %}
+                                <span class="badge bg-danger">Cancelled</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="6" class="text-center py-4">
+                            No past appointments.
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
 </div>
+
 {% endblock %}

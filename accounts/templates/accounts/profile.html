@@ -93,9 +93,26 @@ body.dark-mode .card { background-color: #2a2a2a !important; color: #fff !import
   </a>
 
   <!-- Appointment List -->
-  <a href="{% url 'doctor_my_appointment' %}" class="btn btn-success fw-bold rounded-3 quick-btn">
+  <!-- Appointment List -->
+{% if user.role == 'doctor' %}
+  <a href="{% url 'doctor_my_appointment' %}"
+     class="btn btn-success fw-bold rounded-3 quick-btn">
     Appointment List
   </a>
+
+{% elif user.role == 'patient' %}
+  <a href="{% url 'my_appointments' %}"
+     class="btn btn-success fw-bold rounded-3 quick-btn">
+    My Appointments
+  </a>
+
+{% elif user.role == 'analyst' %}
+  <a href="{}"
+     class="btn btn-success fw-bold rounded-3 quick-btn">
+    Appointment Overview
+  </a>
+{% endif %}
+
 
   <!-- Patient List (Doctor Only) -->
   {% if user.role == 'doctor' %}
