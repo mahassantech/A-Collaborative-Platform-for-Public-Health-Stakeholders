@@ -2,6 +2,7 @@
 from django.conf import settings
 from django.db import models
 from accounts.models import CustomUser
+from django.utils import timezone
 
 
 class DoctorLocation(models.Model):
@@ -51,6 +52,7 @@ class Appointment(models.Model):
     status = models.CharField(max_length=20, choices=APPOINTMENT_STATUS, default="pending")
     notes = models.TextField(blank=True, null=True)
     meeting_link = models.URLField(blank=True, null=True)
+    created_at = models.DateTimeField(default=timezone.now)
 
     class Meta:
         unique_together = ("doctor", "location", "date", "start_time")

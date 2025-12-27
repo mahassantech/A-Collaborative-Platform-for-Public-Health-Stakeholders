@@ -52,6 +52,7 @@ def get_depth(comment):
         depth += 1
         comment = comment.parent
     return depth
+
 @login_required
 def blog_detail(request, pk):
     blog = get_object_or_404(BlogPost, pk=pk)

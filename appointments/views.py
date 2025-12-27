@@ -10,6 +10,7 @@ from accounts.models import CustomUser
 from datetime import datetime, timedelta
 from .models import CustomUser, DoctorLocation, Appointment
 from datetime import datetime, date as today_date, timedelta
+from blog.models import Notification   
 
 
 
@@ -143,8 +144,12 @@ def appointments_success(request):
 
 @login_required
 def my_appointments(request):
-    appointments = request.user.appointments.order_by('-date', '-start_time')
+    # latest appointment first
+    appointments = request.user.appointments.order_by('-created_at')
     return render(request, 'appointments/my_appointments.html', {'appointments': appointments})
+
+
+
 
 
 @login_required
@@ -157,7 +162,7 @@ def doctor_my_appointment(request):
     if request.method == 'POST':
         appt_id = request.POST.get('appointment_id')
         action = request.POST.get('action')
-        meeting_link = request.POST.get('meeting_link')  # 🔥 NEW
+        meeting_link = request.POST.get('meeting_link')  # only for confirm
 
         appointment = get_object_or_404(
             Appointment,
@@ -165,15 +170,34 @@ def doctor_my_appointment(request):
             doctor=request.user
         )
 
+        patient = appointment.patient
+        doctor_name = request.user.username
+
+        # ---------- ACTIONS ----------
         if action == "confirm":
             appointment.status = "confirmed"
-            appointment.meeting_link = meeting_link  # 🔥 SAVE LINK
+            appointment.meeting_link = meeting_link
+
+            Notification.objects.create(
+                user=patient,
+                message=f"Dr. {doctor_name} confirmed your appointment on {appointment.date}. Meeting link added."
+            )
 
         elif action == "cancel":
             appointment.status = "cancelled"
 
+            Notification.objects.create(
+                user=patient,
+                message=f"Dr. {doctor_name} cancelled your appointment on {appointment.date}."
+            )
+
         elif action == "complete":
             appointment.status = "completed"
+
+            Notification.objects.create(
+                user=patient,
+                message=f"Your appointment with Dr. {doctor_name} has been completed."
+            )
 
         appointment.save()
         return redirect('doctor_my_appointment')
