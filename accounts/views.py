@@ -27,7 +27,10 @@ from django.conf import settings
 from django.shortcuts import render
 from django.utils import timezone
 from subscriptions.models import UserSubscription
-from blog.models import Comment 
+from blog.models import Comment,BlogPost
+from django.db.models import Count
+from appointments.models import Appointment
+from analytics.models import Insight
 
 
 # REGISTER VIEW
@@ -116,6 +119,50 @@ def profile_view(request):
         'remaining_days': remaining_days,
         'progress_percent': progress_percent,
     }
+    
+    # ================= ANALYST ANALYTICS =================
+    if user.role == "analyst":
+
+        category_stats = (
+            BlogPost.objects
+            .values("category__name")
+            .annotate(total=Count("id"))
+            .order_by("-total")
+        )
+
+        urgency_stats = (
+            BlogPost.objects
+            .values("urgency_level")
+            .annotate(total=Count("id"))
+        )
+
+        appointment_stats = (
+            Appointment.objects
+            .values("status")
+            .annotate(total=Count("id"))
+        )
+
+        generated_insights = []
+
+        if category_stats:
+            top_cat = category_stats[0]
+            generated_insights.append(
+                f"{top_cat['category__name']} category has the highest number of blog posts."
+            )
+
+        for u in urgency_stats:
+            if u["urgency_level"] == "high" and u["total"] > 5:
+                generated_insights.append(
+                    "A high volume of high-urgency blogs has been detected, indicating the need for immediate intervention"
+                )
+
+        context.update({
+            "category_stats": category_stats,
+            "urgency_stats": urgency_stats,
+            "appointment_stats": appointment_stats,
+            "generated_insights": generated_insights,
+        })
+
     return render(request, "accounts/profile.html", context)
 
 

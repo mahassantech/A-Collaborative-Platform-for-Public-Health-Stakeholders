@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container py-5">
+  <h2 class="fw-bold mb-4">📊 Analyst Dashboard</h2>
+
+  <!-- Blog Category -->
+  <h5>Blog Category Analysis</h5>
+  <ul>
+    {% for c in category_stats %}
+      <li>{{ c.category__name }} → {{ c.total }} blogs</li>
+    {% endfor %}
+  </ul>
+
+  <!-- Urgency -->
+  <h5 class="mt-4">Urgency Level Analysis</h5>
+  <ul>
+    {% for u in urgency_stats %}
+      <li>{{ u.urgency_level|capfirst }} → {{ u.total }}</li>
+    {% endfor %}
+  </ul>
+
+  <!-- Appointment -->
+  <h5 class="mt-4">Appointment Status</h5>
+  <ul>
+    {% for a in appointment_stats %}
+      <li>{{ a.status|capfirst }} → {{ a.total }}</li>
+    {% endfor %}
+  </ul>
+
+  <!-- Insights -->
+  <h4 class="mt-5">🧠 Generated Insights</h4>
+  <ul class="list-group">
+    {% for i in generated_insights %}
+      <li class="list-group-item">{{ i }}</li>
+    {% empty %}
+      <li class="list-group-item">No insights generated yet.</li>
+    {% endfor %}
+  </ul>
+</div>
+
+{% endblock %}
