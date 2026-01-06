@@ -122,6 +122,14 @@ def profile_view(request):
     
     # ================= ANALYST ANALYTICS =================
     if user.role == "analyst":
+        
+        specialization_counts = (
+        CustomUser.objects.filter(role="doctor")
+        .values('specialization__name')   # ManyToMany field এর name
+        .annotate(total=Count('id'))
+        .order_by('-total')
+        )
+        
 
         category_stats = (
             BlogPost.objects
@@ -161,6 +169,7 @@ def profile_view(request):
             "urgency_stats": urgency_stats,
             "appointment_stats": appointment_stats,
             "generated_insights": generated_insights,
+            "specialization_counts": specialization_counts,
         })
 
     return render(request, "accounts/profile.html", context)
