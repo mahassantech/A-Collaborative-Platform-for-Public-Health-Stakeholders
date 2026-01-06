@@ -12,9 +12,8 @@
   </div>
 </section>
 
- <section class="py-5 bg-light">
+<section class="py-5 bg-light">
   <div class="container">
-
     <div class="row">
 
       <!-- ================= LEFT : CATEGORY ================= -->
@@ -29,13 +28,11 @@
 
             <div class="list-group list-group-flush"
                  style="max-height:400px; overflow-y:auto;">
-
               <a href="{% url 'blog_list' %}"
                  class="list-group-item list-group-item-action
                  {% if not selected_category %}active{% endif %}">
                 All Categories
               </a>
-
               {% for cat in categories %}
                 <a href="{% url 'blog_by_category' cat.slug %}"
                    class="list-group-item list-group-item-action
@@ -43,19 +40,14 @@
                   {{ cat.name }}
                 </a>
               {% endfor %}
-
             </div>
           </div>
         </div>
 
         <!-- Mobile Category Dropdown -->
         <div class="d-lg-none">
-          <select class="form-select"
-                  onchange="location = this.value;">
-            <option value="{% url 'blog_list' %}">
-              All Categories
-            </option>
-
+          <select class="form-select" onchange="location = this.value;">
+            <option value="{% url 'blog_list' %}">All Categories</option>
             {% for cat in categories %}
               <option value="{% url 'blog_by_category' cat.slug %}"
                 {% if selected_category == cat %}selected{% endif %}>
@@ -87,55 +79,62 @@
         {% endif %}
 
         <div class="row g-4">
-
           {% for blog in blogs %}
             <div class="col-lg-4 col-md-6">
-              <div class="card h-100 shadow-sm">
+              <div class="card blog-card h-100 shadow-sm border-0" style="transition: transform 0.3s; cursor: pointer;">
 
                 {% if blog.photo %}
-                  <img src="{{ blog.photo.url }}"
-                       class="card-img-top"
-                       style="height:180px; object-fit:cover;">
+                  <a href="{% url 'blog_detail' blog.pk %}">
+                    <img src="{{ blog.photo.url }}" class="card-img-top" style="height:180px; object-fit:cover; border-radius:4px;">
+                  </a>
+                {% else %}
+                  <a href="{% url 'blog_detail' blog.pk %}">
+                    <img src="{% static 'default_post.jpg' %}" class="card-img-top" style="height:180px; object-fit:cover; border-radius:4px;">
+                  </a>
                 {% endif %}
 
                 <div class="card-body d-flex flex-column">
-                  <h5 class="card-title">{{ blog.title }}</h5>
+                  <h5 class="card-title">
+                    <a href="{% url 'blog_detail' blog.pk %}" class="text-dark text-decoration-none">
+                      {{ blog.title|truncatechars:40 }}
+                    </a>
+                  </h5>
 
                   <small class="text-muted mb-2">
-                    By {{ blog.author.username }} ·
-                    {{ blog.created_at|date:"M d, Y" }}
+                    By {{ blog.author.username }} · {{ blog.created_at|date:"M d, Y" }}
                   </small>
 
-                  <p class="card-text">
-                    {{ blog.content|truncatechars:100 }}
-                  </p>
+                  <p class="card-text flex-grow-1">{{ blog.content|truncatechars:100 }}</p>
 
-                  <div class="mt-auto">
+                  <!-- Categories -->
+                  <div class="mb-2">
                     {% for cat in blog.category.all %}
-                      <span class="badge bg-info text-dark">
-                        {{ cat.name }}
-                      </span>
+                      <span class="badge bg-info text-dark me-1">{{ cat.name }}</span>
                     {% endfor %}
                   </div>
 
-                  <a href="{% url 'blog_detail' blog.pk %}"
-                     class="btn btn-outline-primary btn-sm mt-3">
-                    Read More
-                  </a>
-                </div>
+                  <!-- View Post Button -->
+                  <div class="text-center">
+                    <a href="{% url 'blog_detail' blog.pk %}" class="btn btn-outline-primary mt-auto w-100">
+                      Read more
+                    </a>
+                  </div>
 
+                </div>
               </div>
             </div>
           {% empty %}
-            <p class="text-muted">No blog found.</p>
+            <p class="text-center text-muted">No blogs available.</p>
           {% endfor %}
-
         </div>
-
       </div>
     </div>
   </div>
 </section>
+
+
+
+
 
 
 

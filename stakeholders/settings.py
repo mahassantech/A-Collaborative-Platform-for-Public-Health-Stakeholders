@@ -86,6 +86,7 @@ TEMPLATES = [
     },
 ]
 
+
 WSGI_APPLICATION = 'stakeholders.wsgi.application'
 
 
@@ -157,3 +158,4 @@ DEFAULT_FROM_EMAIL = 'webmaster@localhost'
 SSLCOMMERZ_STORE_ID = "testbox"
 SSLCOMMERZ_STORE_PASS = "qwerty"
 SSLCOMMERZ_SANDBOX = True
+
