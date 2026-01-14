@@ -24,6 +24,10 @@ ROLE_PREFIX = {
     "patient": "PT",
     "analyst": "AN",
 }
+GENDER_CHOICES = (
+    ("male", "Male"),
+    ("female", "Female"),
+)
 
 
 class CustomUser(AbstractUser):
@@ -32,7 +36,11 @@ class CustomUser(AbstractUser):
         choices=ROLE_CHOICES,
         default="patient"
     )
-
+    gender = models.CharField(
+        max_length=10,
+        choices=GENDER_CHOICES,
+        default="male"
+    )
     doctor_license = models.CharField(
         max_length=50,
         blank=True,
@@ -94,3 +102,4 @@ class Specialization(models.Model):
 
     def __str__(self):
         return self.name
+
