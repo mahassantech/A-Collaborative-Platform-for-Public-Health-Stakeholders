@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container py-5" style="max-width:800px;">
+
+  <!-- Post Card -->
+  <div class="card shadow-sm mb-4">
+    {% if post.image %}
+    <img src="{{ post.image.url }}" class="card-img-top" alt="{{ post.title }}" style="max-height:300px; object-fit:cover;">
+    {% endif %}
+
+    <div class="card-body">
+      <h2 class="card-title fw-bold">{{ post.title }}</h2>
+
+      <p class="text-muted mb-1 small">
+        By {{ post.author.get_full_name|default:post.author.username }} | {{ post.created_at|date:"M d, Y" }}
+      </p>
+
+      {% if post.category %}
+      <span class="badge bg-info text-dark mb-3">{{ post.category.name }}</span>
+      {% endif %}
+
+      <p class="card-text">{{ post.content }}</p>
+
+      {% if user.is_authenticated and user == post.author and user.role == 'doctor' %}
+      <div class="mt-3">
+        <a href="{% url 'wellness_edit' post.pk %}" class="btn btn-sm btn-outline-primary me-2">✏️ Edit</a>
+        <a href="{% url 'wellness_delete' post.pk %}" class="btn btn-sm btn-outline-danger">🗑 Delete</a>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+
+  <!-- Comments Section -->
+  <div class="card shadow-sm mb-4 p-3">
+    <h4 class="fw-bold mb-3">Comments</h4>
+
+    {% for comment in comments %}
+    <div class="d-flex mb-3">
+        <!-- Profile Picture -->
+        {% if comment.user.profile_pic %}
+        <img src="{{ comment.user.profile_pic.url }}" alt="{{ comment.user.get_full_name|default:comment.user.username }}"
+             class="rounded-circle me-3" style="width:50px; height:50px; object-fit:cover;">
+        {% else %}
+        <img src="{% static 'images/default-user.png' %}" alt="Default User"
+             class="rounded-circle me-3" style="width:50px; height:50px; object-fit:cover;">
+        {% endif %}
+
+        <div class="flex-grow-1">
+            <!-- Name + Role -->
+            <p class="mb-1">
+                <b>{{ comment.user.get_full_name|default:comment.user.username }}</b>
+                {% if comment.user.role == 'doctor' %}
+                    <span class="badge bg-primary">Doctor</span>
+                {% elif comment.user.role == 'patient' %}
+                    <span class="badge bg-success">Patient</span>
+                {% elif comment.user.role == 'analyst' %}
+                    <span class="badge bg-warning text-dark">Analyst</span>
+                {% endif %}
+            </p>
+
+            <!-- Comment Text -->
+            <p class="mb-0">{{ comment.comment }}</p>
+
+            <!-- Timestamp -->
+            <small class="text-muted">{{ comment.created_at|date:"M d, Y H:i" }}</small>
+
+            <!-- Reply Form Toggle -->
+            <div>
+                <a href="#" class="small text-primary" onclick="document.getElementById('reply-{{ comment.id }}').classList.toggle('d-none'); return false;">Reply</a>
+            </div>
+
+            <!-- Reply Form -->
+            <div id="reply-{{ comment.id }}" class="d-none mt-2 ms-4">
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form.comment }}
+                    <input type="hidden" name="parent_id" value="{{ comment.id }}">
+                    <button type="submit" class="btn btn-sm btn-success mt-1">Reply</button>
+                </form>
+            </div>
+
+            <!-- Nested replies -->
+            {% include 'wellness/comment_replies.html' with replies=comment.replies.all %}
+        </div>
+    </div>
+    <hr class="my-2">
+    {% empty %}
+    <p class="text-muted text-center">No comments yet.</p>
+    {% endfor %}
+
+    <!-- Comment Form for new top-level comment -->
+    {% if user.is_authenticated %}
+    <form method="post" class="mt-3">
+        {% csrf_token %}
+        <div class="mb-3">
+            {{ form.comment.label_tag }}
+            {{ form.comment }}
+        </div>
+        <button type="submit" class="btn btn-success btn-sm">Post Comment</button>
+    </form>
+    {% else %}
+    <p class="text-muted text-center mt-3">Login to post a comment.</p>
+    {% endif %}
+  </div>
+
+</div>
+{% endblock %}

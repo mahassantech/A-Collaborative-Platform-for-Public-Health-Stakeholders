@@ -1,0 +1,52 @@
+{% load static %}
+{% for reply in replies %}
+<div class="d-flex mt-2 ms-4">
+    <!-- Profile Picture -->
+    {% if reply.user.profile_pic %}
+    <img src="{{ reply.user.profile_pic.url }}" alt="{{ reply.user.get_full_name|default:reply.user.username }}"
+         class="rounded-circle me-3" style="width:40px; height:40px; object-fit:cover;">
+    {% else %}
+    <img src="{% static 'images/default-user.png' %}" alt="Default User"
+         class="rounded-circle me-3" style="width:40px; height:40px; object-fit:cover;">
+    {% endif %}
+
+    <div class="flex-grow-1">
+        <!-- Name + Role -->
+        <p class="mb-1">
+            <b>{{ reply.user.get_full_name|default:reply.user.username }}</b>
+            {% if reply.user.role == 'doctor' %}
+                <span class="badge bg-primary">Doctor</span>
+            {% elif reply.user.role == 'patient' %}
+                <span class="badge bg-success">Patient</span>
+            {% elif reply.user.role == 'analyst' %}
+                <span class="badge bg-warning text-dark">Analyst</span>
+            {% endif %}
+        </p>
+
+        <!-- Comment Text -->
+        <p class="mb-0">{{ reply.comment }}</p>
+
+        <!-- Timestamp -->
+        <small class="text-muted">{{ reply.created_at|date:"M d, Y H:i" }}</small>
+
+        <!-- Reply Form Toggle -->
+        <div>
+            <a href="#" class="small text-primary" onclick="document.getElementById('reply-{{ reply.id }}').classList.toggle('d-none'); return false;">Reply</a>
+        </div>
+
+        <!-- Reply Form -->
+        <div id="reply-{{ reply.id }}" class="d-none mt-2 ms-4">
+            <form method="post">
+                {% csrf_token %}
+                {{ form.comment }}
+                <input type="hidden" name="parent_id" value="{{ reply.id }}">
+                <button type="submit" class="btn btn-sm btn-success mt-1">Reply</button>
+            </form>
+        </div>
+
+        <!-- Recursive nested replies -->
+        {% include 'wellness/comment_replies.html' with replies=reply.replies.all %}
+    </div>
+</div>
+<hr class="my-2">
+{% endfor %}

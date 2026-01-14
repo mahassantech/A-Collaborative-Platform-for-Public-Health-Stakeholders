@@ -4,63 +4,83 @@
 {% block content %}
 <div class="container py-5">
   <div class="row justify-content-center">
-    <div class="col-md-6">
-      <div class="card shadow p-4">
-        <h4 class="fw-bold mb-3">Edit Profile</h4>
+    <div class="col-lg-7">
+      <div class="card shadow-sm border-0 rounded-4">
+        <div class="card-body p-4">
 
-        <form method="POST" enctype="multipart/form-data">
-          {% csrf_token %}
-
-          <!-- Username -->
-          <div class="mb-3">
-            {{ user_form.username.label_tag }}
-            {{ user_form.username }}
+          <!-- Profile Picture on Top -->
+          <div class="text-center mb-3">
+            {% if user.profile_pic %}
+              <img src="{{ user.profile_pic.url }}"
+                   class="rounded-circle border shadow-sm"
+                   width="110" height="110"
+                   style="object-fit: cover;">
+            {% else %}
+              <img src="{% static 'images/default-avatar.png' %}"
+                   class="rounded-circle border shadow-sm"
+                   width="110" height="110">
+            {% endif %}
           </div>
 
-          <!-- Email -->
-          <div class="mb-3">
-            {{ user_form.email.label_tag }}
-            {{ user_form.email }}
-          </div>
+          <h4 class="fw-bold mb-4 text-center">Edit Profile</h4>
 
-          <!-- Profile Picture -->
-          <div class="mb-3">
-            {{ user_form.profile_pic.label_tag }}
-            {{ user_form.profile_pic }}
-          </div>
+          <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
 
-          <!-- Role -->
-          <div class="mb-3">
-            {{ user_form.role.label_tag }}
-            {{ user_form.role }}
-          </div>
+            <!-- Username -->
+            <div class="mb-3">
+              {{ user_form.username.label_tag }}
+              {{ user_form.username }}
+              <small class="text-muted">Your public display name</small>
+            </div>
 
-          <!-- Doctor-specific fields -->
+            <!-- Email -->
+            <div class="mb-3">
+              {{ user_form.email.label_tag }}
+              {{ user_form.email }}
+            </div>
 
-          <!-- Doctor-specific fields -->
-      {% if user.role == 'doctor' %}
-        <div id="doctor-fields">
-        <div class="mb-3">
-      {{ user_form.doctor_license.label_tag }}
-      {{ user_form.doctor_license }}
+            <!-- Profile Picture Upload (NO preview here) -->
+            <div class="mb-3">
+              {{ user_form.profile_pic.label_tag }}
+              {{ user_form.profile_pic }}
+            </div>
+
+            <!-- Role -->
+            <div class="mb-4">
+              {{ user_form.role.label_tag }}
+              {{ user_form.role }}
+            </div>
+
+            <!-- Doctor Specific Section -->
+            <div id="doctor-fields" class="card bg-light border-0 p-3 mb-4">
+              <h6 class="fw-bold mb-3 text-primary">
+                Doctor Information
+              </h6>
+
+              <div class="mb-3">
+                {{ user_form.doctor_license.label_tag }}
+                {{ user_form.doctor_license }}
+              </div>
+
+              <div class="mb-3">
+                {{ user_form.specialization.label_tag }}
+                {{ user_form.specialization }}
+              </div>
+
+              <div class="mb-3">
+                {{ user_form.hospital_name.label_tag }}
+                {{ user_form.hospital_name }}
+              </div>
+            </div>
+
+            <button class="btn btn-primary w-100 fw-semibold py-2">
+              Save Changes
+            </button>
+
+          </form>
+
         </div>
-
-    <div class="mb-3">
-      {{ user_form.specialization.label_tag }}
-      {{ user_form.specialization }}
-    </div>
-
-    <div class="mb-3">
-      {{ user_form.hospital_name.label_tag }}
-      {{ user_form.hospital_name }}
-    </div>
-    </div>
-    {% endif %}
-
-
-          <button class="btn btn-primary w-100 fw-bold">Save Changes</button>
-        </form>
-
       </div>
     </div>
   </div>
@@ -71,15 +91,14 @@
   const doctorFields = document.getElementById("doctor-fields");
 
   function toggleDoctorFields() {
-      if(roleField.value === "doctor") {
-          doctorFields.style.display = "block";
-      } else {
-          doctorFields.style.display = "none";
-      }
+    if (roleField && roleField.value === "doctor") {
+      doctorFields.style.display = "block";
+    } else {
+      doctorFields.style.display = "none";
+    }
   }
 
-  // On load & change
-  window.onload = toggleDoctorFields;
+  document.addEventListener("DOMContentLoaded", toggleDoctorFields);
   roleField.addEventListener("change", toggleDoctorFields);
 </script>
 {% endblock %}

@@ -100,8 +100,11 @@
   </a>
 
   <!-- Appointment List -->
-  <!-- Appointment List -->
 {% if user.role == 'doctor' %}
+  <a href="{% url 'wellness_create' %}"
+     class="btn btn-success fw-bold rounded-3 quick-btn">
+    wellness Blog
+  </a>
   <a href="{% url 'doctor_my_appointment' %}"
      class="btn btn-success fw-bold rounded-3 quick-btn">
     Appointment List

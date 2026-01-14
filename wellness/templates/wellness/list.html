@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block content %}
+
+<section class="py-5 bg-light">
+  <div class="container">
+    <h2 class="text-center fw-bold mb-5">Wellness Posts</h2>
+    <div class="row g-4">
+
+      {% for post in posts %}
+      <div class="col-md-3 col-sm-6">
+        <div class="card shadow-sm h-100 text-center p-2 wellness-card">
+
+          <!-- Image -->
+          {% if post.image %}
+          <img src="{{ post.image.url }}" alt="{{ post.title }}" class="card-img-top mb-2" style="height:120px; object-fit:cover;">
+          {% endif %}
+
+          <div class="card-body p-2">
+            <!-- Title -->
+            <h6 class="card-title fw-bold">
+              <a href="{% url 'wellness_detail' post.pk %}" class="text-decoration-none text-dark">
+                {{ post.title|truncatechars:25 }}
+              </a>
+            </h6>
+
+            <!-- Category badge -->
+            {% if post.category %}
+            <span class="badge bg-info text-dark mb-2">{{ post.category.name }}</span>
+            {% endif %}
+
+            <!-- Snippet -->
+            <p class="card-text small">{{ post.content|truncatewords:12 }}</p>
+
+            <a href="{% url 'wellness_detail' post.pk %}" class="btn btn-outline-primary btn-sm">Read</a>
+          </div>
+
+        </div>
+      </div>
+      {% empty %}
+      <p class="text-center">No Wellness posts yet.</p>
+      {% endfor %}
+
+    </div>
+  </div>
+</section>
+
+<style>
+.wellness-card:hover {
+    transform: scale(1.02);
+    transition: 0.15s;
+}
+</style>
+
+{% endblock %}

@@ -315,6 +315,38 @@ footer.hc-footer p {
   padding-left: calc(var(--depth) * 30px);
   border-left: 2px solid #e0e0e0;
 }
+  /* hero section  */
+.hero-section {
+  min-height: 100vh;
+  background: url("../images/hero.jpg") center/cover no-repeat;
+  background-size: cover;
+  position: relative;
+}
 
+.hero-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+}
 
+.hero-section .container {
+  position: relative;
+  z-index: 2;
+}
+
+.fade-in {
+  animation: fadeInUp 1.2s ease-in-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(25px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 

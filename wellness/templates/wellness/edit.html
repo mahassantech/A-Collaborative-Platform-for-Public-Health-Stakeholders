@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container py-5" style="max-width:600px;">
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <h2 class="card-title fw-bold text-center mb-4">Edit Wellness Post</h2>
+
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+
+                <!-- Title -->
+                <div class="mb-3">
+                    {{ form.title.label_tag }}
+                    {{ form.title }}
+                    {% if form.title.errors %}
+                        <div class="text-danger small">{{ form.title.errors }}</div>
+                    {% endif %}
+                </div>
+
+                <!-- Content -->
+                <div class="mb-3">
+                    {{ form.content.label_tag }}
+                    {{ form.content }}
+                    {% if form.content.errors %}
+                        <div class="text-danger small">{{ form.content.errors }}</div>
+                    {% endif %}
+                </div>
+
+                <!-- Category -->
+                <div class="mb-3">
+                    {{ form.category.label_tag }}
+                    {{ form.category }}
+                    {% if form.category.errors %}
+                        <div class="text-danger small">{{ form.category.errors }}</div>
+                    {% endif %}
+                </div>
+
+                <!-- Image -->
+                <div class="mb-3">
+                    {{ form.image.label_tag }}
+                    {{ form.image }}
+                    {% if form.image.errors %}
+                        <div class="text-danger small">{{ form.image.errors }}</div>
+                    {% endif %}
+                    {% if post.image %}
+                        <p class="mt-2">Current Image:</p>
+                        <img src="{{ post.image.url }}" alt="{{ post.title }}" class="img-fluid rounded" style="max-height:200px; object-fit:cover;">
+                    {% endif %}
+                </div>
+
+                <button type="submit" class="btn btn-primary w-100">Update Post</button>
+            </form>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}
