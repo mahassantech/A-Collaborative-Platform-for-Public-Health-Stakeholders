@@ -54,17 +54,19 @@ def register(request):
 
 def login_view(request):
     if request.method == "POST":
-        identifier = request.POST.get("email")  # Can be username or email
+        identifier = request.POST.get("email")
         password = request.POST.get("password")
 
-        # Identify user by email or username
-        try:
-            user_obj = CustomUser.objects.get(email=identifier)
+        # Try email first
+        user_obj = CustomUser.objects.filter(email=identifier).first()
+
+        if user_obj:
             username = user_obj.username
-        except CustomUser.DoesNotExist:
-            username = identifier  # Assume username
+        else:
+            username = identifier  # maybe username
 
         user = authenticate(request, username=username, password=password)
+
         if user is not None:
             login(request, user)
             return redirect("profile")
@@ -72,6 +74,7 @@ def login_view(request):
             messages.error(request, "Invalid credentials. Please try again.")
 
     return render(request, "accounts/login.html")
+
 
 # LOGOUT VIEW
 

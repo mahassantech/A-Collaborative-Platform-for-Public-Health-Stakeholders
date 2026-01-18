@@ -1,10 +1,9 @@
 from django.db import models
-from django.conf import settings  # CustomUser er jonno used
-from datetime import date
-from dateutil.relativedelta import relativedelta
+from django.conf import settings
 from django.utils import timezone
+from dateutil.relativedelta import relativedelta
 
-User = settings.AUTH_USER_MODEL  # ensures CustomUser is used
+User = settings.AUTH_USER_MODEL
 
 
 class SubscriptionPlan(models.Model):
@@ -19,34 +18,30 @@ class SubscriptionPlan(models.Model):
 
     def __str__(self):
         return self.get_name_display()
-    
+
 
 class UserSubscription(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    plan = models.ForeignKey('SubscriptionPlan', on_delete=models.SET_NULL, null=True)
-    start_date = models.DateTimeField(null=False)
-    end_date = models.DateTimeField(null=False)
+    plan = models.ForeignKey(SubscriptionPlan, on_delete=models.SET_NULL, null=True)
+
+    # ✅ timezone-aware default
+    start_date = models.DateTimeField(default=timezone.now)
+    end_date = models.DateTimeField(default=timezone.now)
+
     is_active = models.BooleanField(default=False)
 
     def activate_plan(self, plan):
-        from django.utils import timezone
-        from dateutil.relativedelta import relativedelta
-
         self.plan = plan
         self.start_date = timezone.now()
         self.end_date = self.start_date + relativedelta(months=plan.duration_months)
         self.is_active = True
         self.save()
 
-    # check kortesi premium ache kina
     def is_premium(self):
-        """Return True if user has an active premium subscription"""
         if self.plan and self.is_active:
-            return self.plan.name.startswith("premium")  
+            return self.plan.name.startswith("premium")
         return False
 
-
-# transaction model for payment
 
 class PaymentTransaction(models.Model):
     STATUS_CHOICES = (
@@ -60,11 +55,7 @@ class PaymentTransaction(models.Model):
     plan = models.ForeignKey(SubscriptionPlan, on_delete=models.CASCADE)
     tran_id = models.CharField(max_length=100, unique=True)
     amount = models.DecimalField(max_digits=8, decimal_places=2)
-    status = models.CharField(
-        max_length=20,
-        choices=STATUS_CHOICES,
-        default="PENDING"
-    )
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default="PENDING")
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

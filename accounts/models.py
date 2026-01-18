@@ -36,11 +36,8 @@ class CustomUser(AbstractUser):
         choices=ROLE_CHOICES,
         default="patient"
     )
-    gender = models.CharField(
-        max_length=10,
-        choices=GENDER_CHOICES,
-        default="male"
-    )
+    degrees = models.CharField(max_length=255, blank=True, null=True)  # e.g. MBBS, FCPS, MD
+    position = models.CharField(max_length=100, blank=True, null=True)  # e.g. Professor & Head
     doctor_license = models.CharField(
         max_length=50,
         blank=True,
@@ -58,11 +55,14 @@ class CustomUser(AbstractUser):
         blank=True,
         null=True
     )
-
+    email = models.EmailField(unique=True)
+    about_me = models.TextField(blank=True, null=True)
+    phone_number = models.CharField(max_length=20, blank=True, null=True)
     profile_pic = models.ImageField(
         upload_to="profiles/",
         blank=True,
-        null=True
+        null=True,
+        default="images/doctor.jpg"
     )
 
     # 🆔 ROLE-BASED TOKEN (Padded & Scalable)

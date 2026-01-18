@@ -5,82 +5,94 @@
 <div class="container py-5">
   <div class="row justify-content-center">
     <div class="col-lg-7">
-      <div class="card shadow-sm border-0 rounded-4">
-        <div class="card-body p-4">
 
-          <!-- Profile Picture on Top -->
-          <div class="text-center mb-3">
-            {% if user.profile_pic %}
-              <img src="{{ user.profile_pic.url }}"
-                   class="rounded-circle border shadow-sm"
-                   width="110" height="110"
-                   style="object-fit: cover;">
-            {% else %}
-              <img src="{% static 'images/default-avatar.png' %}"
-                   class="rounded-circle border shadow-sm"
-                   width="110" height="110">
-            {% endif %}
+      <div class="card shadow-sm border-0 rounded-4 p-4">
+
+        <!-- Profile Picture -->
+        <div class="text-center mb-4">
+          {% if user.profile_pic %}
+            <img src="{{ user.profile_pic.url }}" class="rounded-circle border shadow-sm" width="120" height="120" style="object-fit:cover;">
+          {% else %}
+            <img src="{% static 'images/default-avatar.png' %}" class="rounded-circle border shadow-sm" width="120" height="120">
+          {% endif %}
+        </div>
+
+        <h4 class="text-center fw-bold mb-4">Edit Profile</h4>
+
+        <form method="POST" enctype="multipart/form-data">
+          {% csrf_token %}
+
+          <!-- Username & Email -->
+          <div class="mb-3">
+            {{ user_form.username.label_tag }}
+            {{ user_form.username }}
+          </div>
+          <div class="mb-3">
+            {{ user_form.email.label_tag }}
+            {{ user_form.email }}
           </div>
 
-          <h4 class="fw-bold mb-4 text-center">Edit Profile</h4>
+          <!-- Profile Pic -->
+          <div class="mb-3">
+            {{ user_form.profile_pic.label_tag }}
+            {{ user_form.profile_pic }}
+          </div>
 
-          <form method="POST" enctype="multipart/form-data">
-            {% csrf_token %}
+          <!-- Role -->
+          <div class="mb-3">
+            {{ user_form.role.label_tag }}
+            {{ user_form.role }}
+          </div>
 
-            <!-- Username -->
+          <!-- Doctor Fields -->
+          <div id="doctor-fields" class="card bg-light border-0 p-3 mb-3">
+            <h6 class="fw-bold mb-3 text-primary">Doctor Information</h6>
+
             <div class="mb-3">
-              {{ user_form.username.label_tag }}
-              {{ user_form.username }}
-              <small class="text-muted">Your public display name</small>
+              {{ user_form.degrees.label_tag }}
+              {{ user_form.degrees }}
             </div>
 
-            <!-- Email -->
             <div class="mb-3">
-              {{ user_form.email.label_tag }}
-              {{ user_form.email }}
+              {{ user_form.position.label_tag }}
+              {{ user_form.position }}
             </div>
 
-            <!-- Profile Picture Upload (NO preview here) -->
             <div class="mb-3">
-              {{ user_form.profile_pic.label_tag }}
-              {{ user_form.profile_pic }}
+              {{ user_form.doctor_license.label_tag }}
+              {{ user_form.doctor_license }}
             </div>
 
-            <!-- Role -->
-            <div class="mb-4">
-              {{ user_form.role.label_tag }}
-              {{ user_form.role }}
+            <div class="mb-3">
+              {{ user_form.specialization.label_tag }}
+              {{ user_form.specialization }}
+              <small class="text-muted d-block">Hold Ctrl (Cmd) to select multiple</small>
             </div>
 
-            <!-- Doctor Specific Section -->
-            <div id="doctor-fields" class="card bg-light border-0 p-3 mb-4">
-              <h6 class="fw-bold mb-3 text-primary">
-                Doctor Information
-              </h6>
-
-              <div class="mb-3">
-                {{ user_form.doctor_license.label_tag }}
-                {{ user_form.doctor_license }}
-              </div>
-
-              <div class="mb-3">
-                {{ user_form.specialization.label_tag }}
-                {{ user_form.specialization }}
-              </div>
-
-              <div class="mb-3">
-                {{ user_form.hospital_name.label_tag }}
-                {{ user_form.hospital_name }}
-              </div>
+            <div class="mb-3">
+              {{ user_form.hospital_name.label_tag }}
+              {{ user_form.hospital_name }}
             </div>
 
-            <button class="btn btn-primary w-100 fw-semibold py-2">
-              Save Changes
-            </button>
+            <div class="mb-3">
+              {{ user_form.about_me.label_tag }}
+              {{ user_form.about_me }}
+            </div>
 
-          </form>
+            <div class="mb-3">
+              {{ user_form.phone_number.label_tag }}
+              {{ user_form.phone_number }}
+            </div>
 
-        </div>
+            <div class="mb-3">
+              {{ user_form.gender.label_tag }}
+              {{ user_form.gender }}
+            </div>
+          </div>
+
+          <button class="btn btn-primary w-100 py-2 fw-semibold">Save Changes</button>
+        </form>
+
       </div>
     </div>
   </div>
@@ -91,7 +103,7 @@
   const doctorFields = document.getElementById("doctor-fields");
 
   function toggleDoctorFields() {
-    if (roleField && roleField.value === "doctor") {
+    if (roleField.value === "doctor") {
       doctorFields.style.display = "block";
     } else {
       doctorFields.style.display = "none";
@@ -99,6 +111,8 @@
   }
 
   document.addEventListener("DOMContentLoaded", toggleDoctorFields);
-  roleField.addEventListener("change", toggleDoctorFields);
+  if(roleField){
+    roleField.addEventListener("change", toggleDoctorFields);
+  }
 </script>
 {% endblock %}

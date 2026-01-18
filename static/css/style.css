@@ -318,7 +318,7 @@ footer.hc-footer p {
   /* hero section  */
 .hero-section {
   min-height: 100vh;
-  background: url("../images/hero.jpg") center/cover no-repeat;
+  background: url("../images/banner 13.webp") center/cover no-repeat;
   background-size: cover;
   position: relative;
 }
@@ -349,4 +349,11 @@ footer.hc-footer p {
     transform: translateY(0);
   }
 }
+
+.wellness-card:hover {
+  transform: scale(1.02);
+  transition: 0.15s ease;
+}
+
+
 

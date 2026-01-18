@@ -1,0 +1,69 @@
+<!-- appointments/doctor_detail.html -->
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+
+      <div class="card shadow-lg p-4 text-center position-relative">
+
+        <!-- Profile Picture (Centered) -->
+        <div class="mb-3">
+          {% if doctor.profile_pic %}
+            <img src="{{ doctor.profile_pic.url }}" class="rounded-circle border border-3 border-primary mx-auto d-block" style="width:140px; height:140px; object-fit:cover;">
+          {% else %}
+            <img src="{% static 'doctor.jpg' %}" class="rounded-circle border border-3 border-primary mx-auto d-block" style="width:140px; height:140px; object-fit:cover;">
+          {% endif %}
+        </div>
+
+        <!-- Name & Degrees -->
+        <h2 class="fw-bold">{{ doctor.first_name }} {{ doctor.last_name }}</h2>
+        {% if doctor.degrees %}
+          <p class="text-primary fst-italic mb-2">{{ doctor.degrees }}</p>
+        {% endif %}
+
+        <!-- Specialization -->
+        {% if doctor.specialization.all %}
+          <p class="mb-2"><strong>Specialization:</strong> 
+            {% for spec in doctor.specialization.all %}
+              <span class="badge bg-info text-dark">{{ spec.name }}</span>
+            {% endfor %}
+          </p>
+        {% endif %}
+
+        <!-- Position & Hospital -->
+        {% if doctor.position %}
+          <p class="mb-1"><strong>Position:</strong> {{ doctor.position }}</p>
+        {% endif %}
+        {% if doctor.hospital_name %}
+          <p class="mb-1"><strong>Hospital:</strong> {{ doctor.hospital_name }}</p>
+        {% endif %}
+
+        <!-- Contact Info -->
+        <div class="mb-3">
+          {% if doctor.phone_number %}
+            <p class="mb-1"><strong>Phone:</strong> {{ doctor.phone_number }}</p>
+          {% endif %}
+          {% if doctor.doctor_license %}
+            <p class="mb-1"><strong>License:</strong> {{ doctor.doctor_license }}</p>
+          {% endif %}
+        </div>
+
+        <!-- About -->
+        {% if doctor.about_me %}
+          <hr>
+          <h5 class="fw-bold mb-2">About</h5>
+          <p class="text-muted">{{ doctor.about_me }}</p>
+        {% endif %}
+
+        <!-- Book Appointment Button -->
+        <a href="{% url 'book_appointment' doctor.id %}" class="btn btn-success btn-lg mt-3 w-100 shadow-sm">📅 Book Appointment</a>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

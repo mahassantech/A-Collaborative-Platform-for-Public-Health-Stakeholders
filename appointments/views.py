@@ -19,7 +19,10 @@ from subscriptions.models import UserSubscription
 def doctor_list(request):
     doctors = CustomUser.objects.filter(role="doctor")
     return render(request, "appointments/doctor_list.html", {"doctors": doctors})
-
+ 
+def doctor_detail(request, id):
+    doctor = get_object_or_404(CustomUser, id=id, role="doctor")
+    return render(request, "appointments/doctor_detail.html", {"doctor": doctor})
 
 @login_required
 def add_location(request):
