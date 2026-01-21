@@ -357,3 +357,87 @@ footer.hc-footer p {
 
 
 
+/* Core Service Cards */
+.hc-card {
+  position: relative;
+  border-radius: 1.5rem;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hc-card:hover {
+  transform: translateY(-10px) scale(1.03);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+}
+
+.hc-card-img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  filter: brightness(0.7);
+  transition: filter 0.3s ease;
+}
+
+.hc-card:hover .hc-card-img {
+  filter: brightness(0.85);
+}
+
+.hc-card-content {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: linear-gradient(to top, rgba(0,0,0,0.6), transparent);
+  padding: 20px;
+  transition: all 0.3s ease;
+}
+
+.hc-card:hover .hc-card-content h6,
+.hc-card:hover .hc-card-content p {
+  transform: translateY(-5px);
+  opacity: 1;
+  transition: all 0.3s ease;
+}
+
+/* Blog Cards */
+.blog-card {
+  overflow: hidden;
+  border-radius: 1.5rem;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.blog-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 15px 30px rgba(0,0,0,0.25);
+}
+
+.blog-card-img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  filter: brightness(0.75);
+  transition: filter 0.3s ease;
+}
+
+.blog-card:hover .blog-card-img {
+  filter: brightness(0.9);
+}
+
+.blog-card-content {
+  position: relative;
+  background: #fff;
+  padding: 15px 20px;
+  transition: all 0.3s ease;
+}
+
+.blog-card-content h5,
+.blog-card-content p {
+  transition: transform 0.3s ease;
+}
+
+.blog-card:hover .blog-card-content h5,
+.blog-card:hover .blog-card-content p {
+  transform: translateY(-3px);
+}

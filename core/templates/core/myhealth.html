@@ -16,6 +16,38 @@
   <div class="container">
     <h2 class="text-center mb-5 fw-bold">Available Treatments</h2>
     <div class="row g-4">
+ 
+
+<div class="container py-5">
+  <h2 class="mb-4 text-center">My Health History</h2>
+  <div class="row g-4">
+    {% for history in posts %}
+      <div class="col-md-4">
+        <div class="card shadow-sm h-100">
+          {% if history.photo %}
+            <img src="{{ history.photo.url }}" class="card-img-top" alt="{{ history.title }}">
+          {% else %}
+            <img src="{% static 'images/default-health.png' %}" class="card-img-top" alt="No Photo">
+          {% endif %}
+          
+          <div class="card-body">
+            <h5 class="card-title">{{ history.title }}</h5>
+            <p class="card-text">
+              <strong>Category:</strong> {{ history.category.name  }}<br>
+              <strong>Treatment:</strong> {{ history.treatment_taken|truncatechars:50 }}
+            </p>
+            <a href="#" class="btn btn-outline-primary btn-sm">View Details</a>
+          </div>
+        </div>
+      </div>
+    {% empty %}
+      <p class="text-muted text-center">No health history yet.</p>
+    {% endfor %}
+  </div>
+</div>
+
+
+
 
       <!-- Treatment 1 -->
       <div class="col-md-4">

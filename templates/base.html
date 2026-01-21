@@ -59,14 +59,14 @@ href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.c
     </button>
 
     <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
-      <ul class="navbar-nav gap-3 fs-6">
+      <ul class="navbar-nav gap-2 fs-6">
         <li class="nav-item"><a class="nav-link text-white nav-hover" href="/">Dashboard</a></li>
         
         <li class="nav-item"><a class="nav-link text-white nav-hover" href="{% url 'wellness_list' %}">Health & Fitness</a></li>
         
         
-        {% comment %} <li class="nav-item"><a class="nav-link text-white nav-hover" href="{% url 'treatmentPage' %}">Care Guides</a>
-        </li> {% endcomment %}
+        <li class="nav-item"><a class="nav-link text-white nav-hover" href="{% url 'health_history_list' %}">My Health</a>
+        </li> 
         
         <li class="nav-item"><a class="nav-link text-white nav-hover" href="{% url 'doctor_list' %}">Find Doctors</a></li>
         <li class="nav-item"><a class="nav-link text-white nav-hover" href="{% url 'blog_list' %}">Blog</a></li>
@@ -111,7 +111,7 @@ href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.c
     </h1>
 
     <p class="lead fade-in">
-      Your space to connect, learn, and grow together.
+      An interactive social platform where people connect, learn, and support each other to grow together.
     </p>
 
     <a href="{% url 'signup' %}"
@@ -160,54 +160,60 @@ href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.c
 <!-- Core Services Section -->
 <section class="bg-light py-5">
   <div class="container">
-    <h2 class="text-center fw-bold mb-5">Our Core Services</h2>
+    <h2 class="text-center fw-bold mb-2">Our Core Services</h2>
+    <p class="text-center text-muted mb-5">
+      Smart healthcare solutions to connect, support, and care for you.
+    </p>
 
     <div class="row g-4 justify-content-center">
 
       <!-- Doctor Directory -->
       <div class="col-md-3 col-sm-6">
-        <div class="card text-center text-white p-4 rounded-4 shadow-sm" style="background: #1abc9c;">
-          <img src="{% static 'images/doctor_list.png' %}" class="mb-3" style="width:70px;">  
-          <h6 class="fw-bold">Doctor Directory</h6>
-          <p class="small">Browse verified doctors by specialty and location.</p>
+        <div class="hc-card rounded-4 overflow-hidden shadow position-relative">
+          <img src="{% static 'images/doctor.jpg' %}" class="hc-card-img">
+          <div class="hc-card-content text-center text-white p-4">
+            <h6 class="fw-bold mb-2">Doctor Directory</h6>
+            <p class="small mb-0">Browse verified doctors by specialty and location.</p>
+          </div>
         </div>
       </div>
 
       <!-- Book Appointments -->
       <div class="col-md-3 col-sm-6">
-        <div class="card text-center text-white p-4 rounded-4 shadow-sm" style="background: #3498db;">
-          <img src="{% static 'images/appointments.png' %}" class="mb-3" style="width:70px;">  
-          <h6 class="fw-bold">Book Appointments</h6>
-          <p class="small">Schedule online consultations with ease.</p>
+        <div class="hc-card rounded-4 overflow-hidden shadow position-relative">
+          <img src="{% static 'images/appointments.png' %}" class="hc-card-img">
+          <div class="hc-card-content text-center text-white p-4">
+            <h6 class="fw-bold mb-2">Book Appointments</h6>
+            <p class="small mb-0">Schedule online consultations with ease.</p>
+          </div>
         </div>
       </div>
 
       <!-- Health Blogs -->
       <div class="col-md-3 col-sm-6">
-        <div class="card text-center text-white p-4 rounded-4 shadow-sm" style="background: #9b59b6;">
-          <img src="{% static 'images/blogs.png' %}" class="mb-3" style="width:70px;">  
-          <h6 class="fw-bold">Health Blogs</h6>
-          <p class="small">Read health tips and expert insights regularly.</p>
+        <div class="hc-card rounded-4 overflow-hidden shadow position-relative">
+          <img src="{% static 'images/health blog.png' %}" class="hc-card-img">
+          <div class="hc-card-content text-center text-white p-4">
+            <h6 class="fw-bold mb-2">Health Blogs</h6>
+            <p class="small mb-0">Read health tips and expert insights regularly.</p>
+          </div>
         </div>
       </div>
 
-      <!-- Wellness Tips -->
+      <!-- Health & Fitness -->
       <div class="col-md-3 col-sm-6">
-        <div class="card text-center text-white p-4 rounded-4 shadow-sm" style="background: #e67e22;">
-          <img src="{% static 'images/wellness.png' %}" class="mb-3" style="width:70px;">  
-          <h6 class="fw-bold">Health & Fitness</h6>
-          <p class="small">Daily tips to improve your overall health and lifestyle.</p>
+        <div class="hc-card rounded-4 overflow-hidden shadow position-relative">
+          <img src="{% static 'images/health and fitness.png' %}" class="hc-card-img">
+          <div class="hc-card-content text-center text-white p-4">
+            <h6 class="fw-bold mb-2">Health & Fitness</h6>
+            <p class="small mb-0">Daily tips to improve your overall health and lifestyle.</p>
+          </div>
         </div>
       </div>
 
     </div>
   </div>
 </section>
-
-
-
-
-
 
 <!-- What Our Clients Say -->
 <section class="py-5 bg-light">
@@ -262,71 +268,6 @@ href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.c
   </div>
 </section>
 
-<!-- Book an Appointment / Premium Service -->
-<section id="appointment" class="py-5" style="background: #f4f8fb;">
-  <div class="container">
-    <h2 class="text-center fw-bold mb-5">Book a Premium Appointment</h2>
-
-    <div class="row justify-content-center">
-      <div class="col-md-6">
-        <div class="card p-4 shadow-sm rounded-4">
-          
-          <p class="text-muted small mb-4">
-            Fill out the form below to schedule a premium consultation with our healthcare specialists.
-          </p>
-
-          <form method="POST">
-            {% csrf_token %}
-
-            <!-- Full Name -->
-            <div class="mb-3">
-              <label for="id_name" class="form-label fw-semibold">Full Name</label>
-              <input type="text" name="name" class="form-control input-medical" id="id_name" placeholder="Enter your full name" required>
-            </div>
-
-            
-
-            <!-- Phone -->
-            <div class="mb-3">
-              <label for="id_phone" class="form-label fw-semibold">Phone Number</label>
-              <input type="text" name="phone" class="form-control input-medical" id="id_phone" placeholder="Enter your phone number" required>
-            </div>
-
-            <!-- Preferred Date -->
-            <div class="mb-3">
-              <label for="id_date" class="form-label fw-semibold">Preferred Date</label>
-              <input type="date" name="date" class="form-control input-medical" id="id_date" required>
-            </div>
-
-            <!-- Preferred Time -->
-            <div class="mb-3">
-              <label for="id_time" class="form-label fw-semibold">Preferred Time</label>
-              <input type="time" name="time" class="form-control input-medical" id="id_time" required>
-            </div>
-
-            <!-- Service Type -->
-            <div class="mb-4">
-              <label for="id_service" class="form-label fw-semibold">Service Type</label>
-              <select class="form-select input-medical" name="service" id="id_service" required>
-                <option value="" disabled selected>Select a service</option>
-                <option value="general">General Consultation</option>
-                <option value="cardiology">Cardiology</option>
-                <option value="dermatology">Dermatology</option>
-                <option value="premium">Premium Consultation</option>
-              </select>
-            </div>
-
-            <a href="{% url 'doctor_list' %}"
-            class="btn btn-medical w-100 fw-bold py-2">
-            Book Appointment
-          </a>
-          </form>
-
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
 
 <!--  Subscription Plans  -->
 <section class="container py-5">
@@ -398,29 +339,37 @@ href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.c
   </div>
 </section>
 
-<!-- Blog -->
-<section class="py-5">
+<section class="py-5 bg-light">
   <div class="container">
     <h2 class="text-center fw-bold mb-4">Latest From Our Blog</h2>
 
     <div class="row g-4">
-
-      {% for i in "123" %}
-      <div class="col-md-4">
-        <div class="blog-card shadow-sm rounded-4 overflow-hidden">
-          <img src="{% static 'images/blog1.jpg' %}" class="card-img-top">
-          <div class="p-3">
-            <h5 class="fw-bold">Blog Title Here</h5>
-            <p class="text-muted small">Short description about blog post.</p>
-            <a href="#" class="fw-bold text-primary text-decoration-none">Read more →</a>
-          </div>
-        </div>
-      </div>
-      {% endfor %}
+      {% for blog in recent_blogs %}
+<div class="col-md-4">
+  <div class="blog-card rounded-4 shadow overflow-hidden position-relative">
+    {% if blog.photo %}
+      <img src="{{ blog.photo.url }}" class="blog-card-img" alt="{{ blog.title }}">
+    {% else %}
+      <img src="{% static 'images/default_blog.jpg' %}" class="blog-card-img" alt="{{ blog.title }}">
+    {% endif %}
+    <div class="blog-card-content p-3">
+      <h5 class="fw-bold mb-2">{{ blog.title }}</h5>
+      <p class="text-muted small">{{ blog.short_description|truncatechars:100 }}</p>
+      <a href="{% url 'blog_detail' blog.pk %}" class="fw-bold text-primary text-decoration-none">
+        Read more →
+      </a>
+    </div>
+  </div>
+</div>
+{% endfor %}
 
     </div>
   </div>
 </section>
+
+
+
+
 
 {% endblock content %}
 

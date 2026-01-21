@@ -1,33 +1,47 @@
-# from django.db import models
-# from django.conf import settings  # For custom user model
-# from blog.models import LANGUAGE_CHOICES
+from django.db import models
+from accounts.models import CustomUser
+from category.models import Category  # তোমার আলাদা Category model
 
+class HealthHistory(models.Model):
+    patient = models.ForeignKey(
+        CustomUser,
+        on_delete=models.CASCADE,
+        related_name="health_histories",
+        limit_choices_to={"role": "patient"}
+    )
 
-# class Blog(models.Model):
-#     LANGUAGE_CHOICES = [
-# ('en-US', 'English'),
-# ('bn', 'Bangla'),
-# ]
+    assigned_doctor = models.ForeignKey(
+        CustomUser,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="assigned_health_posts",
+        limit_choices_to={"role": "doctor"},
+        help_text="Private post: only assigned doctor can see"
+    )
 
-# title = models.CharField(max_length=200)
-# content = models.TextField()
-# description = models.TextField(blank=True, null=True)
-# image = models.ImageField(upload_to='blogs/', blank=True, null=True)
-# category = models.CharField(max_length=100, blank=True, null=True)
-# tags = models.CharField(max_length=250, blank=True, null=True)
-# language = models.CharField(max_length=10, choices=LANGUAGE_CHOICES, default='bn')
+    title = models.CharField(max_length=200)
+    category = models.ForeignKey(
+        Category,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True
+    )
+    photo = models.ImageField(
+    upload_to="health_history_photos/",  # Automatically saved in MEDIA_ROOT/health_history_photos/
+    blank=True,
+    null=True,
+    help_text="Upload any image from your computer"
+)
 
-# # Correct ForeignKey to user
-# user = models.ForeignKey(
-#     settings.AUTH_USER_MODEL,
-#     on_delete=models.CASCADE,
-#     related_name='blogs'  # reverse query: user.blogs.all()
-# )
+    treatment_taken = models.TextField(blank=True)
 
-# created_at = models.DateTimeField(auto_now_add=True)
-# updated_at = models.DateTimeField(auto_now=True)
-# is_published = models.BooleanField(default=True)
+    is_private = models.BooleanField(
+        default=True,
+        help_text="Private = only patient + assigned doctor can see"
+    )
 
-# def __str__(self):
-#     username = self.user.username if self.user else "Unknown User"
-#     return f"{self.title} — {username}"
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.title} ({self.patient.token_id})"

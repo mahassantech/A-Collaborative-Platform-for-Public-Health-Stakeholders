@@ -144,10 +144,14 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-STATIC_URL = 'static/'
-STATICFILES_DIRS = [
-    BASE_DIR / "static",  # If your static folder is at the root level next to manage.py
-]
+# STATIC
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [BASE_DIR / "static"]
+
+# MEDIA
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
@@ -166,4 +170,5 @@ DEFAULT_FROM_EMAIL = 'webmaster@localhost'
 SSLCOMMERZ_STORE_ID = "testbox"
 SSLCOMMERZ_STORE_PASS = "qwerty"
 SSLCOMMERZ_SANDBOX = True
+
 
