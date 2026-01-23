@@ -21,6 +21,8 @@ class RegistrationForm(forms.ModelForm):
         model = CustomUser
         fields = [
             "username",
+            'first_name', 
+            'last_name',
             "email",
             "password",
             "role",
@@ -74,9 +76,10 @@ class UserUpdateForm(forms.ModelForm):
         model = CustomUser
         fields = [
             "username",
+            'first_name',
+            'last_name',
             "email",
             "doctor_license",
-            "specialization",
             "hospital_name",
             "profile_pic",
         ]

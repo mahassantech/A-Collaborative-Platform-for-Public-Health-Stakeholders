@@ -1,6 +1,6 @@
 from django.db import models
 from accounts.models import CustomUser
-from category.models import Category  # তোমার আলাদা Category model
+from category.models import Category  
 
 class HealthHistory(models.Model):
     patient = models.ForeignKey(

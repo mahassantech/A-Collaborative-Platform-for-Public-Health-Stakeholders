@@ -8,9 +8,11 @@
     <!-- LEFT SIDEBAR -->
     <div class="col-lg-4 mb-4">
       <div class="card shadow-sm p-3 text-center">
+        <div class="d-flex justify-content-center">
         <img src="{% if doctor.profile_pic %}{{ doctor.profile_pic.url }}{% else %}{% static 'images/avatar.png' %}{% endif %}" 
              class="rounded-circle mb-3" width="120" height="120" style="object-fit: cover;">
-        <h4 class="fw-bold">{{ doctor.username }}</h4>
+        </div>
+        <h4 class="fw-bold">{{ doctor.first_name }} {{doctor.last_name}}</h4>
         <span class="badge bg-primary mb-2">Doctor</span>
 
         <p class="small text-primary">
@@ -38,52 +40,62 @@
     <!-- RIGHT MAIN CONTENT -->
     <div class="col-lg-8">
       <div class="card shadow-sm p-4">
-        <h4 class="mb-3">Book an Appointment with {{ doctor.username }}</h4>
+        <h4 class="mb-3">Book an Appointment with {{ doctor.first_name }} {{doctor.last_name}}</h4>
 
         {% if user.is_authenticated %}
-        {% if error %}<p class="text-danger">{{ error }}</p>{% endif %}
-        <form method="post">
-          {% csrf_token %}
 
-          <div class="mb-3">
-  <label for="location" class="form-label">Select Location</label>
-  <select class="form-select" name="location_id" id="location" required>
-    {% for loc_slots in available_slots %}
-      <option value="{{ loc_slots.location.id }}">{{ loc_slots.location.name }}</option>
-    {% endfor %}
-  </select>
-</div>
+          {% if user.id != doctor.id %}
 
-<div class="mb-3">
-  <label for="date" class="form-label">Select Appointment Date</label>
-  <input type="date" class="form-control" name="date" required>
-</div>
+            {% if error %}<p class="text-danger">{{ error }}</p>{% endif %}
 
-<div class="mb-3">
-  <label for="slot" class="form-label">Available Time Slots</label>
-  <select class="form-select" name="slot" id="slot" required>
-    {% for loc_slots in available_slots %}
-      {% for s in loc_slots.slots %}
-        <option value="{{ s.value }}">{{ s.display }}</option>
-      {% endfor %}
-    {% endfor %}
-  </select>
-</div>
+            <form method="post">
+              {% csrf_token %}
 
+              <!-- AUTO SELECT FIRST CHAMBER (hidden) -->
+              <input type="hidden" name="location_id" value="{{ doctor.doctor_locations.first.id }}">
 
-          <div class="mb-3">
-            <label for="notes" class="form-label">Notes (optional)</label>
-            <textarea class="form-control" name="notes" id="notes" rows="2"></textarea>
-          </div>
+              <div class="mb-3">
+                <label for="date" class="form-label">Select Appointment Date</label>
+                <input type="date" class="form-control" name="date" required min="{{ today }}">
+              </div>
 
-          <button type="submit" class="btn btn-success w-100 fw-bold rounded-3">📅 Book Appointment</button>
-        </form>
+              <div class="mb-3">
+                <label for="slot" class="form-label">Available Time Slots</label>
+                <select class="form-select" name="slot" id="slot" required>
+                  {% for loc_slots in available_slots %}
+                    {% for s in loc_slots.slots %}
+                      <option value="{{ s.value }}">{{ s.display }}</option>
+                    {% endfor %}
+                  {% endfor %}
+                </select>
+              </div>
+
+              <div class="mb-3">
+                <label for="notes" class="form-label">Notes (optional)</label>
+                <textarea class="form-control" name="notes" id="notes" rows="2"></textarea>
+              </div>
+
+              <button type="submit" class="btn btn-success w-100 fw-bold rounded-3">📅 Book Appointment</button>
+            </form>
+
+          {% else %}
+
+            <!-- 🚫 SELF BOOKING WARNING -->
+            <div class="alert alert-warning">
+              You cannot book an appointment with yourself.
+            </div>
+
+          {% endif %}
+
         {% else %}
-        <p class="text-muted">Please <a href="{% url 'login' %}">login</a> to book an appointment.</p>
+
+          <p class="text-muted">Please <a href="{% url 'login' %}">login</a> to book an appointment.</p>
+
         {% endif %}
 
       </div>
     </div>
+
   </div>
 </div>
 

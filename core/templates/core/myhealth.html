@@ -36,7 +36,7 @@
               <strong>Category:</strong> {{ history.category.name  }}<br>
               <strong>Treatment:</strong> {{ history.treatment_taken|truncatechars:50 }}
             </p>
-            <a href="#" class="btn btn-outline-primary btn-sm">View Details</a>
+            <a href="{% url 'health_detail' history.id  %}" class="btn btn-outline-primary btn-sm">View Details</a>
           </div>
         </div>
       </div>
@@ -49,81 +49,7 @@
 
 
 
-      <!-- Treatment 1 -->
-      <div class="col-md-4">
-        <div class="card shadow-sm h-100">
-          <img src="{% static 'images/blood sugar.png' %}" class="card-img-top" alt="Treatment 1">
-          <div class="card-body">
-            <h5 class="card-title">Diabetes Care</h5>
-            <p class="card-text">Personalized plans for diabetes management and diet support.</p>
-            <a href="#" class="btn btn-outline-primary btn-sm">Learn More</a>
-          </div>
-        </div>
-      </div>
-
-      <!-- Treatment 2 -->
-      <div class="col-md-4">
-        <div class="card shadow-sm h-100">
-          <img src="{% static 'images/cardiac.jpg' %}" class="card-img-top" alt="Treatment 2">
-          <div class="card-body">
-            <h5 class="card-title">Cardiac Wellness</h5>
-            <p class="card-text">Heart care programs with modern techniques and regular monitoring.</p>
-            <a href="#" class="btn btn-outline-primary btn-sm">Learn More</a>
-          </div>
-        </div>
-      </div>
-
-      <!-- Treatment 3 -->
-      <div class="col-md-4">
-        <div class="card shadow-sm h-100">
-          <img src="{% static 'images/pysco.jpg' %}" class="card-img-top" alt="Treatment 3">
-          <div class="card-body">
-            <h5 class="card-title">Physiotherapy</h5>
-            <p class="card-text">Recovery-focused physical therapy designed for all ages and conditions.</p>
-            <a href="#" class="btn btn-outline-primary btn-sm">Learn More</a>
-          </div>
-        </div>
-      </div>
-
-      <!-- Treatment 4 -->
-      <div class="col-md-4">
-        <div class="card shadow-sm h-100">
-          <img src="{% static 'images/treatment4.jpg' %}" class="card-img-top" alt="Treatment 4">
-          <div class="card-body">
-            <h5 class="card-title">Mental Health Support</h5>
-            <p class="card-text">Counseling and therapy sessions for stress, anxiety, and emotional wellness.</p>
-            <a href="#" class="btn btn-outline-primary btn-sm">Learn More</a>
-          </div>
-        </div>
-      </div>
-
-      <!-- Treatment 5 -->
-      <div class="col-md-4">
-        <div class="card shadow-sm h-100">
-          <img src="{% static 'images/treatment5.jpg' %}" class="card-img-top" alt="Treatment 5">
-          <div class="card-body">
-            <h5 class="card-title">Weight Management</h5>
-            <p class="card-text">Healthy weight loss plans designed by certified nutritionists and trainers.</p>
-            <a href="#" class="btn btn-outline-primary btn-sm">Learn More</a>
-          </div>
-        </div>
-      </div>
-
-      <!-- Treatment 6 -->
-      <div class="col-md-4">
-        <div class="card shadow-sm h-100">
-          <img src="{% static 'images/treatment6.jpg' %}" class="card-img-top" alt="Treatment 6">
-          <div class="card-body">
-            <h5 class="card-title">Nutrition & Diet</h5>
-            <p class="card-text">Customized diet plans to help maintain a balanced and healthy lifestyle.</p>
-            <a href="#" class="btn btn-outline-primary btn-sm">Learn More</a>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
+      
 
 <!-- Treatment Benefits Section -->
 <section class="py-5 bg-white">

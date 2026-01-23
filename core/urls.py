@@ -16,6 +16,8 @@ urlpatterns = [
  
     path("", views.health_history_list, name="health_history_list"),
     path("add/", views.add_health_history, name="add_health_history"),
+    path("health/<int:pk>/", views.health_history_detail, name="health_detail"),
+
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

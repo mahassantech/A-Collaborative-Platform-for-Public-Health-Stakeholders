@@ -16,7 +16,7 @@ class BlogPost(models.Model):
         related_name="posts"
     )
     title = models.CharField(max_length=200)
-    content = RichTextField()
+    content = RichTextField(blank=True, null=True)
     description = models.TextField(blank=True, null=True)
     photo = models.ImageField(upload_to="blog_photos/", blank=True, null=True)
     category = models.ManyToManyField(Category)

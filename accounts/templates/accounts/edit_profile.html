@@ -32,6 +32,19 @@
             {{ user_form.email }}
           </div>
 
+          <!-- First Name -->
+<div class="mb-3">
+  {{ user_form.first_name.label_tag }}
+  {{ user_form.first_name }}
+</div>
+
+<!-- Last Name -->
+<div class="mb-3">
+  {{ user_form.last_name.label_tag }}
+  {{ user_form.last_name }}
+</div>
+
+           
           <!-- Profile Pic -->
           <div class="mb-3">
             {{ user_form.profile_pic.label_tag }}
@@ -61,12 +74,6 @@
             <div class="mb-3">
               {{ user_form.doctor_license.label_tag }}
               {{ user_form.doctor_license }}
-            </div>
-
-            <div class="mb-3">
-              {{ user_form.specialization.label_tag }}
-              {{ user_form.specialization }}
-              <small class="text-muted d-block">Hold Ctrl (Cmd) to select multiple</small>
             </div>
 
             <div class="mb-3">

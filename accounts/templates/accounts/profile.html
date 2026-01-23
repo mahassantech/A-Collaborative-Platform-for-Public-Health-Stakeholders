@@ -3,17 +3,17 @@
 
 {% block content %}
 
-<div class="container-fluid py-5">
+<div class="container-fluid py-3">
   <div class="row g-4">
 
   <!-- LEFT SIDEBAR -->
 <div class="col-lg-3 col-md-4">
-  <div class="sidebar dash-card shadow p-4 text-center">
+  <div class="sidebar dash-card shadow p-3 text-center">
 
     <img src="{% if user.profile_pic %}{{ user.profile_pic.url }}{% else %}{% static 'images/avatar.png' %}{% endif %}" 
          class="rounded-circle shadow-sm mb-3" width="120" height="120" style="object-fit: cover;">
 
-    <h4 class="fw-bold">{{ user.username }}</h4>
+    <h4 class="fw-bold">{{ user.first_name }} {{user.last_name}}</h4>
     <p><strong>Token: {{ user.token_id }}</strong></p>
     <p class="text-muted mb-1">{{ user.email }}</p>
     <p class="small">Joined: {{ user.date_joined|date:"F j, Y" }}</p>
@@ -179,27 +179,27 @@
 <!-- Stats Cards -->
 <div class="row g-3 mb-4">
 
-  <div class="col-md-4">
+  {% comment %} <div class="col-md-4">
     <div class="card dash-card shadow p-3">
       <h6 class="text-muted">Total Posts</h6>
       <h3 class="fw-bold">{{ recent_posts.count }}</h3>
     </div>
-  </div>
+  </div> {% endcomment %}
 
-  <div class="col-md-4">
+  {% comment %} <div class="col-md-4">
     <div class="card dash-card shadow p-3">
       <h6 class="text-muted">Comments</h6>
       <h3 class="fw-bold">{{ recent_comments.count }}</h3>
     </div>
-  </div>
+  </div> {% endcomment %}
 
   {% if user.role == "doctor" %}
-  <div class="col-md-4">
+  {% comment %} <div class="col-md-4">
     <div class="card dash-card shadow p-3">
       <h6 class="text-muted">Prescriptions</h6>
       <h3 class="fw-bold">{{ recent_prescriptions.count }}</h3>
     </div>
-  </div>
+  </div> {% endcomment %}
   {% endif %}
 
 </div>
@@ -350,65 +350,7 @@
 {% endif %}
 
 
-      {% comment %} <!-- Charts -->
-      <div class="row g-3 mb-4">
-        <div class="col-md-12">
-          <div class="card dash-card shadow p-3">
-            <h6 class="fw-bold">Posts Over Time</h6>
-            <canvas id="postsChart" height="120"></canvas>
-          </div>
-        </div>
-      </div> {% endcomment %}
-
-      {% comment %} <!-- Notifications -->
-      <div class="card dash-card shadow p-3 mb-4">
-        <h6 class="fw-bold">Notifications</h6>
-        <ul class="list-group list-group-flush">
-          {% for note in notifications %}
-          <li class="list-group-item">{{ note.text|truncatechars:50 }}</li>
-          {% empty %}
-          <li class="list-group-item text-muted">No new notifications</li>
-          {% endfor %}
-        </ul>
-      </div> {% endcomment %}
-
-      <!-- Recent Activities -->
-      <div class="card dash-card shadow mb-4">
-        <div class="card-header fw-bold bg-light">Recent Activities</div>
-        <div class="card-body">
-          <ul class="list-group list-group-flush">
-            {% for post in recent_posts %}
-            <li class="list-group-item">
-              <i class="bi bi-check2-circle text-success"></i>
-              <strong>Posted:</strong> {{ post.title }}
-            </li>
-            {% empty %}
-            <li class="list-group-item text-muted">No posts yet.</li>
-            {% endfor %}
-
-            {% for comment in recent_comments %}
-            <li class="list-group-item">
-              <i class="bi bi-chat-left-text text-primary"></i>
-              <strong>Commented:</strong> {{ comment.comment_text|truncatechars:40 }}
-            </li>
-            {% empty %}
-            <li class="list-group-item text-muted">No comments yet.</li>
-            {% endfor %}
-
-            {% if user.role == "doctor" %}
-              {% for pres in recent_prescriptions %}
-              <li class="list-group-item">
-                <i class="bi bi-clipboard-check text-warning"></i>
-                <strong>Prescribed:</strong> {{ pres.diagnosis|truncatechars:40 }}
-              </li>
-              {% empty %}
-              <li class="list-group-item text-muted">No prescriptions yet.</li>
-              {% endfor %}
-            {% endif %}
-          </ul>
-        </div>
-      </div>
-
+      
       {% if user.role == "doctor" %}
       <a href="{% url 'doctor_dashboard' %}" class="btn btn-primary w-100 fw-bold py-2 rounded-3 shadow-sm mb-4">
         View Patient Posts

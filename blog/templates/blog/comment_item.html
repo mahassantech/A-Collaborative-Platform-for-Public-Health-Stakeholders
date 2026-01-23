@@ -13,7 +13,7 @@
     {% endif %}
 
     <div class="flex-grow-1">
-      <strong>{{ comment.user.username }}</strong>
+      <strong>{{ comment.user.first_name }} {{comment.user.last_name}}</strong>
 
       <span class="badge 
         {% if comment.user.role == 'doctor' %} bg-success

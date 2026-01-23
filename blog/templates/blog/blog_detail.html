@@ -13,11 +13,11 @@
     <div class="card-body">
       <h2>{{ blog.title }}</h2>
       <p class="text-muted">
-        By {{ blog.author.username }}
+        By {{ blog.author.first_name }} {{blog.author.last_name}}
         <span class="badge bg-secondary">{{ blog.author.role }}</span>
         • {{ blog.created_at|date:"F j, Y" }}
       </p>
-      <p>{{ blog.content|safe }}</p>
+      <p>{{ blog.description|safe }}</p>
     </div>
   </div>
 

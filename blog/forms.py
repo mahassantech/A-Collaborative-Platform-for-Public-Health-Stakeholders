@@ -8,10 +8,10 @@ from category.models import Category
 class BlogForm(forms.ModelForm):
     class Meta:
         model = BlogPost
-        fields = ["title", "content", "description", "photo", "category", "urgency_level"]
+        fields = ["title",  "description", "photo", "category", "urgency_level"]
         widgets = {
             "title": forms.TextInput(attrs={"class": "form-control"}),
-            "content": forms.Textarea(attrs={"class": "form-control", "rows": 5}),
+           
             "description": forms.Textarea(attrs={"class": "form-control", "rows": 3}),
             "category": forms.SelectMultiple(attrs={"class": "form-select"}),  # Multiple select
             "urgency_level": forms.Select(attrs={"class": "form-select"}),

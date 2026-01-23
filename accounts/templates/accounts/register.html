@@ -2,15 +2,17 @@
 {% load static %}
 
 {% block content %}
-<div class="d-flex justify-content-center align-items-center medical-bg" style="min-height:100vh; padding:20px; background: linear-gradient(135deg,#7d93a7ff,#b5c6d3ff);">
-    <div class="card shadow-lg p-4 medical-card" style="width:450px;">
-        <div class="text-center mb-4">
-            <h4 class="fw-bold text-primary mt-2">HealthConnect</h4>
-            <p class="text-muted small">Create your account</p>
+<div class="d-flex justify-content-center align-items-center medical-bg"
+     style="min-height:40vh; padding:10px; background: linear-gradient(135deg,#7d93a7ff,#b5c6d3ff);">
+
+    <div class="card shadow medical-card p-3" style="width:380px;">
+        <div class="text-center mb-3">
+            <h5 class="fw-bold text-primary mb-1">HealthConnect</h5>
+            <p class="text-muted small mb-0">Create your account</p>
         </div>
 
         {% if form.errors %}
-        <div class="alert alert-danger">
+        <div class="alert alert-danger py-2 small">
             <ul class="mb-0">
                 {% for field in form %}
                     {% for error in field.errors %}
@@ -27,75 +29,80 @@
         <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
 
-            <!-- Username -->
-            <div class="mb-3">
-                <label for="id_username" class="form-label fw-semibold">Username</label>
-                <input type="text" name="username" id="id_username" class="form-control" value="{{ form.username.value|default_if_none:'' }}">
+            <div class="mb-2">
+                <label class="form-label small fw-semibold">Username</label>
+                <input type="text" name="username" class="form-control form-control-sm">
+            </div>
+            <div class="mb-2">
+  <label class="form-label small fw-semibold">First Name</label>
+  <input type="text" 
+         name="first_name" 
+         value="{{ user.first_name }}"
+         class="form-control form-control-sm">
+</div>
+
+<div class="mb-2">
+  <label class="form-label small fw-semibold">Last Name</label>
+  <input type="text" 
+         name="last_name" 
+         value="{{ user.last_name }}"
+         class="form-control form-control-sm">
+</div>
+
+
+            <div class="mb-2">
+                <label class="form-label small fw-semibold">Email</label>
+                <input type="email" name="email" class="form-control form-control-sm">
             </div>
 
-            <!-- Email -->
-            <div class="mb-3">
-                <label for="id_email" class="form-label fw-semibold">Email</label>
-                <input type="email" name="email" id="id_email" class="form-control" value="{{ form.email.value|default_if_none:'' }}">
+            <div class="mb-2">
+                <label class="form-label small fw-semibold">Password</label>
+                <input type="password" name="password" class="form-control form-control-sm">
             </div>
 
-            <!-- Password -->
-            <div class="mb-3">
-                <label for="id_password" class="form-label fw-semibold">Password</label>
-                <input type="password" name="password" id="id_password" class="form-control">
-            </div>
-
-            <!-- Role -->
-            <div class="mb-3">
-                <label for="id_role" class="form-label fw-semibold">Role</label>
-                <select name="role" id="id_role" class="form-select">
-                    <option value="patient" {% if form.role.value == "patient" %}selected{% endif %}>Patient</option>
-                    <option value="doctor" {% if form.role.value == "doctor" %}selected{% endif %}>Doctor</option>
-                    <option value="analyst" {% if form.role.value == "analyst" %}selected{% endif %}>Data Analyst</option>
+            <div class="mb-2">
+                <label class="form-label small fw-semibold">Role</label>
+                <select name="role" id="id_role" class="form-select form-select-sm">
+                    <option value="patient">Patient</option>
+                    <option value="doctor">Doctor</option>
+                    <option value="analyst">Data Analyst</option>
                 </select>
             </div>
 
-            <!-- Doctor fields -->
             <div id="doctor-fields" style="display:none;">
-                <!-- Doctor License -->
-                <div class="mb-3">
-                    <label for="id_doctor_license" class="form-label fw-semibold">Doctor License</label>
-                    <input type="text" name="doctor_license" id="id_doctor_license" class="form-control" value="{{ form.doctor_license.value|default_if_none:'' }}">
+                <div class="mb-2">
+                    <label class="form-label small fw-semibold">Doctor License</label>
+                    <input type="text" name="doctor_license" class="form-control form-control-sm">
                 </div>
 
-                <!-- Specializations -->
-                <div class="mb-3">
-                    <label for="id_specialization" class="form-label fw-semibold">Specializations</label>
-                    <select name="specialization" id="id_specialization" class="form-select" multiple>
+                <div class="mb-2">
+                    <label class="form-label small fw-semibold">Specializations</label>
+                    <select name="specialization" class="form-select form-select-sm" multiple>
                         {% for spec in form.fields.specialization.queryset %}
-                            <option value="{{ spec.id }}"
-                                {% if spec in form.instance.specialization.all %}selected{% endif %}>
-                                {{ spec.name }}
-                            </option>
+                            <option value="{{ spec.id }}">{{ spec.name }}</option>
                         {% endfor %}
                     </select>
-                    <small class="text-muted">Hold Ctrl (Cmd on Mac) to select multiple</small>
                 </div>
 
-                <!-- Hospital Name -->
-                <div class="mb-3">
-                    <label for="id_hospital_name" class="form-label fw-semibold">Hospital Name</label>
-                    <input type="text" name="hospital_name" id="id_hospital_name" class="form-control" value="{{ form.hospital_name.value|default_if_none:'' }}">
+                <div class="mb-2">
+                    <label class="form-label small fw-semibold">Hospital Name</label>
+                    <input type="text" name="hospital_name" class="form-control form-control-sm">
                 </div>
             </div>
 
-            <!-- Profile Picture -->
-            <div class="mb-3">
-                <label for="id_profile_pic" class="form-label fw-semibold">Profile Picture</label>
-                <input type="file" name="profile_pic" id="id_profile_pic" class="form-control">
+            <div class="mb-2">
+                <label class="form-label small fw-semibold">Profile Picture</label>
+                <input type="file" name="profile_pic" class="form-control form-control-sm">
             </div>
 
-            <button type="submit" class="btn btn-primary w-100 fw-bold py-2 mt-3">Create Account</button>
+            <button type="submit" class="btn btn-primary w-100 fw-semibold py-1 mt-2">
+                Create Account
+            </button>
         </form>
 
-        <p class="text-center mt-3 small">
-            Already have an account? 
-            <a class="text-decoration-none text-primary fw-semibold" href="{% url 'login' %}">Sign In</a>
+        <p class="text-center mt-2 small mb-0">
+            Already have an account?
+            <a href="{% url 'login' %}" class="fw-semibold text-primary text-decoration-none">Sign In</a>
         </p>
     </div>
 </div>
@@ -105,10 +112,9 @@ const roleSelect = document.getElementById("id_role");
 const doctorFields = document.getElementById("doctor-fields");
 
 function checkRole() {
-    doctorFields.style.display = (roleSelect.value === "doctor") ? "block" : "none";
+    doctorFields.style.display = roleSelect.value === "doctor" ? "block" : "none";
 }
-
-window.onload = checkRole;
+checkRole();
 roleSelect.addEventListener("change", checkRole);
 </script>
 {% endblock %}

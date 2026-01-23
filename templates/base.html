@@ -47,7 +47,7 @@ href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.c
 
 
 
-<!-- 🌟 Modern Glass Navbar -->
+<!-- Modern Glass Navbar -->
 <nav class="navbar navbar-expand-lg modern-nav fixed-top shadow-sm">
   <div class="container">
 
@@ -90,7 +90,7 @@ href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.c
   <a href="{% url 'logout' %}" class="btn btn-danger">Logout</a>
 {% else %}
   <a href="{% url 'login' %}" class="btn btn-outline-light">Sign in</a>
-  <a href="{% url 'signup' %}" class="btn btn-outline-light">Join now</a>
+  <a href="{% url 'signup' %}" class="btn btn-success">Join now</a>
 
 {% endif %}
 
@@ -169,8 +169,10 @@ href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.c
 
       <!-- Doctor Directory -->
       <div class="col-md-3 col-sm-6">
+        <a href="{% url 'doctor_list' %}" class="text-decoration-none"></a>
         <div class="hc-card rounded-4 overflow-hidden shadow position-relative">
-          <img src="{% static 'images/doctor.jpg' %}" class="hc-card-img">
+          <img src="{% static 'images/doctor.jpg' %}" class="hc-card-img" >
+          
           <div class="hc-card-content text-center text-white p-4">
             <h6 class="fw-bold mb-2">Doctor Directory</h6>
             <p class="small mb-0">Browse verified doctors by specialty and location.</p>
@@ -215,58 +217,6 @@ href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.c
   </div>
 </section>
 
-<!-- What Our Clients Say -->
-<section class="py-5 bg-light">
-  <div class="container">
-    <h2 class="text-center fw-bold mb-5">What Our Clients Say</h2>
-
-    <div class="row g-4">
-
-      <!-- Testimonial 1 -->
-      <div class="col-md-4">
-        <div class="card p-4 shadow-sm rounded-4">
-          <div class="d-flex align-items-center mb-3">
-            <img src="{% static 'images/cleint doctor2.jpg' %}" class="rounded-circle me-3" style="width:60px; height:60px;">
-            <div>
-              <h6 class="fw-bold mb-0">Dr. Sarah Khan</h6>
-              <small class="text-muted">Cardiologist</small>
-            </div>
-          </div>
-          <p class="text-muted small">"HealthConnect has transformed how I manage patient records. The platform is intuitive and saves a lot of time."</p>
-        </div>
-      </div>
-
-      <!-- Testimonial 2 -->
-      <div class="col-md-4">
-        <div class="card p-4 shadow-sm rounded-4">
-          <div class="d-flex align-items-center mb-3">
-            <img src="{% static 'images/cleint2.jpg' %}" class="rounded-circle me-3" style="width:60px; height:60px;">
-            <div>
-              <h6 class="fw-bold mb-0">Nusrat jahan</h6>
-              <small class="text-muted">Patient</small>
-            </div>
-          </div>
-          <p class="text-muted small">"I feel more in control of my health data. The platform is secure, easy to use, and very helpful."</p>
-        </div>
-      </div>
-
-      <!-- Testimonial 3 -->
-      <div class="col-md-4">
-        <div class="card p-4 shadow-sm rounded-4">
-          <div class="d-flex align-items-center mb-3">
-            <img src="{% static 'images/cleint doctor1.jpg' %}" class="rounded-circle me-3" style="width:60px; height:60px;">
-            <div>
-              <h6 class="fw-bold mb-0">Dr. Ahmed Ali</h6>
-              <small class="text-muted">General Practitioner</small>
-            </div>
-          </div>
-          <p class="text-muted small">"The real-time insights are a game changer. HealthConnect helps us make faster, informed decisions for our patients."</p>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
 
 
 <!--  Subscription Plans  -->

@@ -5,8 +5,7 @@ from .models import DoctorLocation
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .models import Appointment, DoctorLocation
-from .forms import AppointmentForm
-from accounts.models import CustomUser
+from accounts.models import CustomUser,Specialization
 from datetime import datetime, timedelta
 from .models import CustomUser, DoctorLocation, Appointment
 from datetime import datetime, date as today_date, timedelta
@@ -14,11 +13,44 @@ from blog.models import Notification
 from subscriptions.utils import can_book_appointment
 from django.contrib import messages
 from subscriptions.models import UserSubscription
+from django.db.models import Q
 
 
+@login_required
 def doctor_list(request):
-    doctors = CustomUser.objects.filter(role="doctor")
-    return render(request, "appointments/doctor_list.html", {"doctors": doctors})
+    categories = Specialization.objects.all()
+    selected_category_id = request.GET.get('category')
+    query = request.GET.get('q')  # search input
+
+    # Start with all doctors
+    doctors = CustomUser.objects.filter(role='doctor')
+
+    # Filter by specialization if selected
+    if selected_category_id:
+        doctors = doctors.filter(specialization__id=selected_category_id).distinct()
+
+    # Filter by search query (first_name or last_name)
+    if query:
+        doctors = doctors.filter(
+            Q(first_name__icontains=query) | Q(last_name__icontains=query)
+        )
+
+    # Get selected category object
+    selected_category = None
+    if selected_category_id:
+        try:
+            selected_category = Specialization.objects.get(id=selected_category_id)
+        except Specialization.DoesNotExist:
+            selected_category = None
+
+    context = {
+        'doctors': doctors,
+        'categories': categories,
+        'selected_category': selected_category,
+        'query': query,
+    }
+
+    return render(request, "appointments/doctor_list.html", context)
  
 def doctor_detail(request, id):
     doctor = get_object_or_404(CustomUser, id=id, role="doctor")
@@ -57,36 +89,50 @@ def has_active_premium(user):
     except UserSubscription.DoesNotExist:
         return False
 
+
 @login_required
 def book_appointment(request, doctor_id):
     doctor = get_object_or_404(CustomUser, id=doctor_id, role="doctor")
-    try:
-        subscription = request.user.usersubscription
-    except UserSubscription.DoesNotExist:
-        messages.error(request, "You need a premium subscription to book an appointment.")
-        return redirect("subscription_plans")
-
-    if not subscription.is_premium():
-        messages.error(request, "Only premium users can book appointments.")
-        return redirect("subscription_plans")
-
     error = None
     available_slots = []
 
+    # ================= BLOCK SELF BOOKING =================
+    if request.method == "POST" and request.user.id == doctor.id:
+        messages.error(request, "You cannot book an appointment with yourself.")
+        return redirect("book_appointment", doctor_id=doctor.id)
+
+    # ================= SLOT GENERATION =================
+    for loc in doctor.doctor_locations.all():
+        slots = []
+        current = datetime.combine(today_date.today(), loc.start_time)
+        end_dt = datetime.combine(today_date.today(), loc.end_time)
+
+        while current + timedelta(minutes=30) <= end_dt:
+            s = current.time()
+            e = (current + timedelta(minutes=30)).time()
+            slots.append({
+                "value": f"{s.strftime('%H:%M')}-{e.strftime('%H:%M')}",
+                "display": f"{s.strftime('%I:%M %p')} - {e.strftime('%I:%M %p')}"
+            })
+            current += timedelta(minutes=30)
+
+        available_slots.append({
+            "location": loc,
+            "slots": slots
+        })
+
     # ================= POST REQUEST =================
     if request.method == "POST":
-        location_id = request.POST.get("location_id")
         slot_value = request.POST.get("slot")
         date_str = request.POST.get("date")
         notes = request.POST.get("notes")
 
-        if not (location_id and slot_value and date_str):
-            error = "Please select date, location and time slot."
-        else:
-            location = get_object_or_404(
-                DoctorLocation, id=location_id, doctor=doctor
-            )
+        # Auto select first chamber
+        location = doctor.doctor_locations.first()
 
+        if not (slot_value and date_str):
+            error = "Please select date and time slot."
+        else:
             date = datetime.strptime(date_str, "%Y-%m-%d").date()
 
             # 🔴 BLOCK BACK DATE
@@ -101,12 +147,8 @@ def book_appointment(request, doctor_id):
                     error = f"Doctor is not available on {weekday}"
                 else:
                     start_str, end_str = slot_value.split("-")
-                    start_time = datetime.strptime(
-                        start_str.strip(), "%H:%M"
-                    ).time()
-                    end_time = datetime.strptime(
-                        end_str.strip(), "%H:%M"
-                    ).time()
+                    start_time = datetime.strptime(start_str.strip(), "%H:%M").time()
+                    end_time = datetime.strptime(end_str.strip(), "%H:%M").time()
 
                     # 🔹 SLOT ALREADY BOOKED?
                     exists = Appointment.objects.filter(
@@ -131,26 +173,6 @@ def book_appointment(request, doctor_id):
                         )
                         messages.success(request, "Appointment booked successfully!")
                         return redirect("appointments_success")
-
-    # ================= SLOT GENERATION (GET) =================
-    for loc in doctor.doctor_locations.all():
-        slots = []
-        current = datetime.combine(today_date.today(), loc.start_time)
-        end_dt = datetime.combine(today_date.today(), loc.end_time)
-
-        while current + timedelta(minutes=30) <= end_dt:
-            s = current.time()
-            e = (current + timedelta(minutes=30)).time()
-            slots.append({
-                "value": f"{s.strftime('%H:%M')}-{e.strftime('%H:%M')}",
-                "display": f"{s.strftime('%I:%M %p')} - {e.strftime('%I:%M %p')}"
-            })
-            current += timedelta(minutes=30)
-
-        available_slots.append({
-            "location": loc,
-            "slots": slots
-        })
 
     return render(request, "appointments/book_appointment.html", {
         "doctor": doctor,
